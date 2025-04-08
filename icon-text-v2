@@ -1,0 +1,318 @@
+<div class="icon-with-text" id="icon-with-text--{{ section.id }}">
+  <div class="icon-with-text-inner page-width">
+    <div class="icon-with-text-flex">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      <div class="icon-with-text-flex-grid">
+        {%- for block in section.blocks -%}
+          {% if block.settings.image != blank %}
+            <div class="icon-with-text-flex-grid-item">
+              <a href="{{ block.settings.icon-link }}">
+                {% if block.settings.image != blank %}
+                  <div class="block-image-cell">
+                    <img src="{{ block.settings.image | img_url:'master' }}" class="grid-flex-image" height="" width="">
+                  </div>
+                {% endif %}
+                {% if block.settings.icon-text != blank  %}
+                  <p>{{ block.settings.icon-text }}</p>
+                {% endif %}
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+#icon-with-text--{{ section.id }} {
+    padding-top: {{section.settings.pt}}px;
+    padding-bottom: {{section.settings.pb}}px;
+    background: {{section.settings.bg_color}};
+  border-radius:50px;
+}
+
+#icon-with-text--{{ section.id }} .icon-with-text-flex-grid-item {
+    text-align: center;
+  font-weight:600;
+}
+  .icon-with-text-flex-grid-item a {
+    text-decoration: none;
+}
+  .block-image-cell img {
+    width: 200px;
+    background-size: cover;
+    object-fit: fill;
+}
+
+#icon-with-text--{{ section.id }} .icon-with-text-flex-grid {
+    display: flex;
+    justify-content: center;
+    gap: {{section.settings.gap_d}}px;
+}
+
+#icon-with-text--{{ section.id }} .icon-with-text-flex h2{
+    text-align:{{ section.settings.heading-alignment }};
+    font-size: {{ section.settings.heading-font-size }}px;
+  color:{{section.settings.font-color}};
+  }
+
+#icon-with-text--{{ section.id }} .icon-with-text-flex p{
+    font-size: {{ section.settings.block-text-size }}px;
+    color: {{ section.settings.block-text-color }};
+}
+
+@media only screen and (max-width: 767px) {
+
+  #icon-with-text--{{ section.id }} .icon-with-text-flex-grid {
+      gap: {{section.settings.gap_m}}px;
+  }
+
+  /* #icon-with-text--{{ section.id }} img.grid-flex-image {
+    height: {{section.settings.img_w_mob}}px;
+} */
+
+#icon-with-text--{{ section.id }} .icon-with-text-flex-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+}
+
+#icon-with-text--{{ section.id }} .icon-with-text-flex-grid-item {
+    text-align: center;
+}
+#icon-with-text--{{ section.id }} .icon-with-text-flex h2{
+  font-size: {{ section.settings.font-size-mobile }}px;
+}
+  
+#icon-with-text--{{ section.id }} .icon-with-text-flex p{
+    font-size: {{ section.settings.block-text-size-mobile }}px;
+}
+  
+}
+  
+</style>
+
+{% schema %}
+  {
+    "name": "New Icon with text",
+    "class": "new-image-with-text-section-cin",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "pt",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "pb",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding bottom",
+        "default": 0
+      },
+      {
+          "type": "range",
+          "id": "ptm",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Padding top mobile",
+          "default": 0
+      },
+      {
+        "type": "range",
+        "id": "pbm",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding bottom mobile",
+        "default": 0
+      },
+       {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "something for everyone"
+        },
+        {
+          "type": "color",
+          "id": "font-color",
+          "label": "Heading Color",
+          "default": "#055037"
+        },
+        {
+          "type": "select",
+          "id": "heading-alignment",
+          "label": "Heading alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+      {
+        "type": "range",
+        "id": "heading-font-size",
+        "min": 12,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "font-size-mobile",
+        "min": 6,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Font size Mobile",
+        "default": 15
+      },
+      {
+        "type": "header",
+        "content": "Background"
+      },
+      {	
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color"
+      },
+      {
+        "type": "header",
+        "content": "Image size"
+      },
+      {
+        "type": "range",
+        "id": "img_w_d",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Image width",
+        "default": 100
+      },
+      {	
+          "type": "number",
+          "id": "gap_d",
+          "label": "Image gap",
+          "default": 20
+      },
+      {
+        "type": "range",
+        "id": "img_w_mob",
+        "min": 0,
+        "max": 200,
+        "step": 10,
+        "unit": "px",
+        "label": "Image width mob",
+        "default": 100
+      },
+      {	
+          "type": "number",
+          "id": "gap_m",
+          "label": "Image gap mobile",
+          "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Block Content"
+      },
+      {
+        "type": "color",
+        "id": "block-text-color",
+        "label": "Block Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "block-text-size",
+        "min": 10,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Block Text size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "block-text-size-mobile",
+        "min": 10,
+        "max": 25,
+        "step": 1,
+        "unit": "px",
+        "label": "Block Text size Mobile",
+        "default": 12
+      }	
+	],
+    "blocks": [
+      {
+        "type": "item",
+		"limit": 10,
+        "name": "Content",
+        "settings": [
+          {
+            "type": "url",
+            "id": "icon-link",
+            "label": "Link"
+          },		  
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "icon-text",
+            "label" : "Text"
+          }
+		 
+		]
+	  }
+      
+	],
+    "presets": [
+      {
+        "name": "New Icon with text",
+      	"category": "Collection",
+        "blocks": [
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

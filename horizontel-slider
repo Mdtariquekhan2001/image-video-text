@@ -1,0 +1,217 @@
+<!-- Section code -->
+<section class="icon-text-section--{{ section.id }}" id="custom-horozontel-icon--{{ section.id }}" style="background-color: {{ section.settings.background_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="icon-text-wrapper">
+    <div class="icon-text-blocks">
+      {% for block in section.blocks %}
+        <div class="icon-text-block">
+          <img width="17" height="17" src="{{ block.settings.icon_image | img_url: 'master' }}" alt="{{ block.settings.icon_text }}">
+          <div class="icon-text">
+            <p style="color: {{ block.settings.text_color }}; font-size: {{ block.settings.desktop_font_size }}px; font-weight: {{ block.settings.font_weight }};">
+              {{ block.settings.icon_text }}
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Section styles -->
+<style>
+  #custom-horozontel-icon--{{ section.id }} .icon-text-wrapper {
+    max-width: {{section.settings.content-container}}px;
+    margin: 0 auto;
+  }
+
+  #custom-horozontel-icon--{{ section.id }} .icon-text-blocks {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  #custom-horozontel-icon--{{ section.id }} .icon-text-block {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 10px;
+    flex-basis: 24%; /* 4 blocks on desktop */
+  }
+
+  #custom-horozontel-icon--{{ section.id }} .icon-text p {
+    font-size: 16px;
+    color: #333;
+    margin: 0px;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 767px) {
+    #custom-horozontel-icon--{{ section.id }} .icon-text-blocks {
+      display: block; /* Disable flex for slider initialization on mobile */
+    }
+
+    #custom-horozontel-icon--{{ section.id }} .icon-text-block {
+      flex-basis: 100%; /* One block per slide */
+      text-align: center;
+    }
+
+    #custom-horozontel-icon--{{ section.id }} .icon-text p {
+      font-size: {{ block.settings.mobile_font_size }}px !important;
+    }
+    #custom-horozontel-icon--{{ section.id }} .icon-text-block.slick-slide.slick-current.slick-active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #custom-horozontel-icon--{{ section.id }} .slick-next {
+      right: 23px;
+      top: 12px;
+      z-index: 1;
+    }
+    #custom-horozontel-icon--{{ section.id }} .slick-prev {
+      left: 21px;
+      top: -4px;
+      z-index: 1;
+    }
+     #custom-horozontel-icon--{{ section.id }} .slick-next img {
+      right: 23px;
+      top: -10px;
+      z-index: 1;
+       width:10px;
+       height:10px;
+    }
+    #custom-horozontel-icon--{{ section.id }} .slick-prev img {
+      left: 21px;
+      top: 10px;
+      z-index: 1;
+      width:10px;
+       height:10px;
+    }
+  }
+</style>
+
+<script>
+  $(document).ready(function() {
+    function initializeSlider() {
+      // Destroy the slider if it exists to avoid reinitialization
+      if ($('.icon-text-section--{{ section.id }} .icon-text-blocks').hasClass('slick-initialized')) {
+        $('.icon-text-section--{{ section.id }} .icon-text-blocks').slick('unslick');
+      }
+
+      // Only initialize the slider on mobile screens
+      if ($(window).width() <= 767) {
+        $('.icon-text-section--{{ section.id }} .icon-text-blocks').slick({
+          dots: false,
+          arrows: true,
+          infinite: false,
+          speed: 100,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          prevArrow: "<button id='slick-prev-{{ section.id }}' type='button' class='slick-prev top-slider-control pull-left'><img src='https://cdn.shopify.com/s/files/1/0606/2456/8491/files/arro2-removebg-preview.png' loading='lazy' alt='Previous'></button>",
+          nextArrow: "<button id='slick-next-{{ section.id }}' type='button' class='slick-next top-slider-control pull-right'><img src='https://cdn.shopify.com/s/files/1/0606/2456/8491/files/arro1-removebg-preview.png' loading='lazy' alt='Next'></button>",
+        });
+      }
+    }
+
+    // Initialize the slider on page load
+    initializeSlider();
+
+    // Reinitialize the slider on window resize
+    $(window).resize(function() {
+      initializeSlider();
+    });
+  });
+</script>
+
+
+<!-- Schema for dynamic settings -->
+{% schema %}
+{
+  "name": "Icon and Text Section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "number",
+      "id": "content-container",
+      "label": "Content container width"
+    },
+    {
+      "type": "number",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon_text_block",
+      "name": "Icon Text Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "icon_text",
+          "label": "Icon Text"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#333333"
+        },
+        {
+          "type": "number",
+          "id": "desktop_font_size",
+          "label": "Desktop Font Size (px)",
+          "default": 16,
+          
+        },
+        {
+          "type": "number",
+          "id": "mobile_font_size",
+          "label": "Mobile Font Size (px)",
+          "default": 14,
+          
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "400",
+              "label": "Normal"
+            },
+            {
+              "value": "700",
+              "label": "Bold"
+            }
+          ],
+          "default": "400"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon and Text Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

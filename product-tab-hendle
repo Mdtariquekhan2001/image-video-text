@@ -1,0 +1,136 @@
+<section class="portfolio" id="featured-product-tabs--{{ section.id }}">
+    <div class="container-v2 wrapper">
+        <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-auto">
+            <h1 class="gallery-title">{{ section.settings.heading }}</h1>
+        </div>
+        <div class="custom-featured-tabs-v3">
+            {% for product in section.blocks %}
+                <button class="btn btn-default filter-button" data-filter="{{ product.settings.product_handle }}">{{ product.settings.product_title }}</button>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for product in section.blocks %}
+                {% assign product_data = all_products[product.settings.product_handle] %}
+                <div class="gallery_product col-md-4 filter {{ product.settings.product_handle }}">
+                    <img src="{{ product_data.featured_image | img_url: 'large' }}" alt="{{ product_data.title }}">
+                    <h3>{{ product_data.title }}</h3>
+                    <p>{{ product_data.price | money }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function(){
+        $(".filter-button").click(function(){
+            var value = $(this).attr('data-filter');
+
+            // Remove active class from all buttons
+            $(".filter-button").removeClass("active");
+
+            // Add active class to the clicked button
+            $(this).addClass("active");
+
+            if(value == "all") {
+                $('.filter').show('100');
+            } else {
+                $(".filter").not('.'+value).hide('100');
+                $('.filter').filter('.'+value).show('100');
+            }
+        });
+    });
+</script>
+
+<style>
+  #featured-product-tabs--{{ section.id }} .row {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+  }
+  .portfolio {
+    padding: 40px;
+    margin: 0 auto;
+  }
+  #featured-product-tabs--{{ section.id }} .gallery-title {
+    font-size: 24px;
+    color: {{ section.settings.heading_color }};
+    text-align: center;
+    font-weight: 400;
+  }
+  #featured-product-tabs--{{ section.id }} .filter-button {
+    font-size: 14px;
+    text-align: center;
+    color: black;
+    margin-bottom: 30px;
+    background: none !important;
+    border: none;
+    padding: 10px;
+    position: relative;
+  }
+  #featured-product-tabs--{{ section.id }} .filter-button:hover {
+    color: black;
+  }
+  #featured-product-tabs--{{ section.id }} .filter-button.active {
+    color: black;
+    border-bottom: 2px solid black; /* Underline for active button */
+  }
+  #featured-product-tabs--{{ section.id }} .btn-default:active .filter-button:active {
+    color: black;
+  }
+  #featured-product-tabs--{{ section.id }} .port-image {
+    width: 100%;
+  }
+  #featured-product-tabs--{{ section.id }} .gallery_product {
+    margin-bottom: 30px;
+  }
+  #featured-product-tabs--{{ section.id }} .custom-featured-tabs-v3 {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    margin: 0px !important;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured product tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "ALL DAY, ANY DAY"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Title color",
+      "default": "#000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title"
+        },
+        {
+          "type": "product",
+          "id": "product_handle",
+          "label": "Product Handle"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product tabs"
+    }
+  ]
+}
+{% endschema %}

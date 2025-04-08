@@ -1,0 +1,534 @@
+<section class="custom-icon-text {% if section.settings.custom_class != blank %} {{ section.settings.custom_class }} {% endif %}" id="custom-icon-text-v2--{{ section.id }}">
+  <div class="container-full m-section-my m-section-py">
+   {%- if section.settings.heading_text != blank or section.settings.description_text != blank -%}
+  <div class="custom-icon-text-header">
+    {%- if section.settings.heading_text != blank -%}
+      <h2 style="
+        font-size: {{ section.settings.heading_size }}px;
+        color: {{ section.settings.heading_color }};
+        font-weight: {{ section.settings.heading_font_weight }};
+        text-align: {{ section.settings.heading_align }};">
+        {{ section.settings.heading_text }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.description_text != blank -%}
+      <p style="
+        font-size: {{ section.settings.description_size }}px;
+        color: {{ section.settings.description_color }};
+        font-weight: {{ section.settings.description_font_weight }};
+        text-align: {{ section.settings.description_align }};">
+        {{ section.settings.description_text }}
+      </p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+    <div class="custom-icon-text-flex-grid">
+      <div class="custom-icon-text-inner-grid">
+        <div class="custom-icon-text-main-block">
+          {% if section.settings.layout == 'left' %}
+            <div class="custom-icon-text-left">
+              <div class="swipe-v2">
+                <div class="swiper-wrapper-v2 custom-grid-columns" style="">
+                  {% for block in section.blocks %}
+                    <div class="swiper-slide">
+                      <div class="custom-content-left-grid">
+                        <a id="custom-image-lefts" href="{{ block.settings.link_url }}">
+                          <img src="{{ block.settings.image_dekstop | image_url: width: block.settings.image_width, height: block.settings.image_height }}" alt="" width="{{ block.settings.image_width }}px" height="{{ block.settings.image_height }}px">
+                          <p id="home-heading-aal-sec" style="font-size: {{ block.settings.font_size }}px; color: {{ block.settings.font_color }}; font-weight: {{ block.settings.font_weight }};">
+                            {{ block.settings.text_icon }}
+                          </p>
+                          <p id="home-description-aal-sec" style="font-size: {{ block.settings.description_size }}px; color: {{ block.settings.description_color }}; font-weight: {{ block.settings.description_weight }};">
+                            {{ block.settings.block_description }}
+                          </p>
+                        </a>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+#custom-icon-text-v2--{{ section.id }} {
+  background: {{ section.settings.background_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  width: 100%;
+  margin: auto;
+}
+#custom-icon-text-v2--{{ section.id }} .swiper-wrapper-v2.custom-grid-columns {
+    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+}
+#custom-icon-text-v2--{{ section.id }} .container-full.m-section-my.m-section-py {
+  max-width: {{ section.settings.max_container }}px;
+  margin: auto;
+}
+
+#custom-icon-text-v2--{{ section.id }} .custom-icon-text-header h2, 
+#custom-icon-text-v2--{{ section.id }} .custom-icon-text-header p {
+  margin-bottom: 15px;
+}
+
+#custom-icon-text-v2--{{ section.id }} .custom-icon-text-main-block {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+#custom-icon-text-v2--{{ section.id }} .custom-icon-text-header {
+  width: 100%;
+  max-width: 75%;
+  margin: auto;
+}
+.description-full-width-all .custom-icon-text-header {
+  width: 100%;
+  max-width: 80% !important%;
+  margin: auto;
+}
+#custom-icon-text-v2--{{ section.id }} .custom-icon-text-left {
+  max-width: 1284px;
+  width: 100%;
+  margin: auto;
+}
+
+  p#home-heading-aal-sec {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#custom-icon-text-v2--{{ section.id }} .swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+  display: block;
+  margin:auto;
+  display: flex;
+
+}
+  .row-icon-text-all .swiper-wrapper-v2.custom-grid-columns {
+    gap: 185px !important;
+}
+
+/* Grid layout for dynamic columns */
+#custom-icon-text-v2--{{ section.id }} .custom-grid-columns {
+  display: grid;
+  gap: 35px;
+  padding-top: 30px;
+}
+  .row-icon-text-all .custom-grid-columns {
+  gap: 185px;
+
+}
+  
+
+#custom-icon-text-v2--{{ section.id }} .custom-content-left-grid {
+  text-align: center;
+  margin: auto;
+  position: relative;
+}
+
+#custom-icon-text-v2--{{ section.id }} a#custom-image-lefts img {
+  margin: auto;
+}
+ 
+
+/* Responsive for smaller screens */
+@media (max-width: 767px) {
+#custom-icon-text-v2--{{ section.id }} {
+  background: {{ section.settings.background_color-mob }};
+  padding:8px;
+}
+  #custom-icon-text-v2--{{ section.id }} .swiper-wrapper-v2.custom-grid-columns {
+    grid-template-columns: repeat({{ section.settings.columns-phone }}, 1fr);
+}
+  #custom-icon-text-v2--{{ section.id }} .custom-icon-text-header h2 {
+    font-size: {{section.settings.heading_size_mobile}}px !important;
+}
+ 
+  #custom-icon-text-v2--{{ section.id }} .custom-icon-text-header p {
+    font-size: {{section.settings.description_size_mobile}}px !important;
+}
+  #custom-icon-text-v2--{{ section.id }} .custom-icon-text-header {
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+}
+   .row-icon-text-all .swiper-wrapper-v2.custom-grid-columns {
+    gap: 30px !important;
+}
+ #custom-icon-text-v2--{{ section.id }} .custom-icon-text-header p {
+    width: 100%;
+    max-width: 95%;
+    margin: auto;
+   padding-bottom:60px;
+}
+  #custom-icon-text-v2--{{ section.id }} .custom-icon-text-header h2 {
+    width: 100%;
+    margin: auto;
+    padding-top: 20px;
+    padding-bottom:15px;
+}
+  #custom-icon-text-v2--{{ section.id }} .swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+}
+  
+  #custom-icon-text-v2--{{ section.id }} {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  
+  #custom-icon-text-v2--{{ section.id }} .custom-icon-text-left {
+    max-width: 90% !important;
+    width: 100%;
+    margin: auto;
+  }
+   #custom-icon-text-v2--{{ section.id }} p#home-heading-aal-sec {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size:18px !Important;
+}
+  /* a#custom-image-lefts img {
+    width: 60px;
+    height: 40px;
+} */
+  #custom-icon-text-v2--{{ section.id }} .custom-grid-columns {
+  display: grid;
+  gap: 20px;
+  padding-top: 0px;
+}
+  .gris-frections-2-column p#home-heading-aal-sec {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size:12px !Important;
+}
+  
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "custom-icon-text-home-v2",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+     {
+      "type": "color",
+      "id": "background_color-mob",
+      "label": "Background color Mobile",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "max_container",
+      "label": "Max container width",
+      "default": 100
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading text",
+      "default": "Our Features"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading font size",
+      "default": 30
+    },
+     {
+      "type": "header",
+       "content": "Phone Size"
+        },
+     {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading font size",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading font weight",
+      "default": "bold",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_align",
+      "label": "Heading alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "description_text",
+      "label": "Description text",
+      "default": "Check out the quick links below"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Description font size",
+      "default": 16
+    },
+    {
+      "type": "header",
+       "content": "Description Phone Size"
+        },
+     {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading font size",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "description_font_weight",
+      "label": "Description font weight",
+      "default": "normal",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "description_align",
+      "label": "Description alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Image alignment",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "columns",
+      "label": "Number of columns",
+      "default": 3
+    },
+    {
+      "type": "number",
+      "id": "columns-phone",
+      "label": "Number of columns phone",
+      "default": 3
+    },
+   {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom CSS Class",
+      
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Icon + Text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_dekstop",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "text",
+          "id": "text_icon",
+          "label": "Text",
+          "default": "Quick link"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+
+ {
+      "type": "number",
+       "id": "image_width",
+       "label": "Image width",
+      "default": 100
+    },
+        
+      
+{
+      "type": "number",
+      "id": "image_height",
+      "label": "Max container height",
+      "default": 100
+    },
+        
+        {
+          "type": "range",
+          "id": "font_size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 16
+        },
+         {
+          "type": "range",
+          "id": "font_size-mob",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 16
+        },
+        {
+          "type": "color",
+          "id": "font_color",
+          "label": "Font color",
+          "default": "#000000"
+        },
+        {
+  "type": "select",
+  "id": "font_weight",
+  "label": "Font weight",
+  "default": "400",
+  "options": [
+    { "value": "400", "label": "400" },
+    { "value": "500", "label": "500" },
+    { "value": "600", "label": "600" },
+    { "value": "700", "label": "700" }
+  ]
+},
+
+        {
+          "type": "range",
+          "id": "description_size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Description font size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "description_size-mob",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Description font size",
+          "default": 16
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description color",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "description_weight",
+          "label": "Description font weight",
+          "default": "normal",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "bold", "label": "Bold" }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "block_description",
+          "label": "Block Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Icon Text V2"
+    }
+  ]
+}
+
+{% endschema %}

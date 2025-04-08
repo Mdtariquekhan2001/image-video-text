@@ -1,0 +1,689 @@
+<section class="image-with-text-v2-repeat" id="image-with-text-v2-repeat--{{ section.id }}">
+
+  <div class="image-with-text-v2-repeat page-width">
+
+    <div class="image-with-text-v2-repeat--heading">
+
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.rich_content != blank %}
+       {{ section.settings.rich_content }}
+      {% endif %}
+      
+    </div>
+
+    {%- for block in section.blocks -%}
+
+    {% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+      
+    {% if thecycle == 'even' %}
+	
+		<div class="image-with-text-v2-repeat--main even-block">
+
+      <div class="image-with-text-v2-repeat--grid-block">
+
+        <div class="image-with-text-v2-repeat--grid-flex">
+
+          <div class="image-with-text-v2-repeat--grid-flex-inner">
+
+             
+
+            <div class="image-with-text-v2-repeat--grid-item grid-content-block">
+
+              <div class="grid-content-block--inner">
+
+            
+
+                <div class="image-with-text-v2-repeat--title ">
+                 <h3>{{ block.settings.title }}</h3>
+                </div>
+
+                <div class="image-with-text-v2-repeat--content ">
+                  {{ block.settings.content }}
+                </div>
+
+                
+                
+              </div>
+              
+            </div>
+
+            <div class="image-with-text-v2-repeat--grid-item grid-image-block">
+
+                     <img src="{{ block.settings.image | img_url:'master' }}" class="image-feature-block">
+
+             
+               
+             </div>
+            
+          </div>
+            
+        </div>
+        
+      </div>
+      
+    </div>
+     
+      {% else %}
+	  
+	  <div class="image-with-text-v2-repeat--main">
+
+      <div class="image-with-text-v2-repeat--grid-block">
+
+        <div class="image-with-text-v2-repeat--grid-flex">
+
+          <div class="image-with-text-v2-repeat--grid-flex-inner">
+
+             <div class="image-with-text-v2-repeat--grid-item grid-image-block">
+
+               <img src="{{ block.settings.image | img_url:'master' }}" class="image-feature-block">
+
+              
+             </div>
+
+            <div class="image-with-text-v2-repeat--grid-item grid-content-block">
+
+              <div class="grid-content-block--inner">
+
+               
+
+                <div class="image-with-text-v2-repeat--title">
+                  <h3>{{ block.settings.title }}</h3>
+                </div>
+
+                <div class="image-with-text-v2-repeat--content">
+                  {{ block.settings.content }}
+                </div>
+
+              
+                
+              </div>
+              
+            </div>
+            
+          </div>
+            
+        </div>
+        
+      </div>
+      
+    </div>
+
+    
+      
+    
+    {% endif %}
+
+    {% endfor %}
+    
+  </div>
+  
+</section>
+
+
+<style>
+
+#image-with-text-v2-repeat--{{ section.id }} {
+  background: {{section.settings.background_color}};
+  padding-top: {{section.settings.padding_top}}px;
+  padding-bottom: {{section.settings.padding_bottom}}px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--grid-flex-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+
+}
+  #image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--title h3 {
+    font-weight: 600;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--grid-item.grid-image-block .image-feature-block {
+    width: 100%;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .grid-content-block--inner-tags-image img {
+    height: 72px;
+    width: auto;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--title h3 {
+    color: {{section.settings.text_color}};
+    margin: 0px;
+    font-size: {{section.settings.font_size}}px;
+    margin-bottom: 0px;
+    line-height: 1.4;
+        font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--title h3 span {
+    color: {{section.settings.span_color}};
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--content p {
+    font-size: {{section.settings.font_size_con}}px;
+    font-family: inherit;
+    color:{{section.settings.content_color}};
+}
+
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--price p  {
+    color: {{section.settings.regular_color}};
+    font-size: 18px;
+    font-weight: 600;
+}
+  
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--price p .sale-price {
+    color: {{section.settings.sale_color}};
+    font-size: {{section.settings.font_size_sale}}px;
+    font-weight: 600;
+    margin-right: 10px;
+        text-decoration: line-through;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} span.regular-price {
+    color: {{section.settings.regular_color}};
+    font-size: {{section.settings.font_size_reg}}px;
+    font-weight: 600;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} button.button-primary {
+    background: {{section.settings.btn_color}};
+    border: none;
+    color: {{section.settings.btn_text_color}};
+    padding: 8px 17px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: {{ section.settings.font_size_btn }}px;
+    min-height: 36px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--price p {
+    margin: 0px;
+    margin-bottom: 30px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat.page-width {
+    max-width: {{section.settings.max-container}}px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} span.span-label img {
+    height: 56px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--grid-item.grid-image-block {
+    position: relative;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} span.span-label {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--main {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--heading {
+    text-align: center;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--heading h2 {
+    font-size: {{ section.settings.heading_size }}px;
+    color: {{ section.settings.heading_color }};
+    font-weight:{{section.settings.heading_weight}};
+}
+  
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--heading p {
+    font-size: {{ section.settings.rich_content_size }}px;
+     color: {{ section.settings.rich_content_color }};
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--grid-item.grid-content-block {
+    padding: 30px;
+}
+
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--title {
+    /* border-bottom: solid 13px #FEE7BF; */
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--content {
+    margin-top: 15px;
+}
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--grid-item.grid-content-block {
+    padding: 0px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--heading p {
+
+        text-align: center;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--heading h2 {
+
+        text-align: center;
+}
+
+
+  
+}
+  
+  
+@media only screen and (max-width: 767px) {
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--heading p {
+    font-size: {{ section.settings.rich_content_size_mob }}px;
+    text-align: center;
+}
+  #image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--content {
+    margin-top: 5px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--heading h2 {
+    font-size: {{ section.settings.heading_size_mob }}px;
+    text-align: center;
+}
+
+
+#image-with-text-v2-repeat--{{ section.id }} {
+  padding-top: {{section.settings.padding_top_mob}}px;
+  padding-bottom: {{section.settings.padding_bottom_mob}}px;
+}
+  
+#image-with-text-v2-repeat--{{ section.id }}   .image-with-text-v2-repeat--grid-flex-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+  }
+
+  #image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--main.even-block .image-with-text-v2-repeat--grid-item.grid-image-block {
+    order: -1;
+}
+
+  #image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--main {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
+#image-with-text-v2-repeat--{{ section.id }} .text-right {
+    text-align: left;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--title h3 {
+    font-size: {{section.settings.font_size_mob}}px;
+    text-align: center;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--content p {
+    font-size: {{section.settings.font_size__con_mob}}px;
+    text-align: center;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} button.button-primary {
+    font-size: {{ section.settings.font_size_btn_mob }}px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--price p .sale-price {
+    font-size: {{section.settings.font_size_sale_mob}}px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} span.regular-price {
+    font-size: {{section.settings.font_size_reg_mob}}px;
+}
+
+#image-with-text-v2-repeat--{{ section.id }} .image-with-text-v2-repeat--grid-item.grid-content-block {
+    padding: 0px;
+}
+  
+  
+}
+
+  
+</style>
+
+{% schema %}
+  {
+    "name": "Image with text v2",
+    "settings": [
+		{	
+          "type": "header",
+          "content": "Section settings"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading color"
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 46
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size mobile",
+          "default": 25
+        },
+        {
+          "type": "select",
+          "id": "heading_weight",
+          "label": "Heading weight",
+          "options": [
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "richtext",
+          "id": "rich_content",
+          "label": "Content"
+        },
+        {
+          "type": "color",
+          "id": "rich_content_color",
+          "label": "Content color"
+        },
+        {
+          "type": "range",
+          "id": "rich_content_size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "rich_content_size_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size mobile",
+          "default": 15
+        },
+        {
+          "type": "number",
+          "id": "max-container",
+          "label": "Max Width"
+        },
+        {	
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding top",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding bottom",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding top mobile",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding bottom mobile",
+          "default": 50
+        },
+         {	
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color"
+        },
+        {
+          "type": "color",
+          "id": "span_color",
+          "label": "Span text color"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 37
+        },
+        {
+          "type": "range",
+          "id": "font_size_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size mobile",
+          "default": 28
+        },
+        {	
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "color",
+          "id": "content_color",
+          "label": "Content color"
+        },
+        {
+          "type": "range",
+          "id": "font_size_con",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "font_size__con_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size mobile",
+          "default": 15
+        },
+         {	
+          "type": "header",
+          "content": "Button style"
+        },
+        {
+          "type": "color",
+          "id": "btn_color",
+          "label": "Button color"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button text color"
+        },
+        {
+          "type": "range",
+          "id": "font_size_btn",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "font_size_btn_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size mobile",
+          "default": 15
+        },
+        {	
+          "type": "header",
+          "content": "Price style"
+        },
+        {
+          "type": "color",
+          "id": "sale_color",
+          "label": "Sale price color"
+        },
+        {
+          "type": "range",
+          "id": "font_size_sale",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size Sale",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "font_size_sale_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size sale mobile",
+          "default": 15
+        },
+        {
+          "type": "color",
+          "id": "regular_color",
+          "label": "Regular price color"
+        },
+        {
+          "type": "range",
+          "id": "font_size_reg",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size regular",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "font_size_reg_mob",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size regular mobile",
+          "default": 15
+        }
+        
+	],
+    "blocks": [
+      {
+        "type": "item",
+		"limit": 10,
+        "name": "Content",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+		  {	
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {	
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+         
+		]
+	  }
+      
+	],
+    "presets": [
+      {
+        "name": "Image with text v2",
+      	"category": "Collection",
+        "blocks": [
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

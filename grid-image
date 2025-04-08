@@ -1,0 +1,330 @@
+<section class="collection-grid-product" id="collections-geid-all-main-pro--{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="container page-width">
+    <!-- Heading and Description -->
+    <div class="section-header">
+      <h2 style="
+          font-size: {{ section.settings.heading_font_size }}px; 
+          color: {{ section.settings.heading_color }}; 
+          font-weight: {{ section.settings.heading_font_weight }};
+        ">
+        {{ section.settings.heading_text }}
+      </h2>
+      <p id="product-collection-ddescriptm" style="
+          font-size: {{ section.settings.description_font_size }}px; 
+          color: {{ section.settings.description_color }}; 
+          font-weight: {{ section.settings.description_font_weight }};
+        ">
+        {{ section.settings.description_text }}
+      </p>
+    </div>
+
+    <!-- Block Grid with Images -->
+    <div class="collection-grid">
+      <div class="slick-sliders-all">
+        {% for block in section.blocks %}
+        <div class="collection-items-custom">
+          <a href="{{ block.settings.image_link }}">
+            <img src="{{ block.settings.image | img_url: 'large' }}" alt="Image">
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- View More Button -->
+    <div class="view-more">
+      <a href="{{ section.settings.button_link }}" class="btn" style="
+          background-color: {{ section.settings.button_bg_color }};
+          color: {{ section.settings.button_font_color }};
+          font-size: {{ section.settings.button_font_size }}px;
+        ">
+        {{ section.settings.button_text }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Slick Slider Initialization -->
+<script>
+  $('#collections-geid-all-main-pro--{{ section.id }} .slick-sliders-all').slick({
+    dots: false,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    prevArrow: "<img src='https://cdn.shopify.com/s/files/1/0606/2456/8491/files/ei_arrow-left_3.png?v=1730267758'>",
+    nextArrow: "<img src='https://cdn.shopify.com/s/files/1/0606/2456/8491/files/ei_arrow-left_2.png?v=1730267758'>",
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
+</script>
+
+<!-- Slick CSS -->
+<style>
+  #collections-geid-all-main-pro--{{ section.id }}{
+    padding-top:{{section.settings.padding_top}}px;
+    padding-bottom:{{section.settings.padding_bottom}}px;
+  }
+  #collections-geid-all-main-pro--{{ section.id }} .collection-grid {
+    display: grid;
+  grid-template-columns:{{section.settings.columns}}fr !important;
+    gap: 20px;
+  }
+
+  #collections-geid-all-main-pro--{{ section.id }} .slick-sliders-all {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    width: 100%;
+   
+    margin: auto;
+}
+
+  #collections-geid-all-main-pro--{{ section.id }} .collection-items-custom {
+    text-align: center;
+    /* width: 240px !important; */
+    height: 218px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+  #collections-geid-all-main-pro--{{ section.id }} p#product-collection-ddescriptm {
+    width: 92%;
+    margin: auto;
+}
+
+  #collections-geid-all-main-pro--{{ section.id }} .collection-items-custom img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+  #collections-geid-all-main-pro--{{ section.id }} .view-more {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  #collections-geid-all-main-pro--{{ section.id }} .view-more .btn {
+    padding: 10px 20px;
+    text-transform: inherit;
+    font-weight: 400;
+    letter-spacing:0px;
+    width:213px;
+  }
+    @media (max-width: 767px) {
+     #collections-geid-all-main-pro--{{ section.id }} .section-header h2 {
+    font-size: {{section.settings.heading_font_phone}}px !important;
+}
+      #collections-geid-all-main-pro--{{ section.id }} .section-header p {
+    font-size: {{section.settings.description_font_phone}}px !important;
+}
+      #collections-geid-all-main-pro--{{ section.id }} .view-more .btn {
+    padding: 10px 20px;
+    text-transform: inherit;
+    font-weight: 400;
+    letter-spacing:0px;
+    width:69%;
+  }
+      #collections-geid-all-main-pro--{{ section.id }} .slick-sliders-all .slick-arrow {
+        width: 35px;
+        height: 35px;
+        position: relative;
+        top: 40%;
+      }
+      #collections-geid-all-main-pro--{{ section.id }}{
+    padding-top:{{section.settings.padding_top-mob}}px;
+    padding-bottom:{{section.settings.padding_bottom-mob}}px;
+  }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Collection Grid Product",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top-mob",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom-mob",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "You May Also Love"
+    },
+    {
+      "type": "text",
+      "id": "description_text",
+      "label": "Description Text",
+      "default": "Handpicked just for you, these favorites are sure to complement your style."
+    },
+    {
+      "type": "number",
+      "id": "heading_font_size",
+      "label": "Heading Font Size (px)",
+      "default": 24
+    },
+    {
+      "type": "number",
+      "id": "heading_font_phone",
+      "label": "Mobile size",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Font Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "number",
+      "id": "description_font_size",
+      "label": "Description Font Size (px)",
+      "default": 16
+    },
+     {
+      "type": "number",
+      "id": "description_font_phone",
+      "label": "Mobile size",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Font Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "description_font_weight",
+      "label": "Description Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "number",
+      "id": "columns",
+      "label": "Number of columns",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#ff6600"
+    },
+    {
+      "type": "color",
+      "id": "button_font_color",
+      "label": "Button Font Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "number",
+      "id": "button_font_size",
+      "label": "Button Font Size (px)",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image Link",
+         
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Grid Product",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}
+

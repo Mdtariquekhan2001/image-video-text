@@ -1,0 +1,475 @@
+<section class="custom-icon-text" id="custom-icon-text--{{ section.id }}">
+  <div class="custom-icon-text-card">
+  <div class="custom-card-image-with-text__text">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title | escape }}</h2>
+    {% endif %}
+  </div>
+  <div class="custom-containt-discription">
+    {% if section.settings.text != blank %}
+      <div>{{ section.settings.text }}</div>
+    {% endif %}
+  </div>
+    
+    <div class="custom-icon-text-flex-grid">
+     
+      <div class="custom-icon-text-inner-grid">
+        <div class="custom-icon-text-main-block">
+          {% if section.settings.layout == 'left' %}
+            <div class="custom-icon-text-left">
+              {% for block in section.blocks %}
+                <div class="custom-content-left-grid">
+                  <h2>{{ block.settings.text-m1 }}</h2>
+                  <div class="custom-card-flex-main">
+                    <div class="custom-icon-card-image">
+                    
+                        <img src="{{ block.settings.image_dekstop| img_url:'master' }}">
+                    </div>
+                    <div class="custom-coantaint-icon-card">
+                      <p>{{ block.settings.text_icon }}</p>
+                    </div>
+                  </div>
+                  <div class="custom-card-flex-main">
+                    <div class="custom-icon-card-image">
+                     <img src="{{ block.settings.image_dekstop-v2| img_url:'master' }}">
+                    </div>
+                    <div class="custom-coantaint-icon-card">
+                      <p>{{ block.settings.text_icon-v2 }}</p>
+                    </div>
+                  </div>
+                  {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+                    <a id="card-icon-btn" href="{{ block.settings.button_link }}">
+                      {{ block.settings.button_label | escape }}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="custom-icon-text-left">
+              {% for block in section.blocks %}
+                <div class="custom-content-left-grid">
+                  <h2>{{ block.settings.text-m1 }}</h2>
+                  <div class="custom-card-flex-main">
+                    <div class="custom-icon-card-image">
+                      <img src="{{ block.settings.image_dekstop| img_url:'master' }}">
+                    </div>
+                    <div class="custom-coantaint-icon-card">
+                      <p>{{ block.settings.text_icon }}</p>
+                    </div>
+                  </div>
+                  <div class="custom-card-flex-main">
+                    <div class="custom-icon-card-image">
+                      <img src="{{ block.settings.image_dekstop-v2| img_url:'master' }}">
+                    </div>
+                    <div class="custom-coantaint-icon-card">
+                      <p>{{ block.settings.text_icon-v2 }}</p>
+                    </div>
+                  </div>
+                
+                    <a id="card-icon-btn" href="{{ block.settings.button_link }}">
+                      {{ block.settings.button_label | escape }}
+                    </a>
+               
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+#custom-icon-text--{{ section.id }} {
+  background: {{ section.settings.background_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  width: 100%;
+  margin: auto;
+}
+
+.custom-content-left-grid {
+  align-items: center;
+  background: #e0eeeb;
+  border-radius: 20px;
+  padding: 30px 20px;
+}
+
+.custom-card-flex-main {
+  display: flex;
+  gap: 20px;
+}
+
+.custom-content-left-grid {
+  text-align: center;
+  display: grid;
+  grid-template-columns: auto;
+  row-gap: 15px;
+}
+
+.container-fluid.m-section-my.m-section-py {
+  max-width: {{ section.settings.max_container }}px;
+}
+
+a#card-icon-btn {
+  background: {{section.settings.button_color}};
+  border-radius: 20px;
+  padding: 10px;
+  width: 70%;
+  color: {{section.settings.button_text_color}};
+  margin-top: 40px;
+}
+
+
+.custom-icon-text-main-block {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.custom-content-left-grid {
+  text-align: center;
+}
+
+.custom-icon-text-left {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px 24px;
+  max-width: {{ section.settings.max_container-left }}%;
+  width: 100%;
+  max-width: 70%;
+}
+
+.custom-content-left-grid img {
+  width: 20px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+
+.custom-card-image-with-text__text h2 {
+    font-size:{{section.settings.heading_size}}px;
+    color:{{section.settings.title-color}};
+    text-align: {{section.settings.alignment-heading}};
+}
+
+  .custom-containt-discription p {
+    color: {{section.settings.text_color}};
+    text-align: {{section.settings.alignment-heading}};
+    font-size: {{section.settings.text_size}}px;
+    padding-bottom: 30px;
+}
+  .custom-coantaint-icon-card p{
+    color:{{section.settings.text_block_color}};
+    font-size:{{section.settings.text_size_block}}px;
+  }
+
+  .custom-content-left-grid h2 {
+    color: {{section.settings.heading_block_color}};
+    text-align: left;
+    font-size: {{section.settings.heading_size_block}}px;
+    padding-bottom: 10px;
+}
+
+
+
+
+  
+
+@media (max-width: 767px) {
+  .custom-icon-text-main-block {
+    flex-direction: column;
+  }
+   .custom-content-left-grid h2 {
+    font-size: {{section.settings.heading_block_size_mob}}px;
+}
+
+  .custom-icon-text-left {
+    width: 100%;
+  }
+
+  #text-v2 {
+    color: {{ section.settings.heading_text_colorv2 }};
+    font-size: {{ section.settings.heading_size_tab }}px;
+    margin-bottom: 3rem;
+    text-align: center;
+    margin-top: 0px;
+  }
+
+  .custom-content-left-grid {
+    text-align: center;
+    width: 100%;
+  }
+
+  .test {
+    width: 100%;
+    border-left: 0px solid;
+    border-top: 4px solid white;
+  }
+
+  .custom-icon-text-left {
+    display: grid;
+    grid-template-columns: auto;
+    max-width: 100%;
+    padding: 20px;
+  }
+
+   .custom-containt-discription p {
+    font-size: {{section.settings.text_size_mob}}px;
+}
+  .custom-card-image-with-text__text h2 {
+    font-size:{{section.settings.heading_size_mob}}px;
+}
+  
+}
+</style>
+
+{% schema %}
+{
+  "name": "custom-card-icon",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "max_container",
+      "label": "Max container width",
+      "default": 1200
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Image with text"
+    },
+     {
+         "type": "text_alignment",
+         "id": "alignment-heading",
+         "label": "heading alignment",
+         "default": "center"
+      },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mob",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size mobile",
+      "default": 35
+    },
+    {
+      "type": "color",
+      "id": "title-color",
+      "label": "Heading color",
+      "default": "#454545"
+    },
+  
+   
+    
+    {
+      "type": "header",
+      "content": "Section text content"
+    },
+     {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading color",
+      "default": "#454545"
+    },
+     {
+      "type": "range",
+      "id": "text_size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "text_size_mob",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size mobile",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Block text content"
+    },
+    {
+      "type": "color",
+      "id": "heading_block_color",
+      "label": "Block Heading color",
+      "default": "#454545"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_block",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "heading_block_size_mob",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size mobile",
+      "default": 35
+    },
+    {
+      "type": "color",
+      "id": "text_block_color",
+      "label": "Heading color",
+      "default": "#454545"
+    },
+     {
+      "type": "range",
+      "id": "text_size_block",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 46
+    },
+    {
+      "type": "header",
+      "content": "Button Color"
+    },
+
+      {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Background color"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button color",
+      "default": "#454545"
+    },
+    
+    {
+      "type": "header",
+      "content": "Section settings left"
+    },
+    {
+      "type": "number",
+      "id": "max_container-left",
+      "label": "Max container width",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "limit": 40,
+      "name": "Content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text-m1",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_dekstop",
+          "label": "Image desktop"
+        },
+        {
+          "type": "text",
+          "id": "text_icon",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_dekstop-v2",
+          "label": "Image desktop"
+        },
+        {
+          "type": "text",
+          "id": "text_icon-v2",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "custom-card-icon",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

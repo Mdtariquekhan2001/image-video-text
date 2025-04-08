@@ -1,0 +1,496 @@
+<section class="custom-icon-text" id="custom-appintment--{{ section.id }}">
+  <div class="container-fluid m-section-my m-section-py">
+    <div class="custom-icon-text-flex-grid">
+      <div class="custom-icon-text-inner-grid">
+        <div class="custom-icon-text-main-block">
+           <div class="custiom-appontment-form-left">
+             <h2 id="test-appontment">How our bespoke process works</h2>
+             <div class="custom-appontment-form-lrft-contant">
+               
+               {% for block in section.blocks %}
+                
+                <div class="custom-content-left-grid">
+                 
+                  <div class="custom-appintment-image">
+                    <img src="{{ block.settings.image_dekstop | img_url: 'master' }}" alt="">
+                  </div>
+                  <div class="custom-appontment-heading">
+                    <h2 style="font-size: {{ block.settings.font_size }}px;">{{ block.settings.text_icon }}</h2>
+                  </div>
+                  <div class="custom-appintment-description">
+                      <div>{{ block.settings.text-block }}</div>
+                  </div>
+                </div>
+                 {% endfor %}
+             </div>
+            <div class="custom-appointment-address">
+              {% if block.settings.title != blank %}
+                  <h2 id="padding-bottom">{{ block.settings.title | escape }}</h2>
+                {% endif %}
+              <div class="custom-appointment-address-contant">
+                 <img src="https://cdn.shopify.com/s/files/1/0871/7025/3073/files/images__6_-removebg-preview.png?v=1718020399" alt="" style="width:20px">
+                  <p>Using a Full URL File Path</p>
+              </div>
+              <div class="custom-appointment-address-contant">
+                 <img src="https://cdn.shopify.com/s/files/1/0871/7025/3073/files/images__6_-removebg-preview.png?v=1718020399" alt="" style="width:20px">
+                  <p>Using a Full URL File Path</p>
+              </div>
+              <h2 id="appintment-heading">Showroom</h2>
+              <div class="custom-appointment-address-Showroom">
+                 <img src="https://cdn.shopify.com/s/files/1/0871/7025/3073/files/images__6_-removebg-preview.png?v=1718020399" alt="" style="width:20px">
+                  <p>Using a Full URL File Path</p>
+              </div>
+              <div class="custom-appointment-address-location">
+                <h2>Hours:</h2>
+                  <h4>Mon - Fri: 10:00 am - 6:00 pm <br> Sat: 10:00am - 1:00 pm</h4>
+                  <p>By appointment only</p>
+              </div>
+            </div>
+                  
+           
+           
+           </div>
+           <div class="custiom-appontment-form-right">
+              {% render 'appointment-form' %}           
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<style>
+#custom-appintment--{{ section.id }}{
+  padding-top:{{section.settings.padding_top}}px;
+  padding-bottom:{{section.settings.padding_bottom}}px;
+  background:{{section.settings.background_color}};
+}
+  
+ #custom-appintment--{{ section.id }} .custom-icon-text-main-block {
+    display: grid;
+    grid-template-columns: auto auto;
+    max-width: 1200px;
+    margin: auto;
+    gap: 50px;
+}
+  
+ #custom-appintment--{{ section.id }} .custom-appontment-form-lrft-contant {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+  
+ #custom-appintment--{{ section.id }} .custom-appontment-heading h2 {
+    font-size: 20px;
+    padding-top: 10px;
+}
+
+ #custom-appintment--{{ section.id }} .custom-content-left-grid {
+    display: grid;
+    margin: auto;
+    text-align: center;
+}
+
+ #custom-appintment--{{ section.id }} .custom-appintment-image img {
+    height: 64px;
+}
+
+ #custom-appintment--{{ section.id }} .custom-appintment-image {
+    display: flex;
+    justify-content: center;
+}
+
+#custom-appintment--{{ section.id }}  h2#test-appontment {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.custom-appointment-address-contant {
+    display: flex;
+    padding-bottom: 18px;
+    gap: 15px;
+}
+
+  .custom-appointment-address-Showroom {
+    display: flex;
+}
+
+  .custom-appointment-address {
+    background: #e0eeeb;
+    padding: 50px 20px 50px 20px;
+    margin-top: 50px;
+    border-radius:20px;
+}
+
+  h2#appintment-heading {
+    padding-top: 8px;
+    padding-bottom: 20px;
+    font-size: 20px;
+    margin-top: 20px;
+    border-top: 1px solid;
+}
+
+  .custom-appointment-address-location {
+    padding-top: 11px;
+    border-top: 1px solid;
+    margin-top: 30px;
+}
+
+  .custom-appointment-address-location h2 {
+    font-size: 20px;
+    padding-bottom: 7px;
+}
+
+  .custom-appointment-address-location h4 {
+    font-size: 18px;
+}
+
+  h2#padding-bottom {
+    font-size: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
+    margin-bottom: 23px;
+}
+
+</style>
+
+
+{% schema %}
+{
+  "name": "custom-appointment-form",
+  "settings": [
+
+ {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container type",
+      "default": "container-fluid",
+      "options": [
+        {
+          "value": "container-fluid",
+          "label": "Default"
+        },
+        {
+          "value": "w-full",
+          "label": "Full width"
+        },
+        {
+          "value": "container",
+          "label": "Use container box"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>If you’ve got great products your making or looking to work with us then drop us a line.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Contact form"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_name",
+      "label": "Show field name",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show field phone number",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_signup_email",
+      "label": "Show email sign up",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Animations"
+    },
+    
+
+
+
+
+
+    
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+   {	
+	"type": "color",
+    "id": "background_color",
+	"label": "Background color"
+  },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    },
+    
+   
+    {
+      "type": "number",
+      "id": "max_container",
+      "label": "Max container width",
+      "default": 1200
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 46
+        },
+        {
+          "type": "range",
+          "id": "heading_size_tab",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size tablet",
+          "default": 35
+        },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      },
+      {
+         "type": "text_alignment",
+         "id": "alignment-heading",
+         "label": "heading alignment",
+         "default": "center"
+      },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Image alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+     {
+      "type": "header",
+      "content": "Section text color"
+    },
+     {
+        "type": "text",
+        "id": "titlev2",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+    {
+	 "type": "color",
+	 "id": "heading_text_color",
+	 "label": "Heading color",
+      "default": "#454545"
+	},
+    {
+      "type": "header",
+      "content": "Section text contant"
+    },
+    {
+	 "type": "color",
+	 "id": "heading_text_colorv2",
+	 "label": "Heading color",
+      "default": "#454545"
+	},
+       {
+      "type": "header",
+      "content": "Section settings left"
+    },
+    {
+      "type": "number",
+      "id": "max_container-left",
+      "label": "Max container width",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Section settings right"
+    },
+    {
+      "type": "number",
+      "id": "max_container-right",
+      "label": "Max container width",
+      "default": 300
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "limit": 40,
+      "name": "Content",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_dekstop",
+          "label": "Image dekstop"
+        },
+      
+        {
+          "type": "text",
+          "id": "text_icon",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+        "type": "richtext",
+        "id": "text-block",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      }
+  
+      ]
+      
+    },
+    {
+      "type": "Address",
+      "limit": 10,
+      "name": "Address",
+      "settings": [
+        {
+      "type": "header",
+      "content": "Main-heading"
+    },
+        {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+         {
+      "type": "header",
+      "content": "Main-conatnt Email"
+    },
+        {
+          "type": "text",
+          "id": "text-m1",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_dekstop",
+          "label": "Image desktop"
+        },
+        {
+          "type": "text",
+          "id": "text_icon",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+      "type": "header",
+      "content": "Main-conatntShow room"
+    },
+        {
+          "type": "text",
+          "id": "text-m2",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_dekstop-v2",
+          "label": "Image desktop"
+        },
+        {
+          "type": "text",
+          "id": "text_icon-v2",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+      "type": "header",
+      "content": "Main-conatnt Address"
+    },
+        {
+          "type": "text",
+          "id": "text-m3",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_dekstop-v3",
+          "label": "Image desktop"
+        },
+        {
+          "type": "text",
+          "id": "text_icon-v3",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        }
+  
+  
+      ]
+      
+    }
+  ],
+  
+  "presets": [
+    {
+      "name":"custom-appointment-form",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

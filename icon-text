@@ -1,0 +1,433 @@
+<section class="custom-icon-text" id="custom-icon-text--{{ section.id }}">
+  <div class="container-full m-section-my m-section-py">
+    <div class="custom-icon-text-flex-grid">
+      <div class="custom-icon-text-inner-grid">
+       
+      
+               
+        <div class="custom-icon-text-main-block">
+           
+          {% if section.settings.layout == 'left' %}
+            <div class="custom-icon-text-left">
+           
+              {% for block in section.blocks %}
+                <div class="custom-content-left-grid">
+                  <a href="{{ block.settings.link_url }}">
+                    <img src="{{ block.settings.image_dekstop | img_url: 'master' }}" alt="">
+                    <p style="font-size: {{ block.settings.font_size }}px;">{{ block.settings.text_icon }}</p>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="custom-icon-text-right">
+            <div class="custom-icon-main-right">
+               {% if section.settings.title != blank %}
+                  <h2>{{ section.settings.title | escape }}</h2>
+                {% endif %}
+                {% if section.settings.text != blank %}
+                  <div>{{ section.settings.text }}</div>
+                {% endif %}
+               <a href="{{ section.settings.button_link }}">
+        {{ section.settings.button_label | escape }}
+      </a>
+                 
+              </div>
+            </div>
+          {% else %}
+         
+            <div class="custom-icon-text-right">
+               <div class="custom-icon-main-right">
+              {% if section.settings.title != blank %}
+                <h2>{{ section.settings.title | escape }}</h2>
+              {% endif %}
+              {% if section.settings.text != blank %}
+                <div>{{ section.settings.text }}</div>
+              {% endif %}
+              <a href="{{ section.settings.button_link }}">
+                {{ section.settings.button_label | escape }}
+              </a>
+                 </div>
+            </div>
+         
+           <div class="test">
+              {% if section.settings.titlev2 != blank %}
+                  <h2 id="text-v2">{{ section.settings.titlev2 | escape }}</h2>
+                {% endif %}
+              
+            <div class="custom-icon-text-left">
+              {% for block in section.blocks %}
+                <div class="custom-content-left-grid">
+                
+                    <img src="{{ block.settings.image_dekstop | img_url: 'master' }}" alt="">
+                    <p style="font-size: {{ block.settings.font_size }}px;">{{ block.settings.text_icon }}</p>
+                
+                </div>
+              {% endfor %}
+            </div>
+            </div>
+          {% endif %}
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<style>
+  #custom-icon-text--{{ section.id }} {
+  background: {{ section.settings.background_color }};
+
+  width:100%;
+  margin: auto;
+}
+  .container-fluid.m-section-my.m-section-py {
+  max-width: {{ section.settings.max_container }}px;
+}
+ 
+
+  #text-v2 {
+    color:{{section.settings.heading_text_colorv2}};
+    font-size:{{section.settings.heading_size}}px;
+    TEXT-ALIGN: CENTER;
+    /* margin-top:30px; */
+    margin-bottom:3rem;
+}
+  .custom-icon-text-inner-grid h2 {
+    color: {{section.settings.heading_text_color}};
+}
+  .custom-icon-text-inner-grid p {
+    color: {{section.settings.heading_text_color}};
+    margin-bottom:2rem;
+}
+
+.custom-icon-main-right {
+    width: 100%;
+    max-width: 90%;
+    text-align: center;
+    margin: auto;
+}
+
+ 
+.custom-icon-text-main-block {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+  /* align-items:center; */
+}
+
+/* .custom-icon-text-left, .custom-icon-text-right {
+  width: 50%;
+} */
+  .custom-icon-text-right h2 {
+    margin-bottom: 2rem;
+}
+.custom-content-left-grid {
+    text-align: center;
+}
+.custom-icon-text-left {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px 24px;
+  max-width: {{section.settings.max_container-left}}%;
+  width:100%;
+}
+
+ .custom-icon-text-right {
+   padding-top:{{section.settings.padding_top}}px;
+   padding-bottom:{{section.settings.padding_bottom}}px;
+   width:100%;
+   text-align:{{section.settings.alignment-heading}};
+   align-items: revert-layer;
+   width:60%;
+}
+  
+.custom-icon-text-right a {
+    /* padding: 10px; */
+    background: #1d8d78;
+    color: white;
+    padding: 10px 25px 10px 25px;
+}
+  
+.custom-content-left-grid {
+    display: grid;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+  
+ /* {
+  font-size: 16px;
+}.custom-content-left-grid h3 */
+
+
+  
+.custom-content-left-grid img {
+    width: 65px;
+   /* width: auto; */
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+/*  */
+.custom-content-left-grid {
+  text-align: center;
+}
+
+.custom-icon-text-right h2 {
+  font-size: {{section.settings.heading_size}}px;
+}
+
+.custom-icon-text-right p {
+  font-size: 22px;
+}
+
+.test{
+    border-left:4px solid white;
+    width:40%;
+    padding-top:{{section.settings.padding_top}}px;
+    padding-bottom:{{section.settings.padding_bottom}}px;
+}
+  
+.custom-content-left-grid p {
+    margin-top: 15px;
+}
+
+@media (max-width: 767px) {
+  .custom-icon-text-main-block {
+    flex-direction: column;
+  }
+  .custom-icon-text-left, .custom-icon-text-right {
+    width: 100%;
+  }
+  .custom-icon-main-right {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+}
+
+ .custom-icon-text-right {
+    text-align: center;
+    padding-bottom: 50px;
+}
+  #text-v2 {
+     color:{{section.settings.heading_text_colorv2}};
+    font-size: {{section.settings.heading_size_tab}}px;
+    margin-bottom: 3rem;
+    TEXT-ALIGN: CENTER;
+    margin-top:0px;
+    
+}
+  .custom-content-left-grid {
+    text-align: center;
+    width:100%;
+}
+  .test {
+    width: 100%;
+}
+  .custom-icon-text-main-block {
+    gap: 0px;
+    
+}
+  .test{
+     border-left:0px solid;
+    border-top:4px solid white;
+  }
+
+}
+
+</style>
+
+
+{% schema %}
+{
+  "name": "custom-card-icon",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+   {	
+	"type": "color",
+    "id": "background_color",
+	"label": "Background color"
+  },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 50
+    },
+   
+    {
+      "type": "number",
+      "id": "max_container",
+      "label": "Max container width",
+      "default": 1200
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 46
+        },
+        {
+          "type": "range",
+          "id": "heading_size_tab",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size tablet",
+          "default": 35
+        },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      },
+      {
+         "type": "text_alignment",
+         "id": "alignment-heading",
+         "label": "heading alignment",
+         "default": "center"
+      },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Image alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+     {
+      "type": "header",
+      "content": "Section text color"
+    },
+     {
+        "type": "text",
+        "id": "titlev2",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+    {
+	 "type": "color",
+	 "id": "heading_text_color",
+	 "label": "Heading color",
+      "default": "#454545"
+	},
+    {
+      "type": "header",
+      "content": "Section text contant"
+    },
+    {
+	 "type": "color",
+	 "id": "heading_text_colorv2",
+	 "label": "Heading color",
+      "default": "#454545"
+	},
+       {
+      "type": "header",
+      "content": "Section settings left"
+    },
+    {
+      "type": "number",
+      "id": "max_container-left",
+      "label": "Max container width",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Section settings right"
+    },
+    {
+      "type": "number",
+      "id": "max_container-right",
+      "label": "Max container width",
+      "default": 300
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "limit": 40,
+      "name": "Content",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_dekstop",
+          "label": "Image dekstop"
+        },
+      
+        {
+          "type": "text",
+          "id": "text_icon",
+          "label": "Text Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size",
+          "default": 25
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "custom-card-icon",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

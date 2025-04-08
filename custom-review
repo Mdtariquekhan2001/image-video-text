@@ -1,0 +1,873 @@
+<section class="custom-reviews" id="custom-reviews--{{ section.id }}">
+    <div class="custom-reviews--section--{{ section.id }}">
+      <div class="custom-reviews container-fluid m-section-my m-section-py">
+        <div class="custom-reviews--heading">
+          {% if section.settings.heading != blank %}
+            <h2>{{ section.settings.heading }}</h2>
+          {% endif %}
+          {% if section.settings.rich_content != blank %}
+          {{ section.settings.rich_content }}
+          {% endif %}
+        </div>
+        <div class="custom-reviews--main">
+          <div class="custom-reviews--grid-block">
+            <div class="custom-reviews--grid-flex">
+              <div class="custom-reviews--grid-flex-inner">
+                <div class="custom-reviews--grid-item grid-content-block">
+                  <div class="custom-reviews-content-block--inner review-sliderOn" id="customReviews--{{ section.id }}">
+                    {%- for block in section.blocks -%}
+                      <div class="custom-reviews-grid-item">
+                        <div class="custom-reviews-grid-item-inner">
+                          {% if block.settings.image != blank %}
+                          <div class="custom-reviews-grid-item--image">
+                            <img src="{{ block.settings.image | img_url:'master' }}">
+                          </div>
+                          {% endif %}
+                          <div class="custom-reviews-grid-item--details">
+                            {% if block.settings.title != blank %}
+                              <div class="custom-reviews--title">
+                                <h3>{{ block.settings.title }}</h3>
+                              </div>
+                            {% endif %}
+                            {% if block.settings.review-btn-link != blank or block.settings.review-btn-text != blank %}
+                              <div class="custom-review-btn">
+                                <a class="toggle-content-btn" data-target="content-{{ forloop.index }}">
+                                  {{ block.settings.review-btn-text }}
+                                </a>
+                              </div>
+                            {% endif %}
+                            {% if block.settings.content != blank %}
+                              <div class="custom-reviews--content" id="content-{{ forloop.index }}">
+                                {{ block.settings.content }}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div id="overlay" class="overlay">
+    <div class="overlay-content">
+      <span class="close-btn">&times;</span>
+      <div class="overlay-inner-content"></div>
+    </div>
+  </div>
+  
+  
+  
+  <script>
+   document.addEventListener('DOMContentLoaded', function () {
+    var buttons = document.querySelectorAll('.toggle-content-btn');
+    var overlay = document.getElementById('overlay');
+    var closeBtn = document.querySelector('.close-btn');
+    var overlayContent = document.querySelector('.overlay-inner-content');
+  
+    buttons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var targetId = this.getAttribute('data-target');
+        var content = document.getElementById(targetId);
+  
+        if (content) {
+          overlayContent.innerHTML = content.innerHTML;
+          overlay.style.display = 'block';
+        }
+      });
+    });
+  
+    closeBtn.addEventListener('click', function() {
+      overlay.style.display = 'none';
+    });
+  
+    window.addEventListener('click', function(event) {
+      if (event.target === overlay) {
+        overlay.style.display = 'none';
+      }
+    });
+  });
+  
+  
+      $('.review-sliderOn').slick({
+        dots: true,
+        arrows:true,
+        infinite: false,
+        centerMode: false,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        vertical: false,
+       prevArrow: '<div class="sliderv-controls slick-prev"><img src="https://cdn.shopify.com/s/files/1/0871/7025/3073/files/arrow-left-w.png?v=1717997594"></div>',
+       nextArrow: '<div class="sliderv-controls slick-next"><img src="https://cdn.shopify.com/s/files/1/0871/7025/3073/files/arrow-right-w.png?v=1717997595"></div>',
+  responsive: [
+          {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      });
+  
+     
+  
+  </script>
+  
+  
+  <style>
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--content {
+    display: none;
+    width: 100%;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--content.show {
+    display: block;
+  }
+    #overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    overflow: auto;
+  }
+  
+  #overlay .overlay-content {
+    position: relative;
+    width: 50%;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    top: 40%;
+  }
+  
+  #overlay .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  #overlay .overlay-inner-content {
+    margin-top: 20px;
+  }
+  
+    .custom-reviews--grid-item.grid-content-block {
+      background: {{section.settings.bg_color-v2}};
+      padding: 20px;
+      border-radius:5px;
+  }
+  
+  .slick-dots {
+      position: absolute;
+      bottom: -51px;
+      display: block;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      text-align: center;
+  }
+  
+  
+  
+    
+  
+  #custom-reviews--{{ section.id }} {
+      background-color: {{section.settings.bg_color}};
+  }
+  
+  .custom-reviews--section--{{ section.id }} {
+        padding-top: {{section.settings.padding_top}}px;
+      padding-bottom: {{section.settings.padding_bottom}}px;
+     
+      filter: opacity(0.9);
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--title h3 {
+      color: {{section.settings.text_color}};
+      margin: 0px;
+      font-size: {{section.settings.font_size}}px;
+      padding-top: 10px;
+      margin-bottom: 10px;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--title h3 span {
+      color: {{section.settings.span_color}};
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--content p {
+      font-size: {{section.settings.font_size_con}}px;
+      font-family: inherit;
+      color:{{section.settings.content_color}};
+  }
+  
+  
+  #custom-reviews--{{ section.id }} .custom-reviews.page-width {
+      max-width: {{section.settings.max-container}}px;
+  }
+  
+   #custom-reviews--{{ section.id }} .custom-reviews--content p {
+      font-weight: 600;
+  }
+  /* #custom-reviews--{{ section.id }} .custom-review-btn {
+      padding-top: 20px;
+      padding-bottom: 30px;
+  } */
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--heading {
+      text-align: center;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--heading h2 {
+      font-size: {{ section.settings.heading_size }}px;
+      color: {{ section.settings.heading_color }};
+      font-weight:{{ section.settings.heading_weight }};
+          margin-bottom: 15px;
+  }
+    
+  #custom-reviews--{{ section.id }} .custom-reviews--heading p {
+      font-size: {{ section.settings.rich_content_size }}px;
+       color: {{ section.settings.rich_content_color }};
+  }
+  
+  
+  #custom-reviews--{{ section.id }} .custom-reviews-grid-item img {
+    /*  height: 100px; */
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews-grid-item-inner {
+     /* display: flex;
+      align-items: center;
+      gap: 20px;
+          flex-direction: column; */
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews-grid-item--image img {
+      height: 100%;
+      width: 100%;
+        border-radius: 5px;
+     /* object-fit: cover;
+      margin: 0px auto;
+      border-radius: 50%; */
+  }
+  
+  .custom-review-btn a {
+    background:{{section.settings.btn_color}};
+    color:{{section.settings.btn_text_color}};
+    padding: 10px 20px 10px 20px;
+      align-items: center;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      width: 250px;
+      margin: auto;
+      border-radius: 20px;
+      text-decoration: none;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--content p {
+      margin: 0px;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--main {
+      padding-top: 20px;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews-content-block--inner {
+     /* display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 50px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); */
+  }
+  
+  
+  #custom-reviews--{{ section.id }} {
+      /*background-image: url({{ section.settings.image | img_url:'master' }});
+      background-size: 300px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-position: 50% 30%; */
+  } 
+  
+  #custom-reviews--{{ section.id }}  .image-content-block--content--footer {
+      text-align: center;
+      padding: 50px 0px;
+  }
+  
+  #custom-reviews--{{ section.id }}  .image-content-block--content-footer-payment-icons img {
+      margin: 0px auto;
+  }
+  
+  /* #custom-reviews--{{ section.id }}  button.image-content-block--content-footer-button--buynow {
+      background: {{section.settings.btn_color}};
+      max-width: 200px;
+      color: {{section.settings.btn_text_color}};
+      font-size:{{section.settings.font_size_btn}};
+  }
+   */
+  #custom-reviews--{{ section.id }}  .image-content-block--content-footer-payment-icons img {
+      margin: 0px auto;
+      width: 330px;
+      height: auto;
+      margin-top: 10px;
+  }
+  
+  
+  #custom-reviews--{{ section.id }}  .custom-reviews-grid-item--image {
+      text-align: center;
+  }
+  
+  
+  
+  #custom-reviews--{{ section.id }} .slick-prev:before, #custom-reviews--{{ section.id }} .slick-next:before {
+      font-size: 0px;
+  }
+  
+  
+  #custom-reviews--{{ section.id }}  .slick-slider {
+      margin:0 -15px;
+  }
+  #custom-reviews--{{ section.id }}  .slick-slide {
+      text-align:center;
+      margin-right:15px;
+      margin-left:15px;
+  }
+  
+  #custom-reviews--{{ section.id }} .slick-prev {
+      left: -51px;
+    width:38px;
+  }
+  
+  #custom-reviews--{{ section.id }} .product_stars {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      padding-bottom: 10px;
+  }
+    .sliderv-controls.slick-prev.slick-arrow img {
+      border-radius: 50px;
+      margin-top: -1rem;
+      position: absolute;
+  }
+    .sliderv-controls.slick-next.slick-arrow img{
+      border-radius: 50px;
+      margin-top: -1rem;
+      position: absolute;
+  }
+    .slick-next {
+      right: -51px;
+      width: 38px;
+  }
+  
+    .slick-dots li button:before {
+      font-family: 'slick';
+      font-size: 15px !important;
+      line-height: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 24px;
+      height: 20px;
+      content: '•';
+      text-align: center;
+      opacity: .25;
+      color: #1d8d78 !important;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+  }
+  
+  
+  @media only screen 
+    and (min-device-width: 768px) 
+    and (max-device-width: 1024px) 
+    and (-webkit-min-device-pixel-ratio: 1) {
+  
+    
+  #custom-reviews--{{ section.id }} .custom-reviews--heading h2 {
+      font-size: {{ section.settings.heading_size_tab }}px;
+  }
+    
+  #custom-reviews--{{ section.id }} .custom-reviews--heading p {
+      font-size: {{ section.settings.rich_content_size_tab }}px;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--title h3 {
+      font-size: {{section.settings.font_size_tab}}px;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--title h3 span {
+          font-size: {{section.settings.font_size_tab}}px;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--content p {
+      font-size: {{section.settings.font_size__con_tab}}px;
+  }
+  
+  
+  .custom-reviews-grid-item--image img {
+      margin: 0px auto;
+      padding-bottom: 5px;
+  }
+  
+  
+  #custom-reviews--{{ section.id }}  button.image-content-block--content-footer-button--buynow {
+      font-size:{{section.settings.font_size_btntab}};
+  }
+    
+  }
+    
+    
+  @media only screen and (max-width: 767px) {
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--heading p {
+      font-size: {{ section.settings.rich_content_size_mob }}px;
+  
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--heading h2 {
+      font-size: {{ section.settings.heading_size_mob }}px;
+  }
+  
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--title h3 {
+      font-size: {{section.settings.font_size_mob}}px;
+            text-align: center;
+  }
+  
+  #custom-reviews--{{ section.id }} .custom-reviews--content p {
+      font-size: {{section.settings.font_size__con_mob}}px;
+          text-align: center;
+  }
+  
+  #custom-reviews--{{ section.id }}  .custom-reviews-grid-item--image {
+      text-align: center;
+    height:450px;
+  }
+   #custom-reviews--{{ section.id }}  .custom-reviews-grid-item--image img {
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      background-size: cover;
+      object-fit: fill;
+  
+  }
+  
+  .custom-reviews-grid-item--image img {
+      margin: 0px auto;
+  }
+  
+  
+  #custom-reviews--{{ section.id }} .custom-reviews-grid-item {
+      width: 100%;
+  }
+  
+  #custom-reviews--{{ section.id }}  button.image-content-block--content-footer-button--buynow {
+      font-size:{{section.settings.font_size_btnmob}};
+  }
+    
+  #custom-reviews--{{ section.id }} .slick-prev {
+      left: 20px;
+      z-index: 9;
+      opacity: 1;
+  }
+  
+  #custom-reviews--{{ section.id }} .slick-next {
+      right: 40px;
+  }
+  
+    #overlay .overlay-content {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    top: 10%;
+  }
+  }
+  
+    
+  </style>
+  
+  {% schema %}
+    {
+      "name": "custom-vide-image-slider",
+      "settings": [
+          {	
+            "type": "header",
+            "content": "Section settings"
+          },
+          {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color"
+          },
+        {	
+            "type": "header",
+            "content": "Container background"
+          },
+        {
+            "type": "color",
+            "id": "bg_color-v2",
+            "label": "Background color"
+          },
+          {
+            "type": "color",
+            "id": "color",
+            "label": "Overlay color"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "color",
+            "id": "heading_color",
+            "label": "Heading color"
+          },
+          {
+            "type": "range",
+            "id": "heading_size",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size",
+            "default": 46
+          },
+          {
+            "type": "range",
+            "id": "heading_size_tab",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size tablet",
+            "default": 35
+          },
+          {
+            "type": "range",
+            "id": "heading_size_mob",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size mobile",
+            "default": 25
+          },
+          {
+            "type": "select",
+            "id": "heading_weight",
+            "label": "Heading weight",
+            "options": [
+              {
+                "value": "400",
+                "label": "400"
+              },
+              {
+                "value": "500",
+                "label": "500"
+              },
+              {
+                "value": "600",
+                "label": "600"
+              }
+            ],
+            "default": "600"
+          },
+          {
+            "type": "richtext",
+            "id": "rich_content",
+            "label": "Content"
+          },
+          {
+            "type": "color",
+            "id": "rich_content_color",
+            "label": "Content color"
+          },
+          {
+            "type": "range",
+            "id": "rich_content_size",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size",
+            "default": 15
+          },
+          {
+            "type": "range",
+            "id": "rich_content_size_tab",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size tablet",
+            "default": 15
+          },
+          {
+            "type": "range",
+            "id": "rich_content_size_mob",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size mobile",
+            "default": 15
+          },
+          {
+            "type": "number",
+            "id": "max-container",
+            "label": "Max Width"
+          },
+          {	
+            "type": "color",
+            "id": "background_color",
+            "label": "Background color"
+          },
+          {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Padding top",
+            "default": 50
+          },
+          {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Padding bottom",
+            "default": 50
+          },
+          {
+            "type": "range",
+            "id": "padding_top_mob",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Padding top mobile",
+            "default": 50
+          },
+          {
+            "type": "range",
+            "id": "padding_bottom_mob",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Padding bottom mobile",
+            "default": 50
+          },
+           {	
+            "type": "header",
+            "content": "Heading"
+          },
+          {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color"
+          },
+          {
+            "type": "color",
+            "id": "span_color",
+            "label": "Span text color"
+          },
+          {
+            "type": "range",
+            "id": "font_size",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size",
+            "default": 37
+          },
+          {
+            "type": "range",
+            "id": "font_size_tab",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size tablet",
+            "default": 37
+          },
+          {
+            "type": "range",
+            "id": "font_size_mob",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size mobile",
+            "default": 28
+          },
+          {	
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "color",
+            "id": "content_color",
+            "label": "Content color"
+          },
+          {
+            "type": "range",
+            "id": "font_size_con",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size",
+            "default": 15
+          },
+           {
+            "type": "range",
+            "id": "font_size__con_tab",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size tablet",
+            "default": 15
+          },
+          {
+            "type": "range",
+            "id": "font_size__con_mob",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size mobile",
+            "default": 15
+          },
+                  {	
+            "type": "header",
+            "content": "Button setting"
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button label"
+          },
+          {
+            "type": "url",
+            "id": "btn_link",
+            "label": "Button link"
+          },
+          {
+            "type": "color",
+            "id": "btn_color",
+            "label": "Button color"
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button text color"
+          },
+          {
+            "type": "range",
+            "id": "font_size_btn",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size",
+            "default": 37
+          },
+          {
+            "type": "range",
+            "id": "font_size_btntab",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size tablet",
+            "default": 37
+          },
+          {
+            "type": "range",
+            "id": "font_size_btnmob",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size mobile",
+            "default": 28
+         }      
+      ],
+      "blocks": [
+        {
+          "type": "item",
+          "limit": 10,
+          "name": "Content",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image"
+            },
+            {	
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },
+            {	
+              "type": "richtext",
+              "id": "content",
+              "label": "Content"
+            },
+            {
+              "type": "header",
+              "content": "Button"
+            },
+            {
+              "type": "text",
+              "id": "review-btn-text",
+              "label": "Button Text",
+              "default": "explore product"
+            }
+           
+          ]
+        }      
+      ],
+      "presets": [
+        {
+          "name": "custom-vide-image-slider",
+            "category": "Review",
+          "blocks": [
+            {
+              "type": "item"
+            }
+          ]
+        }
+      ]
+    }
+  {% endschema %}

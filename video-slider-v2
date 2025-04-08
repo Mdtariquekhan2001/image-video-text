@@ -1,0 +1,202 @@
+<section class="video-slider-section" id="custom-video-slider--{{ section.id }}">
+  <div class="video-slider-container">
+    <div class="video-grid">
+      {% for block in section.blocks %}
+      <div class="video-block">
+        <div class="video-wrapper">
+          {% if block.settings.video_url contains '.mp4' %}
+          <video
+            class="custom-video"
+            src="{{ block.settings.video_url }}"
+            poster="{{ block.settings.video_poster }}"
+            width="200"
+            height="400"
+            controls
+          ></video>
+          {% else %}
+          <iframe
+            class="youtube-video"
+            src="https://www.youtube.com/embed/{{ block.settings.video_url | split: '/' | last }}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            width="200"
+            height="400"
+          ></iframe>
+          {% endif %}
+        </div>
+        <div class="play-button"></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.video-slider-section {
+  background-color: {{ section.settings.bg_color }};
+  padding: 20px;
+  width: 100%;
+  max-width: {{ section.settings.max_container }}px;
+  margin: auto;
+}
+
+.video-grid {
+  display: flex;
+  gap: 48px;
+  margin: auto;
+  max-width: max-content;
+}
+
+.video-block {
+  position: relative;
+  width: 250px;
+  height: 400px;
+  overflow: hidden;
+}
+
+.video-wrapper {
+  width: 250px;
+  height: 400px;
+  margin: auto;
+}
+
+.youtube-video, .custom-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 5px solid #00ffcc;
+}
+
+.play-button::before {
+  content: '▶';
+  color: #00ffcc;
+  font-size: 24px;
+}
+
+.video-slider-section .slick-arrow {
+  width: 50px;
+  height: 50px;
+  margin-top: 14%;
+}
+
+@media only screen and (max-width: 767px) {
+  .video-slider-section .slick-arrow {
+    width: 30px;
+    height: 30px;
+    margin-top: 54%;
+  }
+  .video-wrapper {
+    width: 250px !important;
+    height: 400px;
+    margin: auto;
+  }
+  .video-grid {
+    display: flex;
+    gap: 20px;
+    margin: auto;
+    max-width: max-content;
+  }
+}
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const playButtons = document.querySelectorAll('.play-button');
+    
+    playButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const videoBlock = this.closest('.video-block');
+        const iframe = videoBlock.querySelector('.youtube-video');
+        const video = videoBlock.querySelector('.custom-video');
+
+        if (iframe) {
+          const src = iframe.getAttribute('src');
+          iframe.setAttribute('src', src + '?autoplay=1'); // Add autoplay query to the iframe src
+          this.style.display = 'none'; // Hide play button when video is playing
+        } else if (video) {
+          video.play(); // Play the .mp4 video
+          this.style.display = 'none'; // Hide play button when video is playing
+        }
+      });
+    });
+    
+    if ($(window).width()) {
+      $('.video-grid').slick({
+        dots: false,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        prevArrow: "<img src='https://cdn.shopify.com/s/files/1/0606/2456/8491/files/ei_arrow-left_3.png?v=1730267758'>",
+        nextArrow: "<img src='https://cdn.shopify.com/s/files/1/0606/2456/8491/files/ei_arrow-left_2.png?v=1730267758'>",
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Video Slider",
+  "settings": [
+    {
+      "type": "number",
+      "id": "max_container",
+      "label": "Max container width",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_block",
+      "name": "Video Block",
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL (YouTube or MP4)"
+        },
+        {
+          "type": "url",
+          "id": "video_poster",
+          "label": "Poster Image URL (for MP4)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Slider",
+      "category": "Video"
+    }
+  ]
+}
+{% endschema %}

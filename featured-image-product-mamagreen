@@ -1,0 +1,867 @@
+<section class="image--grid" id="image--grid-pro--{{ section.id }}">
+
+  <div class="image--grid-inner page-width ">
+
+    <div class="image-grid-slideshow">
+
+     {% if section.settings.h_t != blank %} 
+      
+      <div class="image-grid--heading">
+
+        <h3>{{ section.settings.h_t }}</h3>
+          
+      </div>
+
+      {% endif %}
+
+      <div class="image-slider--flex">
+
+        <div class="image-slider-block">
+
+          <div class="image-slider-slide image--grid--{{ section.id }}">
+
+            {% for block in section.blocks %}
+              {% assign index = block.settings.image_number | minus: 1 %}
+             {% assign selected_image = product.images[index] %}
+
+             <div class="image-slider-slides">
+
+                <div class="image-slider-slide-item">
+              
+                  <a href="{{ block.settings.link }}">
+              
+                    {% if block.settings.image != blank %}
+                      <img class="hidden-xs" src="{{ block.settings.image | img_url:'master' }}">
+                    {% elsif block.settings.product != blank %}
+                      {% assign product = all_products[block.settings.product] %}
+                      {% assign index = block.settings.image_number | minus: 1 %}
+                      {% assign selected_image = product.images[index] %}
+              
+                      {% if selected_image %}
+                        <img class="hidden-xs" src="{{ selected_image | img_url: 'master' }}">
+                      {% else %}
+                        <img class="hidden-xs" src="{{ product.featured_image | img_url: 'master' }}">
+                      {% endif %}
+                    {% endif %}
+              
+                    {% if block.settings.image_mobile != blank %}
+                      <img class="hidden-md" src="{{ block.settings.image_mobile | img_url:'master' }}">
+                    {% elsif block.settings.product != blank %}
+                      {% assign product = all_products[block.settings.product] %}
+                      {% assign index = block.settings.image_number | minus: 1 %}
+                      {% assign selected_image = product.images[index] %}
+              
+                      {% if selected_image %}
+                        <img class="hidden-md" src="{{ selected_image | img_url: 'master' }}">
+                      {% else %}
+                        <img class="hidden-md" src="{{ product.featured_image | img_url: 'master' }}">
+                      {% endif %}
+                    {% endif %}
+              
+                    {% if block.settings.title != blank %}
+                      <h3>{{ block.settings.title }}</h3>
+                    {% endif %}
+                    
+                  </a>
+              
+                </div>
+              
+              </div>
+
+
+            {% endfor %}
+
+            
+          </div>
+          
+        </div>
+
+        {% if section.settings.b_l != blank %}
+
+          <div class="slider--button">
+  
+            <div class="slider--button--inner">
+  
+              <a href="{{ section.settings.b_l }}">
+                <button>{{ section.settings.b_t }}</button>
+              </a>
+              
+            </div>
+            
+          </div>
+
+        {% endif %}
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</section>
+
+<style>
+
+  
+#image--grid-pro--{{ section.id }} {
+    padding-top: {{section.settings.p_t}}px;
+    padding-bottom: {{section.settings.p_b}}px;
+    background: {{section.settings.bg_c}};
+    padding-left: {{ section.settings.c_p_l }}px;
+    padding-right: {{ section.settings.c_p_r }}px;
+}
+
+#image--grid-pro--{{ section.id }} .image-grid--heading h3 {
+    color: {{section.settings.h_c}};
+    font-size: {{section.settings.h_s}}px;
+    text-align: center;
+    font-weight: {{section.settings.h_w}};
+}
+  
+{% if section.settings.container != 0 %}
+  
+ #image--grid-pro--{{ section.id }} .image--grid-inner.page-width {
+      max-width: {{ section.settings.container }}px;
+      margin: 0px auto;
+  }
+
+{% endif %}
+
+
+#image--grid-pro--{{ section.id }} .slick-list {
+    padding-left: 0px !important;
+}
+
+#image--grid-pro--{{ section.id }} .image-slider-slide-item h3 {
+    text-align: center;
+    margin: 0px;
+    font-size:{{ section.settings.f_s }}px;
+    padding-top: 10px;
+    color:{{section.settings.f_c}};
+    font-weight:{{section.settings.f_w}};
+}
+
+#image--grid-pro--{{ section.id }} .slick-slider {
+    margin:0 -15px;
+}
+  
+#image--grid-pro--{{ section.id }} .slick-slide {
+    text-align:center;
+    margin-right:15px;
+    margin-left:15px;
+}
+
+#image--grid-pro--{{ section.id }} .slider--button--inner {
+    text-align: center;
+}
+
+#image--grid-pro--{{ section.id }} .slider--button {
+    padding-top: {{ section.settings.b_t_s }}px;
+}
+
+#image--grid-pro--{{ section.id }} .slider--button--inner button {
+    text-align: center;
+    background: {{section.settings.b_b}};
+    height: {{ section.settings.b_h }}px;
+    max-width: {{ section.settings.b_m_w }}px;
+    width: 100%;
+    font-size: {{section.settings.b_s}}px;
+    color: {{section.settings.b_c}};
+    font-weight:{{section.settings.b_w}};
+}
+
+#image--grid-pro--{{ section.id }} .image-slider-slide-item {
+    text-align: center;
+}
+
+ .image-slider-slide-item a {
+    text-decoration: none;
+} 
+
+#image--grid-pro--{{ section.id }} .image--grid--{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat({{section.settings.d_c}}, 1fr);
+    gap: 30px;
+}
+  #image--grid-pro--{{ section.id }} .image-slider-slide-item img {
+    height: {{section.settings.max_image_height}}px;
+}
+  
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+  #image--grid-pro--{{ section.id }} .image-slider-slide-item h3 {
+    font-size:{{ section.settings.f_s_i }}px;
+  }
+    
+  #image--grid-pro--{{ section.id }} .image--grid--{{ section.id }} {
+     grid-template-columns: repeat({{section.settings.i_c}}, 1fr);
+    gap: 10px;
+  }
+    
+   #image--grid-pro--{{ section.id }} {
+	padding-top: {{section.settings.padding_top_i}}px;
+	padding-bottom: {{section.settings.padding_bottom_i}}px;
+  }
+  {% if section.settings.c-w-b-i != blank %}
+   #image--grid-pro--{{ section.id }} .image-slider-slides {
+    width: 100%;
+    max-width: {{section.settings.c-w-b-i}}px;
+    margin: auto;
+   }
+      {% endif %}
+  }
+
+.hidden-xs {
+    display: inline-block;
+}
+
+.hidden-md {
+    display: none;
+}
+
+  
+  
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+  .hidden-xs {
+    display: inline-block;
+}
+
+.hidden-md {
+    display: none;
+}
+  
+}
+
+@media only screen and (max-width: 767px) {
+
+  #image--grid-pro--{{ section.id }} {
+      padding-top: {{section.settings.p_t_m}}px;
+      padding-bottom: {{section.settings.p_b_m}}px;
+      padding-left: 20px;
+      padding-right: 20px;
+  }
+
+  #image--grid-pro--{{ section.id }} .image-slider-slide-item h3 {
+    font-size:{{ section.settings.f_s_m }}px;
+    font-weight:{{section.settings.f_w}};
+  }
+
+  #image--grid-pro--{{ section.id }} .slider--button--inner button {
+    font-size: {{section.settings.b_s_m}}px;
+    font-weight:{{section.settings.b_w_m}};
+    height: {{ section.settings.b_h_m }}px;
+    max-width: {{ section.settings.b_m_w_m }}px;
+  }
+
+  #image--grid-pro--{{ section.id }} .slider--button {
+    padding-top: {{ section.settings.b_t_s_m  }}px;
+}
+
+#image--grid-pro--{{ section.id }} .image-grid--heading h3 {
+    font-size: {{section.settings.h_s_m}}px;
+    font-weight: {{section.settings.h_w_m}};
+}
+
+  #image--grid-pro--{{ section.id }} .image-slider-slide-item img {
+    height: {{section.settings.max_image_height_mob}}px;
+}
+
+
+.image--grid--{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat({{section.settings.m_c}}, 1fr) !important;
+    gap: 30px;
+}
+
+.hidden-xs {
+    display: none;
+}
+
+.hidden-md {
+    display: inline-block;
+}
+  
+}
+  
+</style>
+
+
+{% schema %}
+  {
+    "name": "Image Grid Block v2",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Max Container"
+        },
+        {
+          "type": "number",
+          "id": "container",
+          "label": "Max Container"
+        },
+      {
+        "type": "range",
+        "id": "max_image_height",
+        "label": "Max Image Height Descktop (px)",
+        "min": 100,
+        "max": 1000,
+        "step": 10,
+        "default": 400
+      },
+
+      {
+        "type": "range",
+        "id": "max_image_height_mob",
+        "label": "Max Image Height Mobile (px)",
+        "min": 100,
+        "max": 1000,
+        "step": 10,
+        "default": 400
+      },
+
+      
+        {
+          "type": "text",
+          "id": "c_p_l",
+          "label": "Container Padding Left"
+        },
+        {
+          "type": "text",
+          "id": "c_p_r",
+          "label": "Container Padding right"
+        },
+        {
+          "type": "header",
+          "content": "Heading Settings"
+        },
+        {
+          "type": "text",
+          "id": "h_t",
+          "label": "Heading text"
+        },
+        {
+          "type": "color",
+          "id": "h_c",
+          "label": "Heading color"
+        },
+        {
+          "type": "range",
+          "id": "h_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "h_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 25
+        },
+        {
+          "type": "header",
+          "content": "Font Weight"
+        },
+        {
+          "type": "select",
+          "id": "h_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "h_w_m",
+          "label": "Font Weight Mobile",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "header",
+          "content": "Background color"
+        },
+        {
+          "type": "color",
+          "id": "bg_c",
+          "label": "Background color"
+        },
+        {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "range",
+          "id": "p_t",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "p_b",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+        },
+      {
+			  "type": "range",
+			  "id": "padding_top_i",
+			  "min": 0,
+			  "max": 100,
+			  "step": 1,
+			  "unit": "px",
+			  "label": "Padding top ipad",
+			  "default": 30
+			},
+			{
+			  "type": "range",
+			  "id": "padding_bottom_i",
+			  "min": 0,
+			  "max": 100,
+			  "step": 1,
+			  "unit": "px",
+			  "label": "Padding bottom ipad",
+			  "default": 30
+			},
+        {
+          "type": "range",
+          "id": "p_t_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top mobile",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "p_b_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Mobile",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Fonts"
+        },
+        {
+          "type": "color",
+          "id": "f_c",
+          "label": "Font color"
+        },
+        {
+          "type": "range",
+          "id": "f_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+      {
+          "type": "range",
+          "id": "f_s_i",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Ipad",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "f_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Font Weight"
+        },
+        {
+          "type": "select",
+          "id": "f_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "f_w_m",
+          "label": "Font Weight Mobile",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "header",
+          "content": "Grid Settings"
+        },
+        {
+          "type": "range",
+          "id": "d_c",
+          "min": 0,
+          "max": 4,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop Column",
+          "default": 4
+        },
+       {
+          "type": "range",
+          "id": "i_c",
+          "min": 0,
+          "max": 4,
+          "step": 1,
+          "unit": "px",
+          "label": "Ipad Column",
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "m_c",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile Column",
+          "default": 1
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "range",
+          "id": "b_t_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Top Space",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "b_t_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Top Space Mobile",
+          "default": 30
+        },
+        {
+          "type": "number",
+          "id": "b_m_w",
+          "label": "Button max width"
+        },
+        {
+          "type": "number",
+          "id": "b_h",
+          "label": "Button Height"
+        },
+        {
+          "type": "number",
+          "id": "b_m_w_m",
+          "label": "Button max width mobile"
+        },
+        {
+          "type": "number",
+          "id": "b_h_m",
+          "label": "Button Height mobile"
+        },
+        {
+          "type": "text",
+          "id": "b_t",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "b_l",
+          "label": "Font Link"
+        },
+        {
+          "type": "color",
+          "id": "b_b",
+          "label": "Button Background Color"
+        },
+        {
+          "type": "color",
+          "id": "b_c",
+          "label": "Font color"
+        },
+        {
+          "type": "range",
+          "id": "b_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "b_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Font Weight"
+        },
+        {
+          "type": "select",
+          "id": "b_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "500"
+        },
+        {
+          "type": "select",
+          "id": "b_w_m",
+          "label": "Font Weight Mobile",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "500"
+        },
+      {
+            "type": "number",
+            "id": "c-w-b-i",
+            "label": "Custom width block ipad"
+          }
+       
+		
+	],
+    "blocks": [
+      {
+        "type": "item",
+		"limit": 40,
+        "name": "Content",
+        "settings": [
+		  {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+  
+          {
+            "type": "number",
+            "id": "image_number",
+            "label": "Image Number to Show (1 = first image)",
+            "default": 1
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+			
+          },
+          {
+            "type": "image_picker",
+            "id": "image_mobile",
+            "label": "Mobile Image"
+          },
+		  {	
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {	
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          }
+		]
+	  }
+      
+	],
+    "presets": [
+      {
+        "name": "Image Grid Block v2",
+      	"category": "Collection",
+        "blocks": [
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
