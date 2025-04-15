@@ -1,0 +1,433 @@
+<div id="featured-tabs-section-{{ section.id }}"style="background-color: {{ section.settings.background_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="custom-tab-inner-flex">
+    <div class="custom-tab-inner-flex-grid">
+  
+
+  <h2 class="featured-heading" style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.heading_font_size_desktop }}px;">
+    {{ section.settings.heading }}
+  </h2>
+
+  <div class="tab-buttons">
+    {% for block in section.blocks %}
+      <button class="tab-btn" data-tab="tab-{{ block.id }}">{{ block.settings.tab_name }}</button>
+    {% endfor %}
+  </div>
+
+  {% for block in section.blocks %}
+  <div class="tab-content" id="tab-{{ block.id }}"> 
+    {% assign products = block.settings.tab_collection.products %}
+   <div class="product-grid">
+  {% for product in products limit:3 %}
+    <div class="product-card">
+      <a href="{{ product.url }}">
+        <div class="custom-product-image">
+        <img src="{{ product.featured_image | img_url: '420x560' }}" alt="{{ product.title }}">
+        </div>
+
+        <div class="custom-all-contant-sec">
+          <div class="custom-product-image-title">
+        <h3>{{ product.title }}</h3>
+          </div>
+          <div class="custom-product-image-price">
+        <p class="price">
+          {% if product.compare_at_price > product.price %}
+            <span class="compare-at">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+          <span class="price">{{ product.price | money }}</span>
+        </p>
+          </div>
+           </div>
+      </a>
+      <form method="post" action="/cart/add" id="custom-tab-button">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button type="submit">Add to Cart</button>
+      </form>
+       
+    </div>
+  {% endfor %}
+</div>
+  </div>
+{% endfor %}
+    </div>
+      <div class="custom-tab-all-main-btn">
+         {% if section.settings.button_text != blank %}
+          <a class="enquire-button" href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
+        {% endif %}
+      </div>
+    
+     </div>
+   </div>
+   
+
+
+
+<style>
+  #featured-tabs-section-{{ section.id }} .custom-product-image-title h3 {
+    font-size: 28px;
+    padding:12px 0px;
+}
+
+  #featured-tabs-section-{{ section.id }} .custom-product-image-price p.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+}
+  #featured-tabs-section-{{ section.id }} .custom-product-image-price span.price {
+    margin: 0px !important;
+}
+
+  #featured-tabs-section-{{ section.id }} form#custom-tab-button button {
+    width: 100%;
+    height: 50px;
+    background: #FB6F92;
+    color: white;
+    border: none;
+  }
+  #featured-tabs-section-{{ section.id }} .custom-all-contant-sec {
+      padding: 10px;
+  }
+   #featured-tabs-section-{{ section.id }} h2.featured-heading {
+      padding-bottom: 20px;
+     font-weight:{{section.settings.heading_font_weight}};
+     text-align:{{section.settings.heading_align_desktop}};
+  }
+
+    #featured-tabs-section-{{ section.id }} .enquire-button {
+    padding: 12px 30px;
+    display: inline-block;
+    margin-top: 20px;
+    background: {{section.settings.btn_bg_color}};
+    color: {{section.settings.btn_heading_color}};
+    font-size:{{section.settings.button_sizem}}
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  
+  #featured-tabs-section-{{ section.id }} .tab-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding-bottom:40px;
+  }
+  #featured-tabs-section-{{ section.id }} .tab-btn {
+    padding: 10px 35px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    border-radius: 50px;
+  }
+  
+  #featured-tabs-section-{{ section.id }} .tab-btn.active {
+    background: black;
+    color: white;
+  }
+  #featured-tabs-section-{{ section.id }} .tab-content {
+    display: none;
+  }
+  #featured-tabs-section-{{ section.id }} .tab-content.active {
+    display: block;
+  }
+  #featured-tabs-section-{{ section.id }} .product-grid {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  #featured-tabs-section-{{ section.id }} .product-card {
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+
+  }
+  #featured-tabs-section-{{ section.id }} .product-card img {
+    width: 100%;
+    height: 560px;
+    background-size: cover;
+    object-fit: cover;
+  }
+  #featured-tabs-section-{{ section.id }} .product-card {
+    text-align: center;
+  }
+ 
+  #featured-tabs-section-{{ section.id }} .price {
+    font-weight: bold;
+    color:#FB6F92;
+  }
+  #featured-tabs-section-{{ section.id }} .compare-at {
+    text-decoration: line-through;
+    margin-right: 10px;
+    color: #A1A1A1;
+  }
+  #featured-tabs-section-{{ section.id }} .tab-content {
+   display: none;
+  }
+  #featured-tabs-section-{{ section.id }} .tab-content.active {
+    display: block;
+  }
+
+  #featured-tabs-section-{{ section.id }} .custom-tab-all-main-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+  @media screen and (max-width: 768px) {
+    #featured-tabs-section-{{ section.id }} .featured-heading {
+      font-size: {{ section.settings.heading_font_size_mobile }}px !important;
+    }
+    #featured-tabs-section-{{ section.id }} h2.featured-heading {
+      text-align:{{section.settings.heading_align_mobile}} !important;
+  }
+   #featured-tabs-section-{{ section.id }} .product-grid {
+    padding:15px;
+   }
+
+    #featured-tabs-section-{{ section.id }} .product-card {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+  }
+    .product-grid {
+    flex-direction: column;
+   }
+    #featured-tabs-section-{{ section.id }} .tab-btn {
+     padding: 3px 20px;
+      min-width: 150px !important;
+  }
+
+    #featured-tabs-section-{{ section.id }} .enquire-button {
+      background: {{section.settings.btn_bg_colorm}};
+      color: {{section.settings.btn_heading_colorm}};
+      font-size:{{section.settings.button_size_mobile}}px;
+    }
+
+    
+  #featured-tabs-section-{{ section.id }} .product-card img {
+    width: 100%;
+    height: 450px;
+    background-size: cover;
+    object-fit: cover;
+  }
+  #featured-tabs-section-{{ section.id }} .tab-buttons {
+    padding-bottom:20px;
+    overflow:scroll;
+    flex-wrap:nowrap;
+  }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sectionId = '{{ section.id }}';
+    const section = document.getElementById(`featured-tabs-section-${sectionId}`);
+    const tabs = section.querySelectorAll('.tab-btn');
+    const contents = section.querySelectorAll('.tab-content');
+
+    function activateTab(index) {
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+        contents[i].classList.toggle('active', i === index);
+      });
+    }
+
+    // Initialize first tab
+    if (tabs.length && contents.length) {
+      activateTab(0);
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', function () {
+        activateTab(index);
+      });
+    });
+  });
+</script>
+
+
+
+{% schema %}
+{
+  "name": "custom tab product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Heading Font Size (Desktop)",
+      "min": 12,
+      "max": 48,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "min": 12,
+      "max": 32,
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading weight",
+      "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+    {
+      "type": "select",
+      "id": "heading_align_desktop",
+      "label": "Heading Alignment (Desktop)",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Center", "value": "center" },
+        { "label": "Right", "value": "right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mobile",
+      "label": "Heading Alignment (Mobile)",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Center", "value": "center" },
+        { "label": "Right", "value": "right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Enquire Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+     {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_heading_color",
+      "label": "Button Text Color",
+      "default": "#000000"
+    },
+     {
+      "type": "range",
+      "id": "button_sizem",
+      "label": "Button Text Font Size (px)",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Button Mobile layout"
+    },
+     {
+      "type": "color",
+      "id": "btn_bg_colorm",
+      "label": "button Background Color mobile",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_heading_colorm",
+      "label": "Button Text Color mobile",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Product Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_name",
+          "label": "Tab Name"
+        },
+        {
+          "type": "collection",
+          "id": "tab_collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "custom tab product"
+    }
+  ]
+}
+{% endschema %}
