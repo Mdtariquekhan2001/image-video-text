@@ -1,0 +1,144 @@
+<section class="single-image" id="single-image--{{ section.id }}">
+  <div class="single-image-inner">
+    <a href="{{ section.settings.image_link }}">
+      {% if section.settings.image != blank %}
+        <div class="web-image">
+         <img src="{{ section.settings.image | img_url:'master' }}"> 
+        </div>
+      {% endif %}
+       {% if section.settings.image_mob != blank %}
+        <div class="mobile-image">
+          <img src="{{ section.settings.image_mob | img_url:'master' }}">
+        </div>
+         {% else %}
+         <div class="mobile-image">
+           <img src="{{ section.settings.image | img_url:'master' }}"> 
+          </div>
+       {% endif %}
+    </a>
+  </div>
+</section>
+<style>
+  .single-image-inner{
+    max-width:{{section.settings.max-width}}px;
+  }
+.mobile-image {
+    display: none;
+}
+.web-image {
+    display: block;
+}
+
+.web-image img {
+  display: block;
+  max-width: 100%;
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.mobile-image img {
+  display: block;
+  max-width: 100%;
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+	#single-image--{{ section.id }} {
+		background: {{section.settings.background_color}};
+		padding-top: {{section.settings.padding_top}}px;
+		padding-bottom: {{section.settings.padding_bottom}}px;
+	}
+
+.single-image-inner.page-width img {
+    border-radius: 20px;
+}
+  
+@media only screen and (max-width: 767px) {
+  .mobile-image {
+      display: block;
+  }
+  .web-image {
+    display: none;
+}
+  #single-image--{{ section.id }} {
+		padding-top: 0px;
+		padding-bottom: 30px;
+	}
+  .single-image-inner.page-width {
+    padding: 0px;
+}
+  .single-image-inner.page-width img {
+    border-radius: 0px;
+}
+
+  
+  
+}
+</style>
+{% schema %}
+	  {
+		"name": "Single Image",
+		"settings": [
+        
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Image Link"
+          },
+          {	
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {	
+            "type": "image_picker",
+            "id": "image_mob",
+            "label": "Mobile Image"
+          },
+          {	
+			  "type": "color",
+			  "id": "background_color",
+			  "label": "Background color"
+			},
+			{
+			  "type": "range",
+			  "id": "padding_top",
+			  "min": 0,
+			  "max": 100,
+			  "step": 1,
+			  "unit": "px",
+			  "label": "Padding top",
+			  "default": 50
+			},
+			{
+			  "type": "range",
+			  "id": "padding_bottom",
+			  "min": 0,
+			  "max": 100,
+			  "step": 1,
+			  "unit": "px",
+			  "label": "Padding bottom",
+			  "default": 50
+			},
+             {
+            "type": "number",
+            "id": "max-width",
+            "label": "Max width",
+            "default": 1440
+          }
+			
+		],
+		"presets": [
+		  {
+			"name": "Single Image",
+			"category": "Image"
+		  }
+		]
+	  }
+{% endschema %}
