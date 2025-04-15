@@ -1,0 +1,501 @@
+<div class="custom-collections-lis-main" id="custom-collections-list--{{ section.id }}">
+  <div class="custom-collections-lis-flex-slider">
+    <div class="custom-collections-lis-inner-grid">
+      <div class="custom-collections-lis-flex-grid">
+       <div class="tara-mini-collection">
+          {% if section.settings.heading != blank %}
+            <h2 class="tara-mini-heading" >
+              {{ section.settings.heading }}
+              </h2>
+          {% endif %}
+        
+          <div class="tara-mini-grid"  style="grid-template-columns: repeat({{ section.settings.columns }}, 1fr)" id="custom-slider-taramini">
+            {% for block in section.blocks %}
+              <div class="tara-mini-item {% if forloop.first %}first{% endif %}">
+               {% if block.settings.image != blank %}
+                
+                    <a href="{{ block.settings.image_link }}">
+                     <img id="custom-coll-list-image" src="{{ block.settings.image | img_url: 'master' }}"  alt="{{ block.settings.label }}" style="max-height: {{ block.settings.max_height }}; width: auto;"  >
+                     <p class="blokc-text-all"
+                  style="
+                    color: {{ block.settings.text_color }};
+                    font-size: {{ block.settings.font_size_desktop }}px;
+                    font-weight: {{ block.settings.font_weight }};
+                    text-align: {{ block.settings.text_align_desktop }};
+                  "
+                  data-mobile-style="
+                  
+                  "
+                >
+                  {{ block.settings.label }}
+                </p>
+                  </a>
+                {% endif %}
+
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  
+  var slickInitialized = false;
+  function initOrDestroySlider() {
+    if (window.innerWidth <= 768) {
+      if (!slickInitialized) {
+        $('.tara-mini-grid').slick({
+          dots: false,
+          infinite: true,
+          speed: 300,
+          slidesToShow: 1,
+          arrows: true,
+          centerMode: true,
+          variableWidth: true
+        });
+        slickInitialized = true;
+      }
+    } else {
+      if (slickInitialized) {
+        $('.tara-mini-grid').slick('unslick');
+        slickInitialized = false;
+      }
+    }
+  }
+
+  $(document).ready(function() {
+    initOrDestroySlider();
+  });
+
+  $(window).on('resize', function() {
+    initOrDestroySlider();
+  });
+  
+</script>
+
+
+
+
+<style>
+
+
+{% if section.settings.container != 0 %}
+  
+ #custom-collections-list--{{ section.id }} .tara-mini-collection {
+      max-width: {{ section.settings.container }}px;
+      margin: 0px auto;
+  }
+
+{% endif %}
+  
+    #custom-collections-list--{{ section.id }} {
+      background:{{ section.settings.bg_color }};
+      padding-top:{{section.settings.pt}}px;
+      padding-bottom:{{section.settings.pb}}px;
+    }
+    
+     
+    #custom-collections-list--{{ section.id }} h2.tara-mini-heading {
+       color: {{ section.settings.heading_color }};
+       font-size: {{ section.settings.heading_font_size_desktop }}px;
+       font-weight: {{ section.settings.heading_font_weight }};
+       text-align: {{ section.settings.heading_align_desktop }};
+    }
+    
+    #custom-collections-list--{{ section.id }} p.blokc-text-all {
+    
+    }  
+      
+    #custom-collections-list--{{ section.id }} .tara-mini-collection {
+      padding: 30px 0;
+    }
+      
+    #custom-collections-list--{{ section.id }} .tara-mini-heading {
+      margin-bottom: 30px;
+    }
+
+    #custom-collections-list--{{ section.id }} .tara-mini-grid {
+      display: flex;
+      grid-template-columns: repeat(4, 1fr);
+      justify-content: center;
+      gap:30px;
+    }
+  
+
+    #custom-collections-list--{{ section.id }} .tara-mini-item img {
+      width: 100%;
+      object-fit: cover;
+    }
+    #custom-collections-list--{{ section.id }} .tara-mini-item p {
+      margin-top: 10px;
+    }
+
+
+  @media screen and (max-width: 768px) {
+     {% for block in section.blocks %}
+    
+       #custom-collections-list--{{ section.id }} p.blokc-text-all {
+          font-size: {{ block.settings.font_size_mobile }}px !important;
+          text-align: {{ block.settings.text_align_mobile }} !important;
+      }  
+   {% endfor %}
+
+    
+   #custom-collections-list--{{ section.id }} h2.tara-mini-heading {
+      font-size: {{ section.settings.heading_font_size_mobile }}px !important;
+      text-align: {{ section.settings.heading_align_mobile }};
+  }
+    
+   #custom-collections-list--{{ section.id }}{
+    padding-top:{{section.settings.ptm}}px !important;
+    padding-bottom:{{section.settings.pbm}}px !important;
+  }
+
+  #custom-collections-list--{{ section.id }} .tara-mini-collection {
+    height: 400px;
+  }
+
+    div#custom-slider-taramini {
+    height: 357px;
+}
+
+    #custom-collections-list--{{ section.id }} .slick-dots {
+    position: absolute;
+    bottom: 45px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    }
+
+
+   #custom-collections-list--{{ section.id }} .slick-prev:before, .slick-next:before {
+      font-family: 'slick';
+      font-size: 30px;
+      line-height: 1;
+      opacity: .75;
+      color: #FB6F92;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+  }
+   #custom-collections-list--{{ section.id }} .slick-prev {
+    left: 38%;
+    z-index: 99;
+    margin-top: 37%;
+}
+
+   #custom-collections-list--{{ section.id }} .slick-next {
+    right: 38%;
+    margin-top: 37%;
+}
+
+  #custom-collections-list--{{ section.id }} .tara-mini-item.slick-slide.slick-current.slick-active {
+    margin-right: 20px;
+     margin-left: 20px;
+}
+
+  
+ {% for block in section.blocks %}
+ img#custom-coll-list-image {
+    height: {{block.settings.max_height-m}} !important;
+    /* width: 250px !important; */
+}
+
+  {% endfor %}}
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "custom collections list",
+  "settings": [
+      {
+          "type": "header",
+          "content": "Max Container"
+        },
+        {
+          "type": "number",
+          "id": "container",
+          "label": "Max Container"
+        },
+      {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "range",
+          "id": "pt",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Padding top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "pb",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Padding bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "ptm",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Padding top mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "pbm",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "label": "Padding bottom mobile",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Background"
+        },
+        {	
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color"
+        },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Explore The Tara Mini’s Collection"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Heading Font Size (Desktop)",
+      "min": 14,
+      "max": 60,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 20
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading weight",
+      "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+    
+    {
+      "type": "select",
+      "id": "heading_align_desktop",
+      "label": "Heading Alignment (Desktop)",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Center", "value": "center" },
+        { "label": "Right", "value": "right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mobile",
+      "label": "Heading Alignment (Mobile)",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Center", "value": "center" },
+        { "label": "Right", "value": "right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Items per Row",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "max_height",
+          "label": "Max Height (e.g. 700px or 50vh)",
+          "default": "300px"
+        },
+        {
+          "type": "text",
+          "id": "max_height-m",
+          "label": "Max Height Mobile (e.g. 700px or 50vh)",
+          "default": "300px"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Item Image"
+        },
+
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label Text",
+          "default": "Bracelets"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image Link"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "label": "Font Size (Desktop)",
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "label": "Font Size (Mobile)",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 14
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Heading weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        
+        {
+          "type": "select",
+          "id": "text_align_desktop",
+          "label": "Text Alignment (Desktop)",
+          "options": [
+            { "label": "Left", "value": "left" },
+            { "label": "Center", "value": "center" },
+            { "label": "Right", "value": "right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "text_align_mobile",
+          "label": "Text Alignment (Mobile)",
+          "options": [
+            { "label": "Left", "value": "left" },
+            { "label": "Center", "value": "center" },
+            { "label": "Right", "value": "right" }
+          ],
+          "default": "center"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "custom collections list",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
