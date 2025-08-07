@@ -1,0 +1,2841 @@
+
+<script>
+  $(document).ready(function(){
+    var seekingMedicines = [];
+
+// $('.seeking-medicines-cell .quiz-questions-answers').slick({
+//   responsive: [
+//     {
+//       breakpoint: 9999,
+//       settings: "unslick"
+//     },
+//     {
+//       breakpoint: 767,
+//       settings: {
+//         slidesToShow: 2,
+//         slidesToScroll: 1,
+//         arrows: false,
+//         infinite: false,
+//         dots: true,
+//         centerPadding: '20px',
+//       }
+//     }
+//   ]
+// });
+
+    
+    
+    /* Form Preview Button Begin. */
+    $(document).on('click','.form-preview-btn',function(e){
+      e.preventDefault();
+      if ($('.phone-check-icon').prop('checked') == false) { 
+          $('.popup-btn-message').text('please check icon !!');
+          $('.new-form-popup').show();
+      }
+      else {
+
+        $('.phoone-index').addClass('hide_this');
+        $('.phoone-index').removeClass('show_this');
+      // var Name2                   = $('.quiz-block-flex--questions').attr('customer-name');
+      var Name2                   = $('.form-control-input-2').val();
+      var Email2                  = $('.quiz-block-flex--questions').attr('customer-email');
+      var Email3                  = $('.form-control-email').val();
+      var Phone2                  = $('.quiz-block-flex--questions').attr('customer-phone');
+      var Phone3                  = $('.form-control-phone').val();
+      var customer_id2            = $('.quiz-block-flex--questions').attr('customer-id');
+      var Age2                    = $('.quiz-block-question-grid-item.index-1 .quiz-answer-1 input').val();
+      var Gender2                 = $('.quiz-block-question-grid-item.index-2 .quiz-answer-1.answer-selected input').val();
+      var Pregnant2               = $('.quiz-block-question-grid-item.pregnancy-index .quiz-answer-1.answer-selected input').val();
+      var Suffering_years2        = $('.quiz-block-question-grid-item.suffering-years-cell .quiz-answer-1.answer-selected span').text().trim();
+      var Seeking_medicines2      = $('.quiz-block-question-grid-item.seeking-medicines-cell').attr('seeking-medicnies-data');
+      var Feel_mass2              = $('.quiz-block-question-grid-item.index-5 .quiz-answer-1.answer-selected h4').text().trim();
+      var Symptoms_experiences2   = $('.symptoms2-all').val();
+      var Symptoms_experiences22  = $('.quiz-block-question-grid-item.index-7 .quiz-answer-1.answer-selected span').text().trim();
+      var Complaints2             = $('.quiz-block-question-grid-item.index-8 .quiz-answer-1.answer-selected span').text().trim();
+      var Bloating2               = $('.quiz-block-question-grid-item.index-9 .quiz-answer-1.answer-selected span').text().trim();
+      var other_medicines2        = $('.quiz-block-question-grid-item.index-10 .form-control-input').val();
+
+      if(Gender2 == 'Male'){
+        $('.pragnant-val-fr').parents('li').hide();
+      }
+      else{
+        $('.pragnant-val-fr').parents('li').show();
+      }
+
+        if(Email3 == "" || Email3 == " "){
+          $('.email-val-fr').html(Email2);
+        }
+        else{
+          $('.email-val-fr').html(Email3);
+        }
+
+        if(Phone3 == "" || Phone3 == " "){
+          $('.phone-val-fr').html(Phone2);
+        }
+        else{
+          $('.phone-val-fr').html(Phone3);
+        }
+        
+      $('.name-val-fr').html(Name2);
+      // $('.email-val-fr').html(Email2);
+      // $('.phone-val-fr').html(Phone2);
+      $('.customer-val-fr').html(customer_id2);
+      $('.age-val-fr').html(Age2);
+      $('.gender-val-fr').html(Gender2);
+      $('.pragnant-val-fr').html(Pregnant2);
+      $('.suffering-years-val-fr').html(Suffering_years2);
+      $('.seeking-medicines-val-fr').html(Seeking_medicines2);
+      $('.feel-mass-val-fr').html(Feel_mass2);
+      $('.symptoms-experiences-val-fr').html(Symptoms_experiences2);
+      $('.symptoms-experiences-2-val-fr').html(Symptoms_experiences22);
+      $('.complaints-val-fr').html(Complaints2);
+      $('.bloating-val-fr').html(Bloating2);
+      $('.other-medicines-val-fr').html(other_medicines2);
+      
+      $('.quiz-block-question-grid-item.index-10').addClass('hide_this');
+      $('.new-from-preview').show();
+      }
+        
+    });
+
+
+    $(document).on('click','.previous-wp-prv',function(e){
+      e.preventDefault();
+      $('.new-from-preview').hide();
+      $('.quiz-block-question-grid-item.index-11').addClass('show_this');
+    })
+
+
+    $(document).on('mouseup',function(e){
+      if(!$(e.target).closest('.new-form-popup').length){
+        $('.new-form-popup').hide();
+      }
+    });
+    
+    $(document).on('click','.index-2 .quiz-answer-1',function(){
+      $(this).addClass('answer-selected').siblings().removeClass('answer-selected');
+    });
+
+    $(document).on('click','.index-2.gender-question-cell .next-wp',function(){
+       var GenderCheck = $('input[name=GenderWp]:checked').val();
+      if(GenderCheck == 'Male'){
+        $('.Tabs-Cell-2').addClass('active').siblings().removeClass('active');
+      }
+    });
+
+    $(document).on('click','.feel-mass .next-wp',function(){
+        $('.Tabs-Cell-3').addClass('active').siblings().removeClass('active');
+    });
+
+
+    $(document).on('click','.index-9.bleeding .next-wp',function(){
+        $('.Tabs-Cell-4').addClass('active').siblings().removeClass('active');
+    });
+
+    $(document).on('click','.pregnancy-index .next-wp2',function(){
+        $('.Tabs-Cell-2').addClass('active').siblings().removeClass('active');
+    });
+
+    $(document).on('click','.index-3.seeking-medicines-cell .previous-wp',function(){
+      $('.Tabs-Cell-1').addClass('active').siblings().removeClass('active');
+    });
+    
+    $(document).on('click','.following-symptoms .previous-wp',function(){
+      $('.Tabs-Cell-2').addClass('active').siblings().removeClass('active');
+    });
+
+    $(document).on('click','.custom-message .previous-wp',function(){
+      $('.Tabs-Cell-3').addClass('active').siblings().removeClass('active');
+    });
+
+    
+
+    
+   $(document).on('click', '.seeking-medicines-cell .qz-ans', function(e) {
+     e.preventDefault();
+        var checkbox = $(this).find('.suffering-piles-wp');
+        var value = checkbox.val();
+
+        if ($(this).hasClass('answer-selected')) {
+            $(this).removeClass('answer-selected');
+            checkbox.prop("checked", false);
+
+            // Value ko array se remove karna
+            var index = seekingMedicines.indexOf(value);
+            if (index !== -1) {
+                seekingMedicines.splice(index, 1);
+            }
+        } else {
+            $(this).addClass('answer-selected');
+            checkbox.prop("checked", true);
+
+            // Value ko array mein add karna
+            if (!seekingMedicines.includes(value)) {
+                seekingMedicines.push(value);
+            }
+        }
+       $(this).parents('.seeking-medicines-cell').attr('seeking-medicnies-data',seekingMedicines);
+    });
+
+     $(document).on('click','.suffering-years-cell .quiz-answer-1',function(e){
+      e.preventDefault();
+       $(this).addClass('answer-selected').siblings().removeClass('answer-selected')
+     })
+
+
+    $(document).on('click','.pregnancy-index .quiz-answer-1',function(){
+      $(this).addClass('answer-selected').siblings().removeClass('answer-selected');
+    });
+
+    $(document).on('click','.index-5 .quiz-answer-1',function(){
+      $(this).addClass('answer-selected').siblings().removeClass('answer-selected');
+    });
+
+
+    $(document).on('click', '.index-6 .quiz-answer-1', function(e) {
+      e.preventDefault();
+      $(this).toggleClass('answer-selected');
+      var checkbox = $(this).find('input[type="checkbox"]');
+      checkbox.prop('checked', $(this).hasClass('answer-selected'));
+      var Symptoms_experiences = [];
+      $('.quiz-block-question-grid-item.index-6 .quiz-questions-answers .quiz-answer-1.answer-selected').each(function() {
+          var experiences = $(this).find('span.symp-text').text().trim();
+          Symptoms_experiences.push(experiences);
+      });
+      $('.symptoms2-all').val(Symptoms_experiences.join(','));
+    });
+
+
+    $(document).on('click','.index-7 .quiz-answer-1',function(){
+      $(this).addClass('answer-selected').siblings().removeClass('answer-selected');
+    });
+
+    $(document).on('click','.index-8 .quiz-answer-1',function(){
+      $(this).addClass('answer-selected').siblings().removeClass('answer-selected');
+    });
+
+    $(document).on('click','.index-9 .quiz-answer-1',function(){
+      var Name9 = $('.form-control-input-2').val();
+      $(this).addClass('answer-selected').siblings().removeClass('answer-selected');
+      $('.custom-name-wp').text(Name9);
+    });
+    
+    $(document).on('click','.next-wp',function(e){
+      e.preventDefault();
+      var currentIndex = parseInt($(this).parents('.quiz-block-question-grid-item').attr('current-index'));
+      var NextIndex = currentIndex+1;
+      
+      if(currentIndex==1){
+        var AgeInput = $('.quiz-block-question-grid-item.index-1 .form-control-input').val();
+        if(AgeInput == "" || AgeInput == " "){
+          $('.popup-btn-message').text('please fill age !!');
+          $('.new-form-popup').show();
+        }
+        else {
+          $(this).parents('.quiz-block-question-grid-item').removeClass('show_this');
+          $(this).parents('.quiz-block-question-grid-item').addClass('hide_this');
+          
+          $(".quiz-block-question-grid-item.index-"+NextIndex+"").addClass('show_this');
+          $(".quiz-block-question-grid-item.index-"+NextIndex+"").removeClass('hide_this');
+        }
+      }
+      else if(currentIndex==2){
+        if($('.quiz-block-question-grid-item.index-2 .quiz-answer-1').hasClass('answer-selected')){
+        var GenderInput = $('.quiz-block-question-grid-item.index-2 .quiz-answer-1.answer-selected input').val();
+          if(GenderInput == 'Female'){
+            $('.pregnancy-index').show();
+            $(this).parents('.quiz-block-question-grid-item.gender-question-cell').removeClass('show_this');
+            $(this).parents('.quiz-block-question-grid-item.gender-question-cell').addClass('hide_this');
+          }
+          else {            
+            $(this).parents('.quiz-block-question-grid-item').removeClass('show_this');
+            $(this).parents('.quiz-block-question-grid-item').addClass('hide_this');
+            
+            $(".quiz-block-question-grid-item.index-"+NextIndex+"").addClass('show_this');
+            $(".quiz-block-question-grid-item.index-"+NextIndex+"").removeClass('hide_this');
+          }
+        }
+        else{
+          $('.popup-btn-message').text('please select one !!');
+          $('.new-form-popup').show();
+        }
+      }
+      else if(currentIndex==3){
+        var SufferingPlies = $(this).parents('.seeking-medicines-cell').attr('seeking-medicnies-data').length;
+        if(SufferingPlies == 0 || SufferingPlies == '0'){
+          $('.popup-btn-message').text('please select one !!');
+          $('.new-form-popup').show();
+        }
+        else{
+          $(this).parents('.quiz-block-question-grid-item').removeClass('show_this');
+          $(this).parents('.quiz-block-question-grid-item').addClass('hide_this');
+          $(".quiz-block-question-grid-item.index-"+NextIndex+"").addClass('show_this');
+          $(".quiz-block-question-grid-item.index-"+NextIndex+"").removeClass('hide_this');
+        }
+      }
+        else if(currentIndex==10){
+          $('.index-11.phoone-index').removeClass('hide_this');
+          $('.custom-message').removeClass('show_this');
+          $('.custom-message').addClass('hide_this');
+        }
+      else{
+        if($(this).parents('.quiz-block-question-grid-item').find('.quiz-answer-1').hasClass('answer-selected')){
+          $(this).parents('.quiz-block-question-grid-item').removeClass('show_this');
+          $(this).parents('.quiz-block-question-grid-item').addClass('hide_this');
+          
+          $(".quiz-block-question-grid-item.index-"+NextIndex+"").addClass('show_this');
+          $(".quiz-block-question-grid-item.index-"+NextIndex+"").removeClass('hide_this');
+        }
+        else{
+          $('.popup-btn-message').text('please select one !!');
+          $('.new-form-popup').show();
+        }
+      }
+    });
+
+    
+    $(document).on('click','.previous-wp',function(e){
+      e.preventDefault();
+      var currentIndex2 = parseInt($(this).parents('.quiz-block-question-grid-item').attr('current-index'));
+      var PreviousIndex = currentIndex2-1;
+      $(this).parents('.quiz-block-question-grid-item').removeClass('show_this');
+      $(this).parents('.quiz-block-question-grid-item').addClass('hide_this');
+      $(".quiz-block-question-grid-item.index-"+PreviousIndex+"").addClass('show_this');
+      $(".quiz-block-question-grid-item.index-"+PreviousIndex+"").removeClass('hide_this');
+      $('.new-name-field').addClass('hide_this');
+      $('.new-name-field').removeClass('show_this');
+    });
+
+    $(document).on('click','.close-form-popup',function(){
+      $('.new-form-popup').hide();
+    });
+
+
+    $(document).on('click','.pregnancy-answer-btn .previous-wp2',function(e){
+      e.preventDefault();
+      $('.pregnancy-index').hide();
+      $('.gender-question-cell').addClass('show_this');
+      $('.gender-question-cell').removeClass('hide_this');
+
+    });
+
+    $(document).on('click','.pregnancy-answer-btn .next-wp2',function(e){
+      e.preventDefault();
+      $('.pregnancy-index').hide();
+      $('.seeking-medicines-cell').addClass('show_this');
+      $('.seeking-medicines-cell').removeClass('hide_this');
+    });
+
+
+    // Form Submit Click
+    $(document).on('click','.form-submit-btn',function(e){
+      e.preventDefault();
+      $(this).siblings('.hiddenSpinner').removeClass('hidden');
+      $(this).addClass('hiddenHide');
+      var Date                   = $('.quiz-block-flex--questions').attr('date');
+      // var Name                   = $('.quiz-block-flex--questions').attr('customer-name');
+      var Name                   = $('.name-val-fr').text().trim();
+      // var Email                  = $('.quiz-block-flex--questions').attr('customer-email');
+      var Email                  = $('.email-val-fr').text().trim();
+      // var Phone                  = $('.quiz-block-flex--questions').attr('customer-phone');
+      var Phone                  = $('.phone-val-fr').text().trim();
+      var customer_id            = $('.quiz-block-flex--questions').attr('customer-id');
+      var Age                    = $('.quiz-block-question-grid-item.index-1 .quiz-answer-1 input').val();
+      var Gender                 = $('.quiz-block-question-grid-item.index-2 .quiz-answer-1.answer-selected input').val();
+      var Pregnant               = $('.quiz-block-question-grid-item.pregnancy-index .quiz-answer-1.answer-selected input').val();
+      var Suffering_years        = $('.quiz-block-question-grid-item.suffering-years-cell .quiz-answer-1.answer-selected span').text().trim();
+      var Seeking_medicines      = $('.quiz-block-question-grid-item.index-4.seeking-medicines-cell .seeking-medicines-all').val();
+      var Feel_mass              = $('.quiz-block-question-grid-item.index-5 .quiz-answer-1.answer-selected h4').text().trim();
+      var Symptoms_experiences   = $('.symptoms2-all').val();
+      var Symptoms_experiences2  = $('.quiz-block-question-grid-item.index-7 .quiz-answer-1.answer-selected span').text().trim();
+      var Complaints             = $('.quiz-block-question-grid-item.index-8 .quiz-answer-1.answer-selected span').text().trim();
+      var Bloating               = $('.quiz-block-question-grid-item.index-9 .quiz-answer-1.answer-selected span').text().trim();
+      var other_medicines        = $('.quiz-block-question-grid-item.index-10 .form-control-input').val();
+
+      $.ajax({
+        //url: 'https://billing.onenewsmedia.com/vaidkula.php',
+        url: 'https://vaidyakula.in/',
+        method: 'POST',
+        data: {
+          Date: Date,
+          Name: Name,
+          Email: Email,
+          Phone: Phone,
+          Age: Age,
+          customer_id: customer_id,
+          Gender: Gender,
+          Pregnant: Pregnant,
+          Suffering_years: Suffering_years,
+          Seeking_medicines: Seeking_medicines,
+          Feel_mass: Feel_mass,
+          Symptoms_experiences: Symptoms_experiences,
+          Symptoms_experiences2: Symptoms_experiences2,
+          Complaints: Complaints,
+          Bloating: Bloating,
+          other_medicines: other_medicines 
+        },
+        
+        success: function(response){
+          console.log("Success Response : " + response);
+                $.ajax({
+       // url: 'https://script.google.com/macros/s/AKfycbyHQAdYdFWKxYpxLmm0-toj-s_SfoxsoI0pII6rRtpzEKIbL91XH3ofaz4xuFXSF0Oe/exec',
+        url: 'https://script.google.com/macros/s/AKfycbyRkD-COR3zihJo4V5Ot2BKi0cpPIP3psxMbqvsOuf6NK-8YOtZ81M5Ji7vpyrtnUd-/exec',
+        type: 'POST',
+        data: {
+          name: Name,
+          age: Age,
+          email: Email,
+          phone: Phone,
+          customer_id: customer_id,
+          gender: Gender,
+          pregnant: Pregnant,
+          suffering_years: Suffering_years,
+          seeking_medicines: Seeking_medicines,
+          feel_mass: Feel_mass,
+          symptoms_experiences: Symptoms_experiences,
+          symptoms_experiences2: Symptoms_experiences2,
+          complaints: Complaints,
+          bloating: Bloating,
+          other_medicines: other_medicines 
+        },
+        success: function(data){
+          console.log("Sheet data saved");
+          window.location.href="/pages/thank-you";
+        },
+        error: function(){
+          console.log("Sheet data fail");
+        }
+      });
+        },
+        
+        error: function(xhr, status, error) {
+        console.log(error);
+        }
+      }); 
+      
+      
+    });
+
+
+  $(document).on('click','.new-name-field .next-wp-2',function(e){
+    e.preventDefault();
+    var NameIndex = $(this).parents('.quiz-block-question-grid-item').find('.form-control-input-2').val();
+    console.log("Name Index : " + NameIndex)
+     if(NameIndex == "" || NameIndex == " "){
+          $('.popup-btn-message').text('please fill name !!');
+          $('.new-form-popup').show();
+     }
+    else{
+      $('.age-index').removeClass('hide_this');
+      $('.new-name-field').addClass('hide_this');
+    }
+  })
+
+
+  $(document).on('click','.age-index .previous-wp-age',function(){
+     $('.new-name-field').removeClass('hide_this');
+     $('.age-index').addClass('hide_this');
+     $('.age-index').removeClass('show_this');
+  });
+
+  $(document).on('click','.phoone-index .previous-wp-age',function(){
+      $('.index-11.phoone-index').addClass('hide_this');
+      $('.index-11.phoone-index').removeClass('show_this');
+      $('.custom-message').addClass('show_this');
+      $('.custom-message').removeClass('hide_this');
+  });
+
+
+
+
+  });
+
+
+
+  
+
+
+
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  const yesOption = document.getElementById("yesOption");
+
+  // Add event listener to detect when the radio button is selected
+  yesOption.addEventListener("change", function () {
+    if (yesOption.checked) {
+
+      // Move to the form preview directly, skipping the other steps
+      moveToFormPreview();
+    }
+  });
+
+  function moveToFormPreview() {
+    // Hide other steps if visible
+    $('.quiz-block-question-grid-item').hide();
+    
+    // Show the final preview section
+    $('.new-from-preview').show();
+
+    // Populate the preview with the details entered by the user
+    var Name2 = $('.form-control-input-2').val();
+    var Email3 = $('.form-control-email').val();
+    var Phone3 = $('.form-control-phone').val();
+    var Age2 = $('.quiz-block-question-grid-item.index-1 .quiz-answer-1 input').val();
+    var Gender2 = $('.quiz-block-question-grid-item.index-2 .quiz-answer-1.answer-selected input').val();
+    var Pregnant2 = $('.quiz-block-question-grid-item.pregnancy-index .quiz-answer-1.answer-selected input').val();
+    var Suffering_years2 = $('.quiz-block-question-grid-item.suffering-years-cell .quiz-answer-1.answer-selected span').text().trim();
+    var Seeking_medicines2 = $('.quiz-block-question-grid-item.seeking-medicines-cell').attr('seeking-medicnies-data');
+    var Feel_mass2 = $('.quiz-block-question-grid-item.index-5 .quiz-answer-1.answer-selected h4').text().trim();
+    var Symptoms_experiences2 = $('.symptoms2-all').val();
+    var Symptoms_experiences22 = $('.quiz-block-question-grid-item.index-7 .quiz-answer-1.answer-selected span').text().trim();
+    var Complaints2 = $('.quiz-block-question-grid-item.index-8 .quiz-answer-1.answer-selected span').text().trim();
+    var Bloating2 = $('.quiz-block-question-grid-item.index-9 .quiz-answer-1.answer-selected span').text().trim();
+    var other_medicines2 = $('.quiz-block-question-grid-item.index-10 .form-control-input').val();
+
+    // Set the values in the preview section
+    $('.name-val-fr').html(Name2);
+    $('.email-val-fr').html(Email3);
+    $('.phone-val-fr').html(Phone3);
+    $('.age-val-fr').html(Age2);
+    $('.gender-val-fr').html(Gender2);
+    $('.pragnant-val-fr').html(Pregnant2);
+    $('.suffering-years-val-fr').html(Suffering_years2);
+    $('.seeking-medicines-val-fr').html(Seeking_medicines2);
+    $('.feel-mass-val-fr').html(Feel_mass2);
+    $('.symptoms-experiences-val-fr').html(Symptoms_experiences2);
+    $('.symptoms-experiences-2-val-fr').html(Symptoms_experiences22);
+    $('.complaints-val-fr').html(Complaints2);
+    $('.bloating-val-fr').html(Bloating2);
+    $('.other-medicines-val-fr').html(other_medicines2);
+
+    // Show the preview section
+    $('.new-from-preview').show();
+  }
+});
+
+</script>
+
+
+<section class="quiz-block">
+  
+
+  <div class="quiz-block-inner page-width">
+
+    <div class="quiz-block-flex" style="text-align: center;">
+
+      {% assign Heading = section.settings.heading %}
+      {% assign DoctorName = section.settings.dr-name %}
+      {% assign Qualification = section.settings.dr-qualification %}
+      <div class="quiz-block-v3-heading" >
+        <h2>{{ Heading }}</h2>
+        <p>Doctor Name : {{ DoctorName }}</p>
+        <p>Qualification : {{ Qualification }}</p>
+      </div>
+
+      {% assign SubHeading = section.settings.sub-heading %}
+      {% if SubHeading != blank %}
+        <div class="quiz-block-sub-heading">
+          <h3>{{ SubHeading }}</h3>
+        </div>
+      {% endif %}
+
+      <div class="quiz-block-flex--questions" customer-name="{{ customer.name }}" customer-id="{{ customer.id }}" customer-email="{{ customer.email }}" customer-phone="{{ customer.phone }}" date="{{ 'now' | date: '%d-%B-%Y' }}">
+
+        <div class="quiz-block-tabs-main">
+          {% for block in section.blocks %}
+            {% assign TabsBlock = block.settings.tabs-title %}
+            {% if TabsBlock != blank %}
+            <div class="quiz-block-tabs-in Tabs-Cell-{{ forloop.index }} {% if forloop.first %} active {% endif %}">
+              <p>{{ TabsBlock }}</p>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+
+        
+        <div class="quiz-block-question-grid">
+
+
+        {% comment %} Question 0 {% endcomment %}
+
+            {% if customer %}
+              
+              <div class="quiz-block-question-grid-item index-0 new-name-field" new-current-index="1">
+            
+                <p class="percent">0%</p>
+                <div class="progress-container">
+                  <div style="width:0%;" class="progress-bar"></div>
+                </div>
+            
+                <div class="quiz-question-title">
+                  <h3>What is your Name?</h3>
+                </div>
+            
+                <div class="quiz-questions-answers">
+                  <div class="quiz-answer-1">
+                    <input type="text" class="form-control-input-2" name="radio" placeholder="Enter your Name" />
+                  </div>
+                </div>
+            
+                <div class="pre-nxt-button-cell">
+                  <button class="next-wp-2">Next</button>
+                </div>
+            
+              </div>
+            {% else %}
+             
+              <div class="quiz-login-redirect" style="text-align:center; padding: 50px;">
+                <!-- <h2 style="font-size: 32px; font-weight: bold;">ONLINE TEST</h2> -->
+                <p style="font-size: 18px;">Please login to access the quiz test</p>
+                <a href="/account/login?return_url=/pages/quiz" class="button" style="padding: 10px 20px; background: black; color: white;">
+                  Login to Continue
+                </a>
+              </div>
+            {% endif %}
+
+
+
+        {% comment %} Question 1 {% endcomment %}
+
+          <div class="quiz-block-question-grid-item hide_this index-1 age-index" current-index="1">
+
+            <p class="percent">10%</p>
+            <div class="progress-container">
+              <div style="width:10%;" class="progress-bar"></div>
+            </div>
+
+             <div class="quiz-question-title">
+               <h3>How old are you? (Enter Age in years)</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+               <div class="quiz-answer-1">
+                  <input type="number" class="form-control-input" name="radio2" placeholder="Enter your Age" />
+               </div>
+             </div>
+
+         {% comment %}   {% render 'previous-next' %} {% endcomment %}
+            <div class="pre-nxt-button-cell">
+              <button class="previous-wp-age">Previous</button>
+              <button class="next-wp">Next</button>
+            </div>
+             
+           </div>
+          
+          {% comment %} Question 2 {% endcomment %}
+
+           <div class="quiz-block-question-grid-item hide_this index-2 gender-question-cell" current-index="2">
+
+            <p class="percent">20%</p>
+            <div class="progress-container">
+              <div style="width:20%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+               <h3>Select your Gender</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                  <input type="radio" name="GenderWp" value="Male" />
+                    <div class="radioImage">
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/man.png?v=1715167621">
+                      </div>
+                      <span>Male</span>
+                   </div>
+                  </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                  <input type="radio" name="GenderWp" value="Female" />
+                    <div class="radioImage">
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/woman.png?v=17151680721">
+                      </div>
+                      <span>Female</span>
+                   </div>
+                  </label>
+               </div>
+               
+             </div>
+            {% render 'previous-next' %}
+             
+             
+           </div>
+
+
+          {% comment %} Pregnancy Question {% endcomment %}
+
+            <div class="quiz-block-question-grid-item pregnancy-index" style="display:none;">
+
+            <p class="percent">25%</p>
+            <div class="progress-container">
+              <div style="width:25%;" class="progress-bar"></div>
+            </div>
+             <div class="quiz-question-title">
+               <h3>Are you currently pregnant?</h3>
+             </div>
+             <div class="quiz-questions-answers">
+               <div class="quiz-answer-1" >
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles" id="yesOption" value="YES" />
+                    <div class="radioImage">
+                      <span>YES</span>
+                    </div>
+                  </label>
+               </div>
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles"   value="NO" / >
+                    <div class="radioImage">
+                      <span>NO</span>
+                   </div>
+                  </label>
+               </div>
+             </div>
+
+      <div class="pre-nxt-button-cell pregnancy-answer-btn">
+        <button class="previous-wp2">Previous</button>
+        <button class="next-wp2">Next</button>
+      </div>
+              
+     {% comment %} {% render 'previous-next' %}{% endcomment %} 
+     </div>
+
+          
+
+        {% comment %} Question 3 {% endcomment %}
+
+          <div class="quiz-block-question-grid-item hide_this index-3 seeking-medicines-cell" current-index="3" seeking-medicnies-data="">
+            <input type="hidden" name="seeking-medicines-all" class="seeking-medicines-all" value="">
+            
+            <p class="percent">30%</p>
+            <div class="progress-container">
+              <div style="width:40%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+               <!-- <h3>Which of the following diseases are you seeking medicines for?</h3> -->
+               <h3>Are you suffering from Piles, Fissure or Fistula?</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1 qz-ans" id="peles-suffring">
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles" value="" />
+                    <div class="radioImage">
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_4_-_Piles_Image.png?v=1736224245">
+                      </div>
+                      <div class="radio-img-text">
+                        <p>Do you feel a mass around your anal region?</p>
+                      </div>
+
+                      <div class="radio-text-wp2">
+                        <h4>Piles</h4>
+                      </div>
+                      <div>
+                        <input type="checkbox" class="suffering-piles-wp " name="suffering-piles" value="Piles">
+                      </div>
+                   </div>
+                  </label>
+                 
+                 
+                </div>
+
+               <div class="quiz-answer-1 qz-ans">
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles" value="" />
+                    <div class="radioImage">
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_4_-_Fissure.png?v=1736224245">
+                      </div>
+                      <div class="radio-img-text">
+                        <p>A cut inside anal canal mostly due to constipation, leading to Bleeding or Pain</p>
+                      </div>
+                      
+                      <div class="radio-text-wp2">
+                        <h4>Fissure</h4>                  
+                      </div>
+                      <div>
+                         <input type="checkbox" class="suffering-piles-wp " name="suffering-piles" value="Fistula">
+                      </div>
+                   </div>
+                  </label>
+                
+                 
+                </div>
+
+               <div class="quiz-answer-1 qz-ans">
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles" value="" />
+                    <div class="radioImage">
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_4_-_Fistula.png?v=1736224245">
+                      </div>
+                      <div class="radio-img-text">
+                        <p>An abnormal tunnel that connects anal canal to skin around anus might lead to pus within brackets</p>
+                      </div>
+
+                      <div class="radio-text-wp2">
+                        <h4>Fistula</h4>               
+                      </div>
+                      <div>
+                         <input type="checkbox" class="suffering-piles-wp " name="suffering-piles" value="Fissure">
+                      </div>
+                   </div>
+                  </label>
+                
+                
+                 
+                </div>
+  
+
+             </div>
+             <div class="select-all-texts">
+              <p>You can select more than one, if applicable</p>
+            </div>
+            {% render 'previous-next' %}
+            
+             
+           </div>
+
+
+
+        {% comment %} Question 4 {% endcomment %}
+          <div class="quiz-block-question-grid-item hide_this index-4 suffering-years-cell" current-index="4">
+            <p class="percent">40%</p>
+            <div class="progress-container">
+              <div style="width:30%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+               <h3>Since how many years are you suffering from this disease?</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles" value="Male" />
+                    <div class="radioImage">
+                     
+                      <span>Less than one year</span>
+                   </div>
+                  </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles" value="Male" />
+                    <div class="radioImage">
+                     
+                      <span>More than one year</span>
+                      
+                   </div>
+                  </label>
+               </div>
+
+               
+             </div>
+            {% render 'previous-next' %}
+           </div>
+
+          {% comment %} Question 5 {% endcomment %}
+
+          <div class="quiz-block-question-grid-item feel-mass hide_this index-5" current-index="5">
+
+            <p class="percent">50%</p>
+            <div class="progress-container">
+              <div style="width:50%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+               <h3>Can you feel a mass around the anal region?</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1 stage-1">
+                 <label class="form-control-input">
+                    <div class="radioImage">
+                      
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_6_-_Piles_Stage_1.png?v=1736224245">
+                      </div>
+                      
+                      <div class="mass-feel-text">
+                        <p>Internal Piles. Can't feel outside the Anus </p>
+                      </div>
+                      
+                      <div class="mass-feel-stages">
+                       <h4>Stage 1</h4>
+                       <input type="radio" name="MassFeel" class="mass-feel-radio mass-show">
+                      </div>
+                      
+                   </div>
+                  </label>
+                </div>
+
+               <div class="quiz-answer-1 stage-2">
+                 <label class="form-control-input">
+                    <div class="radioImage">
+                      
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_6_-_Piles_Stage_2.png?v=1736224245">
+                      </div>
+                      <div class="mass-feel-text">
+                        <p>Piles that come out during defecation but retract on their own post defecation</p>
+                      </div>
+                      
+                      <div class="mass-feel-stages">
+                        <h4>Stage 2</h4>
+                        <input type="radio" name="MassFeel" class="mass-feel-radio mass-show">
+                      </div>
+                   
+                   </div>
+                  </label>
+                </div>
+
+               <div class="quiz-answer-1 stage-3">
+                 <label class="form-control-input">
+                    <div class="radioImage">
+                      
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_6_-_Piles_Stage_3.png?v=1736224245">
+                      </div>
+                      
+                      <div class="mass-feel-text">
+                        <p>Piles that come out but do not retract on their own (need to be pushed  back inside manually)</p>
+                      </div>
+                      
+                      <div class="mass-feel-stages">
+                        <h4>Stage 3</h4>
+                        <input type="radio" name="MassFeel" class="mass-feel-radio mass-show">
+                      </div>
+                   
+                   </div>
+                  </label>
+                </div>
+
+               <div class="quiz-answer-1 stage-4">
+                 <label class="form-control-input">
+                    <div class="radioImage">
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_6_-_Piles_Stage_4.png?v=1736224245">
+                      </div>
+                      
+                      <div class="mass-feel-text">
+                        <p>Piles which cannot be pushed back inside anus (Thus, remain outside)</p>
+                      </div>
+                      
+                      <div class="mass-feel-stages">
+                        <h4>Stage 4</h4>
+                        <input type="radio" name="MassFeel" class="mass-feel-radio mass-show">
+                       
+
+                      </div>
+                   
+                      
+                   </div>
+                  </label>
+                </div>
+
+               <div class="quiz-answer-1" style="display:none;">
+                 <label class="form-control-input">
+                  <input type="radio" name="Since how many years are you suffering from Piles" value="Male" />
+                    <div class="radioImage">
+                      <div class="radioImage--image">
+                          <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/woman.png?v=17151680721">
+                      </div>
+                      <h4>I dont feel a mass around the anal region</h4>
+                   
+                      
+                   </div>
+                  </label>
+                </div>
+
+             </div>
+            {% render 'previous-next' %}
+            
+             
+           </div>
+
+          {% comment %} Question 6 {% endcomment %}
+
+
+
+          
+          <div class="quiz-block-question-grid-item hide_this index-6 following-symptoms" current-index="6">
+          <!-- <input type="hidden" name="symptoms2-all" class="symptoms2-all" value=""> -->
+            <input type="hidden" class="symptoms2-all" value="">
+
+            <p class="percent">60%</p>
+            <div class="progress-container">
+              <div style="width:60%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+               <!-- <h3>Which of the following symptoms are you experiencing (Select all that apply)</h3> -->
+               <h3>Which of the following symptoms are you suffering from?</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1" id="test">
+                 <label class="form-control-input">
+                   <div class="symptoms-image">
+                         <input type="checkbox" class="foll-symp-radio">
+
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Piles_with_Pain.webp?v=1751620319">
+                   </div>
+                   <div class="radioImage">
+                     <span class="symp-text">Piles with <strong>Pain</strong></span>
+                     <span class="arrow"></span>
+                   </div>
+                 </label>
+                 
+                 
+               </div>
+
+               
+
+                <div class="quiz-answer-1" id="symptom-bleeding">
+                  <label class="form-control-input">
+                    <div class="symptoms-image">
+                      <input type="checkbox" name="following-symptoms-radio" class="foll-symp-radio" id="checkbox-bleeding">
+                      <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Piles_with_Bleeding.webp?v=1751620319">
+                    </div>
+                    <div class="radioImage">
+                      <span class="symp-text">Piles with <strong>Bleeding</strong></span>
+                      <span class="arrow"></span>
+                    </div>
+                  </label>
+                </div>
+               
+
+
+               
+
+               <div class="quiz-answer-1" id="test">
+                 <label class="form-control-input">
+                   <div class="symptoms-image">
+                     <input type="checkbox" name="following-symptoms-radio" class="foll-symp-radio">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Piles_with_Burning_77331e85-c52b-4fd6-972c-9d7fe25e55fd.avif?v=1751620319">
+                   </div>
+                   
+                   <div class="radioImage"> 
+                     <span class="symp-text">Piles with <strong>Burning</strong></span>
+                     <span class="arrow"></span>
+                     
+                   </div>
+                </label>
+                  
+                 
+               </div>
+
+               <div class="quiz-answer-1" id="test">
+                 <label class="form-control-input">
+                   
+                   <div class="symptoms-image">
+                     <input type="checkbox" name="following-symptoms-radio" class="foll-symp-radio ">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Piles_with_Itching_cc7fb2c1-2dd9-44ba-83aa-4543bb42ec42.webp?v=1751620319">
+                   </div>
+                   
+                   <div class="radioImage">
+                    <span class="symp-text">Piles with <strong>Itching</strong></span>
+                     <span class="arrow"></span>
+                     
+                   </div>
+                </label>
+                  
+                 
+               </div>
+
+
+                <div class="quiz-answer-1" id="test">
+                 <label class="form-control-input">
+                   
+                  <div class="symptoms-image">
+                    <input type="checkbox" name="following-symptoms-radio" class="foll-symp-radio ">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Itching.png?v=1712596944">
+                   </div>
+                   
+                   <div class="radioImage">
+                     <span class="symp-text">Piles with <strong>Pus</strong></span>
+                     <span class="arrow"></span>
+                   </div>
+                </label>
+                  
+               </div>
+
+             </div>
+            <div class="select-all-text">
+              <p>You can select more than one, if applicable</p>
+            </div>
+            {% render 'previous-next' %}
+            
+             
+           </div>
+
+
+
+
+
+
+          
+          {% comment %} Question 7 {% endcomment %}
+
+
+     <div class="quiz-block-question-grid-item hide_this index-7 bleeding" current-index="7">
+
+            <p class="percent">70%</p>
+            <div class="progress-container">
+              <div style="width:70%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+           
+               <h3>How much bleeding are you experiencing?</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_7.2_-_Bleeding_-_1_2_drops_of_blood.png?v=1736224245">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>1-2 drops of blood</span>
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                  </div>
+                </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_7.2_-_Bleeding_-_Stream_of_blood.png?v=1736224245">
+                   </div>
+                  <div class="radioImage">
+                    <span>Lot of bleeding, like stream of blood</span>
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio">
+                  </div>
+                </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Screen_7.2_-_Bleeding_-_Blood_on_Stool.png?v=1736224245">
+                   </div>
+                  <div class="radioImage">
+                    <span>Blood only on the side of the stool/ Faeces</span>
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio">
+                  </div>
+                </label>
+               </div>
+               
+             </div>
+            {% render 'previous-next' %}
+            
+             
+           </div>
+          
+          {% comment %} Question 8 {% endcomment %}
+
+
+<div class="quiz-block-question-grid-item hide_this index-8" current-index="8">
+
+            <p class="percent">80%</p>
+            <div class="progress-container">
+              <div style="width:80%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+               <!-- <h3>Any complaints with the bowel movement?</h3> -->
+               <h3>Are you suffering from Constipation or Loose motions?</h3>
+               <!-- <p>Bloating (Stomach phulna) : Stomach feels full & tight with discomfort or pain or makes noises</p> -->
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   
+                   <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Symptoms_Screen_8_-_Constipation.png?v=1736224245">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>Constipation</span>
+                  </div>
+
+                   <div class="radio-input-bottom">
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                   </div>
+                   
+                </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                    <div class="symptoms-image">
+                      <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Symptoms_Screen_8_-_Loose_motions.png?v=1736224245">
+                    </div>
+                   
+                  <div class="radioImage">
+                    <span>Loose motions</span>
+                  </div>
+
+                  <div class="radio-input-bottom">
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                   </div>
+                   
+                </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   
+                   <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Symptoms_Screen_8_-_Sometimes_constipation_and_sometimes_loose_motions.png?v=1736224245">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>Sometimes Constipation & Sometimes Loose motions </span> 
+                  </div>
+
+                   <div class="radio-input-bottom">
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                   </div>
+                   
+                </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                  <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Symptoms_Screen_8_-_No_constipation_and_No_loose_motions.png?v=1736224245">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>No Constipation & No Loose motions</span>
+                  </div>
+
+                  <div class="radio-input-bottom">
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                   </div>
+                   
+                </label>
+               </div>
+               
+             </div>
+            {% render 'previous-next' %}
+            
+             
+           </div>
+
+           {% comment %} Question 9 {% endcomment %}
+
+
+          <div class="quiz-block-question-grid-item hide_this index-9 bleeding bloating" current-index="9">
+
+            <p class="percent">90%</p>
+            <div class="progress-container">
+              <div style="width:90%;" class="progress-bar"></div>
+            </div>
+             
+             <div class="quiz-question-title">
+               <!-- <h3>Do you feel bloating? <br/>Explain bloating here?</h3> -->
+               <h3>Are you suffering from Bloating?</h3>
+               <p>Bloating (Stomach phulna) : Stomach feels full & tight with discomfort or pain or makes noises</p>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   
+                   <div class="symptoms-image">
+
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/no2.png?v=1751603912">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>Bloating & Stomach phulna (YES)</span>
+                  </div>
+
+                   <div class="radio-input-bottom">
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                   </div>
+                   
+                </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   
+                   <div class="symptoms-image">
+                      <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/es.png?v=1751603602">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>Bloating & Stomach Pain (NO)</span>
+                  </div>
+
+                    <div class="radio-input-bottom">
+                      <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                    </div>
+                   
+                </label>
+               </div>
+
+
+               {% comment %}
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   
+                   <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Symptoms_screen_9_-_Bloating_constipation.png?v=1736224245">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>Bloating & constipation</span>
+                  </div>
+
+                  <div class="radio-input-bottom">
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                   </div>
+                   
+                </label>
+               </div>
+
+               <div class="quiz-answer-1">
+                 <label class="form-control-input">
+                   
+                   <div class="symptoms-image">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/Symptoms_Screen_8_-_No_constipation_and_No_loose_motions.png?v=1736224245">
+                   </div>
+                   
+                  <div class="radioImage">
+                    <span>No bloating</span>
+                  </div>
+
+                   <div class="radio-input-bottom">
+                    <input type="radio" class="bleeding-radio-check" name="bleeding-radio"> 
+                   </div>
+                   
+                </label>
+               </div>
+{% endcomment %}
+               
+               
+             </div>
+            {% render 'previous-next' %}
+            
+             
+           </div>
+
+          {% comment %} Question 10 {% endcomment %}
+
+
+          <div class="quiz-block-question-grid-item hide_this index-10 custom-message" current-index="10">
+
+            <p class="percent">95%</p>
+            <div class="progress-container">
+              <div style="width:95%;" class="progress-bar"></div>
+            </div>
+
+
+            
+            
+            <div style="text-align: left;
+                        margin: 20px auto;
+                        max-width: 650px;
+                          display:none;
+              "
+              >
+              <ol pattern="1">
+                <li><b>Name: </b> <b class="custom-name-wp"></b></li>
+                <li><b>Email: </b>{{ customer.email }}</li>
+                <li><b>Phone: </b>{{ customer.phone }}</li>
+              </ol>
+            </div>
+             <div class="quiz-question-title">
+               <!-- <h3>Any other symptoms or medicines? Pls mention (Optional)</h3> -->
+               <h3>Do you want to share any other complaints or any other medicines you take (Optional)?</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+
+               <div class="quiz-answer-1">
+                 <label> Write here (optional) </label>
+                 <div class="form-group">
+                   <textarea class="form-control-input"  rows="3" cols="4" ></textarea>
+                 </div>
+                 
+               </div>
+
+               
+             </div>
+            {% render 'previous-next' %}
+            
+             
+           </div>
+
+
+
+        {% comment %} Question 11 {% endcomment %}
+
+          <div class="quiz-block-question-grid-item hide_this index-11 phoone-index" current-index="1">
+
+            <p class="percent">100%</p>
+            <div class="progress-container">
+              <div style="width:100%;" class="progress-bar"></div>
+            </div>
+
+             <div class="quiz-question-title">
+               <h3>Send me prescription on WhatsApp</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+               <div class="quiz-answer-1">
+                  <input type="tel" class="form-control-input form-control-phone" name="radio2phone" placeholder="Enter your Phone Number" />
+               </div>
+             </div>
+              <p id="share-your-WhatsApp"> Share Your WhatsApp Number</p>
+
+               <div class="quiz-mobile-cell">
+                 <div class="quiz-mobile-inner-check">
+                   <div class="quiz-mobile-whatsapp">
+                     <input type="checkbox" name="phone-check" class="phone-check-icon">
+                     <img src="https://cdn.shopify.com/s/files/1/0761/2648/6846/files/whatsapp-icon.png?v=1722427145">
+                   </div>
+                   <div class="quiz-mobile-text">
+                     <p>I consent to receiving communication from Vaidyakula Wellness LLP including medicine prescription on whatsapp</p>
+                   </div>
+                 </div>
+               </div>
+
+            <div class="email-question-wp">
+             <div class="quiz-question-title">
+               <h3>Email ID (optional)?</h3>
+             </div>
+
+             <div class="quiz-questions-answers">
+               <div class="quiz-answer-1">
+                  <input type="text" class="form-control-input form-control-email" name="radio2phone" placeholder="Enter your Email" />
+               </div>
+             </div>
+            </div>
+
+          
+
+         {% comment %}   {% render 'previous-next' %}  
+          
+            {% endcomment %}
+
+           <div class="pre-nxt-button-cell">
+              <button class="previous-wp-age">Previous</button>
+               <button class="form-preview-btn" style="display:block;">Preview</button>
+            </div>
+            
+           
+
+           </div>
+        </div>
+
+      <div class="new-form-popup" id="popup">
+        <div class="popup-content">
+          <span class="close close-form-popup">&times;</span>
+          <p class="popup-btn-message"></p>
+        </div>
+      </div>
+
+         <!-- <div class="pre-nxt-button-cell">
+                <button class="form-submit-btn" style="display:block;">Submit</button>
+                <div class="loading-overlay__spinner hiddenSpinner hidden">
+                  <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </div>
+              
+              <div class="thank-you-message" style="display: none; margin-top: 20px;">
+                <h3>Thank you!</h3>
+                <p>Your submission has been received successfully.</p>
+          </div> -->
+        
+
+
+        <div class="new-from-preview" style="display:none;">
+          <h2>Please Preview Your Form</h2>
+
+
+
+
+          
+          <div class="form-preview-inner">
+            
+              <h2>About You</h2>
+              <ul pattern="1" class="about-you-details">
+              
+                <li style="display:none;">
+                  <h3>Date </h3>
+                  <p class="date-val-fr"></p>
+                </li>
+                
+                <li>
+                  <h3 class="name-fr">Name : </h3>
+                  <p class="name-val-fr"></p>
+                </li>
+                  
+                <li>
+                  <h3 class="name-fr">Age : </h3>
+                  <p class="age-val-fr"></p>
+                </li>
+                
+                <li>
+                  <h3 class="name-fr">Gender : </h3>
+                  <p class="gender-val-fr"></p>
+                </li>
+
+                <li>
+                  <h3 class="name-fr">Are you currently pregnant : </h3>
+                  <p class="pragnant-val-fr"></p>
+                </li>
+                  
+                <li>
+                  <h3 class="name-fr">WhatsApp Number : </h3>
+                  <p class="phone-val-fr"></p>
+                </li>
+
+                <li>
+                  <h3 class="name-fr">Email : </h3>
+                  <p class="email-val-fr"></p>
+                </li>
+                
+              </ul>
+            <hr>
+            
+            <h2>About your Piles disease</h2>
+            <ul pattern="1" class="about-you-details">
+              <li>
+                <!-- <h3 class="name-fr">Which of the diseases are you seeking medicines for?</h3> -->
+                <h3 class="name-fr">Suffering from : </h3>
+                <p class="seeking-medicines-val-fr"></p>
+              </li>
+
+              <li>
+                <h3 class="name-fr">Suffering since : </h3>
+                <p class="suffering-years-val-fr"></p>
+              </li>
+              
+              <li>
+                <h3 class="name-fr">Piles stage : </h3>
+                <p class="feel-mass-val-fr"></p>
+              </li>
+              
+              
+            </ul>
+            
+            <hr>
+            <h2>About your Symptoms</h2>
+            <ul class="about-you-details">
+              <li>
+                <h3 class="name-fr">Primary symptoms : </h3>
+                <p class="symptoms-experiences-val-fr"></p>
+              </li>
+              <li>
+                <h3 class="name-fr">Bleeding : </h3>
+                <p class="symptoms-experiences-2-val-fr"></p>
+              </li>
+              <li>
+                <h3 class="name-fr">Constipation or Loose motions : </h3>
+                <p class="complaints-val-fr"></p>
+              </li>
+              <li>
+                <h3 class="name-fr">Suffering from Bloating? </h3>
+                <p class="bloating-val-fr"></p>
+              </li>
+            </ul>
+            <ul style="display:none;">
+              <li>
+                <h3 class="name-fr">Any other symptoms or medicines?</h3>
+                <p class="other-medicines-val-fr"></p>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="pre-nxt-button-cell">
+            <!-- <button class="previous-wp-prv">Previous</button> -->
+            <button class="form-submit-btn" style="display:block;">Submit</button>
+            <div class="loading-overlay__spinner hiddenSpinner hidden">
+              <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            	<circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <div class="thank-you-message" style="display: none; margin-top: 20px;">
+            <h3>Thank you!</h3>
+            <p>Your submission has been received successfully.</p>
+          </div>
+
+
+          
+          
+        </div>
+        
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</section>
+
+
+<!-- piles -->
+
+<script>
+$(document).ready(function () {
+  $(document).on("click", ".index-3 .next-wp", function (e) {
+    e.preventDefault();
+
+    
+    $(".index-3").removeClass("show_this").addClass("hide_this");
+    $(".index-4, .index-5").removeClass("show_this").addClass("hide_this");
+
+    
+    var isPilesChecked = false;
+    $(".index-3 .suffering-piles-wp").each(function () {
+      if ($(this).val().toLowerCase() === "piles" && $(this).is(":checked")) {
+        isPilesChecked = true;
+      }
+    });
+
+    
+    if (isPilesChecked) {
+      $(".index-4").removeClass("hide_this").addClass("show_this");
+      $("html, body").animate({ scrollTop: $(".index-4").offset().top }, 400);
+    } else {
+      $(".index-5").removeClass("hide_this").addClass("show_this");
+      $("html, body").animate({ scrollTop: $(".index-5").offset().top }, 400);
+    }
+  });
+});
+</script>
+<!-- <script>
+fetch("https://api.sendgrid.com/v3/mail/send", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer SG.YOUR_API_KEY_HERE",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    personalizations: [{
+      to: [{ email: "deven@vaidyakul.com" }],
+      cc: [{ email: "dr.atulsongire@gmail.com" }]
+    }],
+    from: { email: "noreply@yourdomain.com" },
+    subject: `Vaidyakul_Phone number of ${customerName}`,
+    content: [{
+      type: "text/plain",
+      value: message
+    }]
+  })
+});
+</script> -->
+<!-- thanku -->
+
+
+<script>
+  $(document).ready(function () {
+    $('.form-submit-btn').on('click', function (e) {
+      e.preventDefault();
+
+     
+      $('.loading-overlay__spinner').removeClass('hidden');
+
+     
+      setTimeout(function () {
+       
+        $('.pre-nxt-button-cell').hide();
+
+      
+        $('.loading-overlay__spinner').addClass('hidden');
+
+     
+        $('.thank-you-message').show();
+      }, 2000); 
+    });
+  });
+</script>
+
+<!-- popupo -->
+
+<script>
+  document.querySelector('.form-preview-btn').addEventListener('click', function(e) {
+    const checkbox = document.querySelector('.phone-check-icon');
+    const popup = document.getElementById('popup');
+    const popupMsg = document.querySelector('.popup-btn-message');
+
+    if (!checkbox.checked) {
+      e.preventDefault(); // Stop submit
+      popupMsg.textContent = "Please Check Icon !!";
+      popup.style.display = "block";
+    } else {
+      popup.style.display = "none";
+     
+    }
+  });
+
+  document.querySelector('.close-form-popup').addEventListener('click', function() {
+    document.getElementById('popup').style.display = "none";
+  });
+</script>
+
+<!-- pregnent page -->
+
+<script>
+$(document).on('change', '.pregnancy-index .quiz-answer-1 input[type="radio"]', function () {
+  var answer = $(this).val(); 
+
+  if (answer === "YES") {
+  
+    const formData = {
+      name: $('.name-val-fr').text(),
+      age: $('.age-val-fr').text(),
+      gender: $('.gender-val-fr').text(),
+      pregnant: answer,
+      phone: $('.phone-val-fr').text(),
+      email: $('.email-val-fr').text(),
+      suffering: $('.seeking-medicines-val-fr').text(),
+      since: $('.suffering-years-val-fr').text(),
+      stage: $('.feel-mass-val-fr').text(),
+      primary: $('.symptoms-experiences-val-fr').text(),
+      bleeding: $('.symptoms-experiences-2-val-fr').text(),
+      motions: $('.complaints-val-fr').text(),
+      bloating: $('.bloating-val-fr').text(),
+      other: $('.other-medicines-val-fr').text()
+    };
+
+    localStorage.setItem("pregnancy_data_only", JSON.stringify(formData));
+
+   
+    window.location.href = "/pages/pregnant";
+  }
+});
+</script>
+
+
+<!-- bleeding -->
+
+<script>
+$(document).ready(function() {
+
+  
+  $(document).on('change', '.index-6 .foll-symp-radio', function() {
+    var parent = $(this).closest('.quiz-answer-1');
+
+   
+    if ($(this).is(':checked')) {
+      parent.addClass('answer-selected');
+    } else {
+      parent.removeClass('answer-selected');
+    }
+
+   
+    var selected = [];
+    $('.index-6 .quiz-answer-1.answer-selected').each(function() {
+      var text = $(this).find('.symp-text').text().trim();
+      selected.push(text);
+    });
+
+   
+    $('.symptoms2-all').val(selected.join(','));
+  });
+
+ 
+  $(document).on('click', '.index-6 .next-wp', function(e) {
+    e.preventDefault();
+
+    var selectedCount = $('.index-6 .quiz-answer-1.answer-selected').length;
+    var bleedingSelected = $('#symptom-bleeding').hasClass('answer-selected');
+
+    
+    if (selectedCount === 0) {
+      $('.popup-btn-message').text('Please Select One !!');
+      $('.new-form-popup').fadeIn();
+      return;
+    }
+
+    
+    $('.index-6').removeClass('show_this').addClass('hide_this');
+    $('.index-7, .index-8').removeClass('show_this').addClass('hide_this');
+
+  
+    if (bleedingSelected) {
+      $('.index-7').removeClass('hide_this').addClass('show_this');
+      $('html, body').animate({ scrollTop: $('.index-7').offset().top }, 400);
+    } else {
+      $('.index-8').removeClass('hide_this').addClass('show_this');
+      $('html, body').animate({ scrollTop: $('.index-8').offset().top }, 400);
+    }
+  });
+
+});
+// checkbx
+  document.querySelector('.foll-symp-checkbox').addEventListener('click', function () {
+  console.log(this.checked); 
+});
+        
+</script>
+
+
+<!-- email -->
+
+<!-- <script>
+function sendQuizResponse() {
+ 
+  var userName = document.querySelector('.input-name')?.value || 'Anonymous';
+  var userPhone = document.querySelector('.input-phone')?.value || 'Not provided';
+  var allAnswers = document.querySelector('.quiz-summary')?.innerText || 'No answers captured';
+
+  emailjs.send("deven@vaidyakul.com", "dr.atulsongire@gmail.com", {
+    user_name: userName,
+    user_phone: userPhone,
+    all_answers: allAnswers
+  })
+  .then(function(response) {
+    console.log("Email Sent!", response.status, response.text);
+  
+    window.location.href = "/pages/thank-you";
+  }, function(error) {
+    console.error("Email Failed", error);
+    alert("Something went wrong. Please try again.");
+  });
+}
+
+
+document.querySelector('.form-submit-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  sendQuizResponse();
+});
+</script> -->
+
+
+
+
+<style>
+.hiddenHide {
+  opacity: 0.5;
+}
+.select-all-texts p {
+    font-size: 20px !important;
+    font-weight: 700;
+    padding-bottom: 20px;
+}
+.loading-overlay__spinner.hiddenSpinner {
+    position: absolute;
+    left: 60%;
+    top: 35%;
+}
+
+  p#share-your-WhatsApp {
+    font-weight: 700 !important;
+}
+
+.quiz-block-v3-section .quiz-block-v3-heading h2{
+    font-size: {{ section.settings.heading_size }}px !important;
+    color: {{ section.settings.heading_color }};
+}
+
+.quiz-block-v3-section .quiz-block-v3-heading p{
+    color: {{ section.settings.heading_color }};
+}
+
+.quiz-block-v3-section .quiz-block-sub-heading h3{
+    font-size: {{ section.settings.sub-heading_size }}px !important;
+    color: {{ section.settings.sub-heading_color }};
+    margin-top: 5px;
+}
+
+/* .quiz-block-v3-section .quiz-block-sub-heading {
+    margin-top: 0px;
+} */
+
+.quiz-block-v3-section .quiz-block-v3-heading h2 {
+    margin: 0;
+}
+
+.quiz-block-v3-section .quiz-block-v3-heading p {
+    margin: 0;
+}
+
+.quiz-block-v3-section .quiz-block-tabs-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.quiz-block-v3-section .quiz-block-tabs-in {
+    background-color: #696969;
+    color: white;
+    line-height: normal;
+    width: 150px;
+    padding: 15px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid;
+    transition: all 0.25s;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.quiz-block-v3-section .quiz-block-tabs-in.active {
+    background: #ff9900;
+}
+
+.quiz-block-v3-section .quiz-block-tabs-in p {
+    font-size: 16px !important;
+}
+
+.quiz-block-v3-section input.form-control-input-2 {
+    padding: 5px 5px 5px 20px;
+    width: 500px;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    border-bottom: 2px solid #696969;
+    transition: all 0.25s;
+}
+
+.suffering-years-cell .quiz-questions-answers {
+    display: grid;
+    width: 100%;
+    grid-template-columns: auto auto;
+}
+  
+.pregnancy-answer-btn .next-wp2 {
+    background: #ff9900;
+    border: none;
+}
+
+.pregnancy-answer-btn .next-wp2:hover{
+    background: #fff;
+    color: #ff9900;
+    border: 2px solid #ff9900;
+}
+
+.pregnancy-answer-btn .previous-wp2 {
+    background: #B2ECD3;
+    border: none;
+}
+
+.pregnancy-answer-btn .previous-wp2:hover{
+    background: #fff;
+    color: #000;
+    border: 2px solid #B2ECD3;
+}
+.select-all-text {
+    padding: 30px 0 0 0;
+}
+
+.select-all-text p {
+    color: #000;
+    font-weight: 800;
+    font-size: 20px !important;
+}
+
+.following-symptoms .quiz-questions-answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 50%;
+    margin: auto;
+}
+.following-symptoms .quiz-answer-1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+input.foll-symp-radio {
+    opacity: 99;
+    width: 15px;
+    height: 15px;
+    position: unset;
+}
+
+.following-symptoms .radioImage {
+    background: #e5e5e5;
+    width: 100%;
+    padding: 20px 30px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.following-symptoms .radioImage strong {
+    color: #ff9900;
+}
+
+
+.phoone-index .quiz-question-title {
+    padding-bottom: 20px;
+}
+
+.phoone-index .email-question-wp {
+    padding: 30px 0 0 0;
+}
+
+
+.bleeding .radioImage {
+    background: #e5e5e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.bleeding label.form-control-input {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+
+.bleeding .symptoms-image {
+    width: 100%;
+}
+.radio-img-text {
+    background: #e5e5e5;
+}
+
+.radio-img-text p {
+    padding: 10px;
+}
+input.suffering-piles-wp {
+    opacity: 99;
+    width: 20px;
+    height: 20px;
+    position: unset;
+}
+
+.quiz-mobile-inner-check {
+    display: flex;
+    align-items: center;
+    width: 500px;
+    padding-top: 25px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+.quiz-mobile-cell {
+    display: flex;
+    justify-content: center;
+}
+.quiz-mobile-text p {
+    text-align: left;
+}
+input.phone-check-icon {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+    ul.about-you-details li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+ul.about-you-details li h3 {
+    margin: 0;
+    padding: 0;
+}
+
+ul.about-you-details li p {
+    margin: 0;
+    font-weight: 600;
+}
+
+ul.about-you-details {
+    padding: 0;
+}
+  
+.form-preview-inner hr {
+    margin: 30px 0 30px 0;
+}
+
+
+  
+  
+  
+.form-preview-inner {
+  margin: 20px 0 25px 0;
+  max-width: 1000px;
+  padding: 50px;
+  background: #fff;
+  border-radius: 40px;
+  box-shadow: 0 0 20px 0 #f3f3f3;
+  text-align: left;
+  border: 1px solid green;
+}
+ol li p {
+  position: relative;
+  margin-left: 30px;
+}
+ol li p:before {
+  content: "Ans-";
+  position: absolute;
+  left: -50px;
+  font-weight: 600;
+}
+textarea.form-control-input {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100px;
+  resize: vertical;
+  border-radius: 10px;
+  padding: 20px;
+  outline: none;
+  transition: all 0.25s;
+}
+textarea.form-control-input:focus {
+  box-shadow: 0 0 15px #d3d3d3;
+}
+.quiz-answer-1 {
+  flex: 1;
+  /* max-width: 300px; */
+}
+.percent {
+  margin: 0 auto 5px;
+  width: 700px;
+  font-size: 16px;
+  text-align: end;
+  line-height: normal;
+}
+.progress-container {
+  margin: 0 auto 20px;
+  width: 700px;
+  height: 8px;
+  border-radius: 5px;
+  background: #e5e5e5;
+  overflow: hidden;
+}
+.progress-container .progress-bar {
+  display: block !important;
+  background: #ff9900;
+}
+.quiz-answer-1.answer-selected label {
+    border: 2px solid #ff9900 !important;
+}
+
+.new-form-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffffe6;
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 400px;
+  min-height: 200px;
+  text-transform: capitalize;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.close.close-form-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-weight: 800;
+    color: #000 !important;
+    opacity: 9;
+    font-size: 26px;
+}
+.popup-btn-message {
+    color: #000;
+    opacity: 99;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+.hide_this{
+  display:none !important;
+}
+.show_this{
+  display:block !important;
+}
+.form-submit-btn{
+  display:none;
+}
+.quiz-block-question-grid-item.index-10 .form-preview-btn{
+  /* display:block !important; */
+}
+.quiz-block-question-grid-item.index-1 button.previous-wp {
+  /* display: none; */
+}
+
+.quiz-block-question-grid-item.index-10 button.next-wp {
+  /* display: none; */
+}
+.pre-nxt-button-cell button {
+  color: #000;
+  line-height: normal;
+  width: 200px;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  min-width: 100px;
+  transition: all 0.25s;
+}
+.pre-nxt-button-cell button:hover{
+  background: #fff;
+  color: #ff9900;
+  border: 2px solid #ff9900;
+}
+
+.pre-nxt-button-cell {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+  position: relative;
+  
+}
+.pre-nxt-button-cell .previous-wp{
+  background: #B2ECD3;
+  border: none;
+}
+
+.pre-nxt-button-cell .previous-wp:hover{
+  background: #fff;
+  color: #000;
+  border: 2px solid #B2ECD3;
+}
+.pre-nxt-button-cell .next-wp , .pre-nxt-button-cell .form-submit-btn , .pre-nxt-button-cell .form-preview-btn, .pre-nxt-button-cell .next-wp-2{
+  background: #ff9900;
+  border: none;
+}
+
+button.previous-wp-age , .previous-wp-prv {
+    background: #B2ECD3;
+    border: none;
+} 
+
+  
+.quiz-block-flex--questions {
+    text-align: center;
+}
+
+.quiz-questions-answers {
+    display: flex;
+    gap: 20px;
+    /* justify-content: center; */
+    padding-bottom: 24px;
+}
+.quiz-block-question-grid-item {
+    padding: 10px 0px 100px;
+}
+
+/* .following-symptoms label.form-control-input img {
+    width: 60px;
+    object-fit: contain;
+    height: 60px;
+} */
+
+label.form-control-input img {
+    width: 100px;
+    object-fit: contain;
+    height: 100px;
+}
+
+.radio-img-text {
+    background: #e5e5e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.quiz-answer-1 label.form-control-input {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #aeaeae;
+    padding: 20px;
+  /* height:300px; */
+}
+
+.following-symptoms .quiz-answer-1 label.form-control-input {
+   width: 300px;
+   padding: 0;
+   margin-bottom: 0;
+}
+
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + .radioImage {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + .radioImage {
+  /* outline: 2px solid #f00; */
+}
+/* CHECKED STYLES */
+[type=radio] + .radioImage {
+  /* outline: 2px solid #f2f2f2; */
+}
+
+.radioImage {
+    padding: 20px 20px;
+}  
+
+input.form-control-input {
+  padding: 5px 5px 5px 20px;
+  width: 500px;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  border-bottom: 2px solid #696969;
+  transition: all 0.25s;
+}
+input.form-control-input:focus {
+    background: #f1f1f1;
+}
+
+.quiz-question-title {
+    padding-bottom: 10px;
+}
+/* 
+.quiz-answer-1 {
+    max-width: 300px;
+} */
+
+.radioImage p {
+    font-weight: 500;
+    font-size: 13px !important;
+    line-height: 18px;
+}
+
+.new-from-preview {
+    padding-bottom: 20px;
+}
+
+.following-symptoms label.form-control-input {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 10px;
+}
+/* .quiz-answer-1.qz-ans {
+    position: relative;
+}
+  input.suffering-piles-wp {
+    position: absolute;
+    bottom: 20px;
+    right: 46%;
+} */
+  .new-from-preview h2 , .new-from-preview h3{
+    color: #ff9900;
+}
+  
+   input.mass-feel-radio.mass-show {
+    opacity: 1 !important;
+    width: 15px !important;
+    height: 15px !important;
+    display: block;
+    position: relative !important;
+    text-align: center;
+     margin: auto;
+}
+  
+  .symptoms-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4px;
+}
+  
+@media only screen and (max-width: 767px) {
+/* label.form-control-input .radioImage .radio-text-wp2 {
+    padding-bottom: 20px;
+}
+  input.suffering-piles-wp {
+    position: absolute;
+    bottom: 16px;
+    right: 6%;
+} */
+  .mass-feel-stages {
+    display: flex !important;
+    flex-direction: row-reverse  !important;
+    width: 80px  !important;
+}
+  
+  input.mass-feel-radio.mass-show {
+    opacity: 1 !important;
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+  
+  .mass-feel-stages {
+    display: flex;
+    flex-direction: row-reverse;
+}
+  
+.seeking-medicines-cell .radioImage {
+        grid-template-columns: 1fr 3fr 1fr 0.5fr;
+}
+  
+.suffering-years-cell .radioImage {
+    background: #e5e5e5;
+    padding: 10px 5px;
+}
+
+  .quiz-answer-1 label.form-control-input {
+  height:auto !important; 
+}
+
+.following-symptoms .quiz-answer-1 label.form-control-input {
+   width: 100%;
+}
+
+.quiz-answer-1 label.form-control-input {
+    padding: 0px;
+}
+  
+.form-preview-inner {
+  padding: 15px;
+}
+
+  .radio-input-bottom {
+    margin-top: 10px;
+}
+
+.bleeding .quiz-questions-answers {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+  .seeking-medicines-cell .quiz-questions-answers {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 1fr;
+}
+  .following-symptoms .quiz-questions-answers {
+    grid-template-columns: auto;
+    max-width: 100%;
+    gap: 20px;
+}
+
+  .feel-mass .quiz-questions-answers {
+    display: grid;
+}
+
+.feel-mass .radioImage--image {
+    order: 3;
+}
+
+.feel-mass .mass-feel-text {
+    order: 2;
+}
+
+.mass-feel-stages {text-align: center;display: flex;align-items: center;gap: 5px;flex-direction: column}
+
+.quiz-block-v3-section .quiz-block-v3-heading h2{
+    font-size: {{ section.settings.heading_size_mobile }}px !important;
+}
+
+.quiz-block-v3-section .quiz-block-sub-heading h3{
+    font-size: {{ section.settings.sub-heading_size_mobile }}px !important;
+}
+.quiz-block-v3-section .quiz-block-tabs-in p {
+    font-size: 12px !important;
+}
+.quiz-block-v3-section .quiz-block-tabs-main {
+    gap: 10px;
+}
+
+.quiz-block-v3-section .quiz-block-tabs-in {
+    width: 100%;
+}
+  
+.percent {
+    width: 100%;
+}
+.progress-container {
+  width: 100%;
+}
+  
+input.form-control-input {
+    width: 100%;
+}
+  
+.quiz-block-v3-section input.form-control-input-2 {
+    width: 100%;
+}
+.quiz-questions-answers {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+}
+  
+</style>
+
+
+{% schema %}
+ {
+   "name": "Quiz block V3",
+   "class": "quiz-block-section quiz-block-v3-section hidden",
+   "settings": [
+       {
+         "type": "header",
+         "content": "Section settings"
+       },
+       {
+         "type": "text",
+         "id": "heading",
+         "label": "Heading"
+       },
+       {
+         "type": "color",
+         "id": "heading_color",
+         "label": "color",
+         "default": "#121212"
+       },
+       {
+         "type": "range",
+         "id": "heading_size",
+         "min": 0,
+         "max": 100,
+         "step": 1,
+         "unit": "px",
+         "label": "Font size",
+         "default": 25
+       },
+       {
+         "type": "range",
+         "id": "heading_size_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 1,
+         "unit": "px",
+         "label": "Font size Mobile",
+         "default": 16
+       },
+     
+     {
+       "type": "header",
+       "content": "Doctor Name and Qualification"
+     },
+     {
+       "type": "text",
+       "id": "dr-name",
+       "label": " Doctor Name",
+       "default": "Dr. Atul Songire"
+     },
+     {
+       "type": "text",
+       "id": "dr-qualification",
+       "label": "Qualification"
+     },
+      {
+         "type": "header",
+         "content": "Sub Heading"
+       },
+       {
+         "type": "text",
+         "id": "sub-heading",
+         "label": "sub-Heading"
+       },
+       {
+         "type": "color",
+         "id": "sub-heading_color",
+         "label": "color",
+         "default": "#121212"
+       },
+       {
+         "type": "range",
+         "id": "sub-heading_size",
+         "min": 0,
+         "max": 100,
+         "step": 1,
+         "unit": "px",
+         "label": "Font size",
+         "default": 25
+       },
+       {
+         "type": "range",
+         "id": "sub-heading_size_mobile",
+         "min": 0,
+         "max": 100,
+         "step": 1,
+         "unit": "px",
+         "label": "Font size Mobile",
+         "default": 16
+       },
+     {
+       "type": "header",
+       "content": "Section Content"
+     },
+     {
+       "type": "number",
+       "id": "max-container",
+       "label": "Max Width"
+     },
+     {
+       "type": "range",
+       "id": "padding_top",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Padding top",
+       "default": 50
+     },
+     {
+       "type": "range",
+       "id": "padding_bottom",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Padding bottom",
+       "default": 50
+     },
+     {
+       "type": "range",
+       "id": "padding_top_mob",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Padding top mobile",
+       "default": 50
+     },
+     {
+       "type": "range",
+       "id": "padding_bottom_mob",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Padding bottom mobile",
+       "default": 50
+     },
+     {
+       "type": "header",
+       "content": "Heading"
+     },
+     {
+       "type": "color",
+       "id": "text_color",
+       "label": "Text color"
+     },
+     {
+       "type": "color",
+       "id": "span_color",
+       "label": "Span text color"
+     },
+     {
+       "type": "range",
+       "id": "font_size",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size",
+       "default": 37
+     },
+     {
+       "type": "range",
+       "id": "font_size_tab",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size tablet",
+       "default": 37
+     },
+     {
+       "type": "range",
+       "id": "font_size_mob",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size mobile",
+       "default": 28
+     },
+     {
+       "type": "header",
+       "content": "Content"
+     },
+     {
+       "type": "color",
+       "id": "content_color",
+       "label": "Content color"
+     },
+     {
+       "type": "range",
+       "id": "font_size_con",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size",
+       "default": 15
+     },
+     {
+       "type": "range",
+       "id": "font_size__con_tab",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size tablet",
+       "default": 15
+     },
+     {
+       "type": "range",
+       "id": "font_size__con_mob",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size mobile",
+       "default": 15
+     },
+     {
+       "type": "header",
+       "content": "Button setting"
+     },
+     {
+       "type": "text",
+       "id": "btn_text",
+       "label": "Button label"
+     },
+     {
+       "type": "url",
+       "id": "btn_link",
+       "label": "Button link"
+     },
+     {
+       "type": "color",
+       "id": "btn_color",
+       "label": "Button color"
+     },
+     {
+       "type": "color",
+       "id": "btn_text_color",
+       "label": "Button text color"
+     },
+     {
+       "type": "range",
+       "id": "font_size_btn",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size",
+       "default": 37
+     },
+     {
+       "type": "range",
+       "id": "font_size_btntab",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size tablet",
+       "default": 37
+     },
+     {
+       "type": "range",
+       "id": "font_size_btnmob",
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "px",
+       "label": "Font size mobile",
+       "default": 28
+     }
+
+
+],
+   "blocks": [
+     {
+       "type": "item",
+       "limit": 10,
+       "name": "Tabs",
+       "settings": [
+         {
+           "type": "header",
+           "content": "Tabs"
+         },
+         {
+           "type": "text",
+           "id": "tabs-title",
+           "label": "Title"
+         }
+
+
+	]
+  }
+
+],
+   "presets": [
+     {
+       "name": "Quiz block V3",
+     	"category": "Image",
+       "blocks": [
+         {
+           "type": "item"
+         }
+       ]
+     }
+   ]
+ }
+{% endschema %}

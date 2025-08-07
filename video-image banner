@@ -1,0 +1,200 @@
+<div id="custom-video-banner--{{ section.id }}" class="banner-media-wrapper" style="padding-top: {{ section.settings.padding_top }}; padding-bottom: {{ section.settings.padding_bottom }};">
+
+  <div class="desktop-only">
+    {% if section.settings.desktop_video_type == 'youtube' and section.settings.desktop_youtube_video != blank %}
+      <div class="video-wrapper">
+{% assign video_id = section.settings.desktop_youtube_video | split: 'v=' | last | split: '&' | first %}
+<iframe
+  id="youtube-video--{{ section.id }}"
+  src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&loop=1&mute=1&playlist={{ video_id }}"
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  allowfullscreen
+></iframe>
+      </div>
+    {% elsif section.settings.desktop_video_type == 'hosted' and section.settings.desktop_hosted_video != blank %}
+
+          {{ section.settings.desktop_hosted_video | video_tag: autoplay: true, loop: true, controls: false, muted: true }}
+     
+    {% elsif section.settings.desktop_image != blank %}
+      <img src="{{ section.settings.desktop_image | image_url: width: 2000 }}" alt="Desktop Banner">
+    {% endif %}
+  </div>
+
+  <div class="mobile-only">
+    {% if section.settings.mobile_video_type == 'youtube' and section.settings.mobile_youtube_video != blank %}
+      <div class="video-wrapper">
+      {% assign video_id = section.settings.mobile_youtube_video | split: 'v=' | last | split: '&' | first %}
+<iframe
+  id="youtube-video--{{ section.id }}"
+  src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&loop=1&mute=1&playlist={{ video_id }}"
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  allowfullscreen
+></iframe>
+      
+      
+      
+      
+      
+      </div>
+    {% elsif section.settings.mobile_video_type == 'hosted' and section.settings.mobile_hosted_video != blank %}
+
+      {{ section.settings.mobile_hosted_video | video_tag: autoplay: true, loop: true, controls: false, muted: true }}
+     
+    {% elsif section.settings.mobile_image != blank %}
+      <img src="{{ section.settings.mobile_image | image_url: width: 1000 }}" alt="Mobile Banner">
+    {% endif %}
+  </div>
+</div>
+
+{% style %}
+  #custom-video-banner--{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .banner-media-wrapper video,
+  .banner-media-wrapper img {
+    width: 100%;
+    height: {{ section.settings.section_height }}px !Important;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-wrapper iframe {
+    width: 100%;
+    height: {{ section.settings.section_height }}px !Important;
+  }
+
+  #custom-video-banner--{{ section.id }} .desktop-only {
+    display: block;
+  }
+
+  #custom-video-banner--{{ section.id }} .mobile-only {
+    display: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    #custom-video-banner--{{ section.id }} .desktop-only {
+      display: none;
+    }
+
+    #custom-video-banner--{{ section.id }} .mobile-only {
+      display: block;
+    }
+
+    .banner-media-wrapper video,
+    .banner-media-wrapper img,
+    .video-wrapper {
+      height: {{ section.settings.section_height_mobile }} !important;
+    }
+  }
+{% endstyle %}
+
+
+
+{% schema %}
+{
+  "name": "Responsive Video Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID",
+      "default": "banner-section"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Media"
+    },
+    {
+      "type": "select",
+      "id": "desktop_video_type",
+      "label": "Desktop Video Type",
+      "options": [
+        { "value": "hosted", "label": "Shopify Hosted Video" },
+        { "value": "youtube", "label": "YouTube Video" }
+      ],
+      "default": "hosted"
+    },
+    {
+      "type": "video",
+      "id": "desktop_hosted_video",
+      "label": "Desktop Hosted Video URL (Shopify file)"
+    },
+    {
+      "type": "url",
+      "id": "desktop_youtube_video",
+      "label": "Desktop YouTube Video URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Fallback Image"
+    },
+
+    {
+      "type": "header",
+      "content": "Mobile Media"
+    },
+    {
+      "type": "select",
+      "id": "mobile_video_type",
+      "label": "Mobile Video Type",
+      "options": [
+        { "value": "hosted", "label": "Shopify Hosted Video" },
+        { "value": "youtube", "label": "YouTube Video" }
+      ],
+      "default": "hosted"
+    },
+    {
+      "type": "video",
+      "id": "mobile_hosted_video",
+      "label": "Mobile Hosted Video URL (Shopify file)"
+    },
+    {
+      "type": "url",
+      "id": "mobile_youtube_video",
+      "label": "Mobile YouTube Video URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Fallback Image"
+    },
+
+    {
+      "type": "text",
+      "id": "section_height",
+      "label": "Desktop Height",
+      "default": "500px"
+    },
+    {
+      "type": "text",
+      "id": "section_height_mobile",
+      "label": "Mobile Height",
+      "default": "400px"
+    },
+    {
+      "type": "text",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "default": "0px"
+    },
+    {
+      "type": "text",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "default": "0px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Responsive Video Banner"
+    }
+  ]
+}
+{% endschema %}
+

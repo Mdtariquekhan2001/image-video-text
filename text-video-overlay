@@ -1,0 +1,723 @@
+<section class="text-over-video" id="text-over-video--{{ section.id }}">
+  <div class="text-over-video-container">
+  <div class="text-over-video-main">
+    <div class="t-o-v-main-video">
+      <video class="desktop_view" autoplay loop muted playsinline style="width: 100%; height: auto; object-fit: cover;">
+        <source src="{{ section.settings.video }}" type="video/mp4">
+      </video>
+
+      <video class="mobile_view" autoplay loop muted playsinline style="width: 100%; height: auto; object-fit: cover;">
+        <source src="{{ section.settings.video_mobile }}" type="video/mp4">
+      </video>
+      
+    </div>
+    <div class="t-o-v-main-content">
+      <div class="t-o-v-main-content-in">
+      {%- for block in section.blocks -%}
+          {% case block.type %}
+            {%- when 'text' -%}
+              <h2 class="text-over-video-main__heading">
+                {{ block.settings.text }}
+              </h2>
+            {%- when 'paragraph' -%}
+              <div class="text-over-video-main__para">
+                  {{ block.settings.paragraph }}
+              </div>
+            {%- when 'button' -%}
+              <div class="text-over-video-main__button">
+                  
+                 {% if block.settings.btn-url != blank %}
+
+                  <div class="slider--button">
+          
+                    <div class="slider--button--inner">
+          
+                      <a href="{{ block.settings.btn-url }}">
+                        <button>{{ block.settings.btn-text }}</button>
+                      </a>
+                      
+                    </div>
+                    
+                  </div>
+        
+                {% endif %}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<style>
+#text-over-video--{{ section.id }}{
+    padding-top: {{ section.settings.padding-top }}px;
+    padding-bottom: {{ section.settings.padding-bottom }}px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+  #text-over-video--{{ section.id }} .text-over-video-container {
+   {% if section.settings.container and section.settings.container > 0 %} max-width: {{ section.settings.container }}px; 
+    margin: 0px auto;
+     {% endif %}
+    padding: {{ section.settings.c_s_i }}px;
+    border-radius: 30px;
+}
+  #text-over-video--{{ section.id }}  .text-over-video-main__image img {
+    width: 100%;
+}
+  #text-over-video--{{ section.id }} .text-over-video-main {
+    position: relative;
+}
+  #text-over-video--{{ section.id }} .t-o-v-main-content {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: {{section.settings.c_s}};;
+    height: 100%;
+    align-items: {{section.settings.cc_s}};
+}
+
+#text-over-video--{{ section.id }} h2.text-over-video-main__heading {
+    font-size: {{ section.settings.h_s }}px;
+    text-align: {{section.settings.con_s}};
+    font-weight: {{ section.settings.h_w }};
+    color: {{section.settings.h_c}};
+        margin: 0px;
+}
+
+#text-over-video--{{ section.id }} .slider--button--inner {
+    text-align: center;
+}
+
+#text-over-video--{{ section.id }} .slider--button {
+    padding-top: {{ section.settings.b_t_s }}px;
+}
+
+#text-over-video--{{ section.id }} .slider--button--inner button {
+    text-align: center;
+    background: {{section.settings.b_b}};
+    height: {{ section.settings.b_h }}px;
+    max-width: {{ section.settings.b_m_w }}px;
+    width: 100%;
+    font-size: {{section.settings.b_s}}px;
+    color: {{section.settings.b_c}};
+    font-weight:{{section.settings.b_w}};
+    cursor: pointer;
+}
+
+#text-over-video--{{ section.id }}  .t-o-v-main-content-in {
+    padding: 20px;
+    text-aligh:{{section.settings.con_s}};
+}
+
+#text-over-video--{{ section.id }} .text-over-video-main__para {
+    font-size: {{section.settings.cont_s}}px;
+    color: {{section.settings.cont_c}};
+    font-weight: {{section.settings.cont_w}};
+}
+
+#text-over-video--{{ section.id }} video.desktop_view {
+    display: block;
+}
+
+#text-over-video--{{ section.id }} video.mobile_view {
+    display: none;
+}
+  
+@media only screen and (max-width: 767px) {
+
+#text-over-video--{{ section.id }}{
+    padding-top: {{ section.settings.p-t-m }}px;
+    padding-bottom: {{ section.settings.p-b-m }}px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+#text-over-video--{{ section.id }} .slider--button {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+#text-over-video--{{ section.id }} .slider--button--inner button { 
+      height: {{ section.settings.b_h_m }}px;
+      max-width: {{ section.settings.b_m_w_m }}px;
+      width: 100%;
+      font-size: {{section.settings.b_s_m}}px;
+      font-weight:{{section.settings.b_w_m}};
+  }
+
+#text-over-video--{{ section.id }} h2.text-over-video-main__heading {
+    font-size: {{ section.settings.h_s_m }}px;
+    font-weight: {{ section.settings.h_w_m }};
+}
+
+#text-over-video--{{ section.id }} .text-over-video-main__para {
+    font-size: {{section.settings.cont_s_m}}px;
+    font-weight: {{section.settings.cont_w_m}};
+}
+
+#text-over-video--{{ section.id }} video.desktop_view {
+    display: none;
+}
+
+#text-over-video--{{ section.id }} video.mobile_view {
+    display: block;
+}
+ #text-over-video--{{ section.id }} .t-o-v-main-content {
+    position: relative;
+ }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+#text-over-video--{{ section.id }} video.desktop_view {
+    display: none;
+}
+#text-over-video--{{ section.id }} video.mobile_view {
+    display: block;
+}
+  #text-over-video--{{ section.id }} .t-o-v-main-content {
+    position: relative;
+ }
+}
+</style>
+{% schema %}
+  {
+    "name": "Text over video",
+    "settings": [
+       {
+          "type": "header",
+          "content": "Max Container"
+        },
+        {
+          "type": "number",
+          "id": "container",
+          "label": "Max Container"
+        },
+         {
+          "type": "number",
+          "id": "c_s_i",
+          "label": "Container spacing"
+        },
+        {
+          "type": "header",
+          "content": "Spacing Settings"
+        },
+        {
+          "type": "range",
+          "id": "padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding-top",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding-bottom",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "p-t-m",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding top mobile",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "p-b-m",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding bottom mobile",
+          "default": 20
+        },
+        {
+          "type": "header",
+          "content": "Video Settings"
+        },
+        {
+          "type": "url",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "url",
+          "id": "video_mobile",
+          "label": "Mobile Video"
+        },
+        {
+          "type": "header",
+          "content": "Heading Settings"
+        },
+        {
+          "type": "color",
+          "id": "h_c",
+          "label": "Heading color"
+        },
+        {
+          "type": "range",
+          "id": "h_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "h_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 25
+        },
+        {
+          "type": "header",
+          "content": "Font Weight"
+        },
+        {
+          "type": "select",
+          "id": "h_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "h_w_m",
+          "label": "Font Weight Mobile",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+         {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "color",
+          "id": "cont_c",
+          "label": "Content color"
+        },
+        {
+          "type": "range",
+          "id": "cont_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "cont_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 25
+        },
+        {
+          "type": "header",
+          "content": "Font Weight"
+        },
+        {
+          "type": "select",
+          "id": "cont_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "cont_w_m",
+          "label": "Font Weight Mobile",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "range",
+          "id": "b_t_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Top Space",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "b_t_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Top Space Mobile",
+          "default": 30
+        },
+        {
+          "type": "number",
+          "id": "b_m_w",
+          "label": "Button max width"
+        },
+        {
+          "type": "number",
+          "id": "b_h",
+          "label": "Button Height"
+        },
+        {
+          "type": "number",
+          "id": "b_m_w_m",
+          "label": "Button max width mobile"
+        },
+        {
+          "type": "number",
+          "id": "b_h_m",
+          "label": "Button Height mobile"
+        },
+        {
+          "type": "color",
+          "id": "b_b",
+          "label": "Button Background Color"
+        },
+        {
+          "type": "color",
+          "id": "b_c",
+          "label": "Font color"
+        },
+        {
+          "type": "range",
+          "id": "b_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "b_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Font Weight"
+        },
+        {
+          "type": "select",
+          "id": "b_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "500"
+        },
+        {
+          "type": "select",
+          "id": "b_w_m",
+          "label": "Font Weight Mobile",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "500"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "select",
+          "id": "con_s",
+          "label": "Content Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "cc_s",
+          "label": "Container Vertical Alignment",
+          "options": [
+            {
+              "value": "flex-start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "end"
+        },
+        {
+          "type": "select",
+          "id": "c_s",
+          "label": "Container Horizontal Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        }
+	],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Heading",
+            "default": "Heading"
+          }
+		]
+	  },
+      {
+        "type": "paragraph",
+        "name": "Paragraph",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "paragraph",
+            "label": "Paragraph"
+          }
+		]
+	  },
+       {
+        "type": "button",
+        "name": "Button",
+        "settings": [
+		  {
+          "type": "text",
+          "id": "btn-text",
+          "label": "Button Text",
+          "default": "Collection Detail"
+        },
+        {
+          "type": "url",
+          "id": "btn-url",
+          "label": "Button Link"
+        }
+		]
+	  }
+      
+	],
+    "presets": [
+      {
+        "name": "Text over video",
+      	"category": "Collection",
+        "blocks": [
+          {
+            "type": "text"
+          },
+          {
+            "type": "paragraph"
+          },
+          {
+            "type": "button"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

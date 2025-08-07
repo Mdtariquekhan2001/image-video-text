@@ -1,0 +1,327 @@
+{%- style -%}
+.section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+  padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+}
+@media screen and (min-width: 750px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+}
+{%- endstyle -%}
+
+
+<section class="custom-blog-slider color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" id="custom-blog-slider--{{ section.id }}">
+  <div class="custom-blog-slider__inner page-width">
+    <div class="custom-blog-slider__header">
+      <h2>{{ section.settings.heading }}</h2>
+      <a
+        {% if section.settings.view_all_link == blank %}
+          role="link" aria-disabled="true"
+        {% else %}
+          href="{{ section.settings.view_all_link }}"
+        {% endif %}
+        class="button{% if section.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
+      >
+        {{ section.settings.button_label | default: 'View All' | escape }}
+      </a>
+
+    </div>
+    
+    {% assign articles = blogs[section.settings.blog].articles | slice: 0, 10 %}
+    {% if articles.size > 0 %}
+     <div class="swiper blog-swiper">
+      <div class="swiper-wrapper">
+        {% for article in articles %}
+          <div class="swiper-slide blog-slide {% if forloop.first %}featured{% endif %}">
+          <div class="blog-slide__image {% if forloop.first %}first-blog-image{% endif %}">
+            {% if article.image %}
+              <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.title }}" loading="lazy">
+            {% endif %}
+          </div>
+
+        {% if forloop.first %}
+          <div class="blog-slide__overlay">
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.content | strip_html | truncate: 160 }}</p>
+            {% if section.settings.show_read_more %}
+              <a href="{{ article.url }}" class="read-more-btn">{{ section.settings.read_more_text }}</a>
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="blog-slide__text">
+            <h4>{{ article.title }}</h4>
+            <p>{{ article.content | strip_html | truncate: 160 }}</p>
+            {% if section.settings.show_read_more %}
+              <a href="{{ article.url }}" class="read-more-link">{{ section.settings.read_more_text }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+        {% endfor %}
+      </div>
+
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+     </div>
+
+    {% endif %}
+  </div>
+</section>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new Swiper('#custom-blog-slider--{{ section.id }} .blog-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      loop: false, 
+      initialSlide: 0, 
+      centeredSlides: false, 
+      navigation: {
+        nextEl: '#custom-blog-slider--{{ section.id }} .swiper-button-next',
+        prevEl: '#custom-blog-slider--{{ section.id }} .swiper-button-prev',
+      },
+      breakpoints: {
+        480: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 3,
+        },
+      }
+    });
+  });
+
+   document.addEventListener("DOMContentLoaded", function () {
+    const wrapper = document.querySelector('#custom-blog-slider--{{ section.id }} .swiper-wrapper');
+    const featured = wrapper.querySelector('.swiper-slide.featured');
+
+    if (wrapper && featured) {
+      wrapper.prepend(featured); 
+    }
+  });
+
+
+  function moveFeaturedSlideFirst() {
+    const wrapper = document.querySelector('#custom-blog-slider--{{ section.id }} .swiper-wrapper');
+    const featured = wrapper?.querySelector('.swiper-slide.featured');
+    if (wrapper && featured) {
+      wrapper.prepend(featured);
+    }
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    moveFeaturedSlideFirst();
+
+    setTimeout(moveFeaturedSlideFirst, 500);
+    window.addEventListener("resize", function () {
+      moveFeaturedSlideFirst();
+    });
+  });
+</script>
+
+
+
+<style>
+
+#custom-blog-slider--{{ section.id }} .page-width{
+  padding:10px 20px;
+}
+
+  
+#custom-blog-slider--{{ section.id }} .swiper-slide.blog-slide .first-blog-image img {
+  height: 570px;
+  width: 100%;
+  object-fit: cover;
+}
+
+#custom-blog-slider--{{ section.id }} a.read-more-btn {
+    color: white;
+}
+
+#custom-blog-slider--{{ section.id }} .swiper-wrapper {
+    gap: 20px;
+}
+  
+#custom-blog-slider--{{ section.id }} a.button.button--secondary {
+    text-decoration: underline;
+     display: flex;
+    justify-content: flex-end;
+}
+
+#custom-blog-slider--{{ section.id }} .blog-slide__overlay h3 {
+    color: white;
+}
+
+#custom-blog-slider--{{ section.id }} .swiper-slide.blog-slide.featured {
+    width: 456px !important;
+}
+ 
+  
+#custom-blog-slider--{{ section.id }} .custom-blog-slider__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+#custom-blog-slider--{{ section.id }} .custom-blog-slider__header h2 {
+  margin: 0;
+}
+
+#custom-blog-slider--{{ section.id }} .blog-swiper {
+  position: relative;
+}
+
+#custom-blog-slider--{{ section.id }} .blog-slide {
+  overflow: hidden;
+  position: relative;
+}
+
+#custom-blog-slider--{{ section.id }} .blog-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#custom-blog-slider--{{ section.id }} .blog-slide__overlay {
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#custom-blog-slider--{{ section.id }} .blog-slide__text {
+  padding: 16px 0px;
+}
+
+#custom-blog-slider--{{ section.id }} .blog-slide__text h4 {
+  margin:0px;
+}
+  
+#custom-blog-slider--{{ section.id }} .swiper-button-next,
+#custom-blog-slider--{{ section.id }} .swiper-button-prev {
+  color: #000;
+}
+
+ a.read-more-link {
+    color: black;
+}
+  
+@media only screen and (max-width: 767px) {
+#custom-blog-slider--{{ section.id }} .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+    display: none;
+}
+  
+#custom-blog-slider--{{ section.id }} .page-width{
+  padding:10px 15px;
+}
+  
+#custom-blog-slider--{{ section.id }} a.button.button--secondary {
+    text-decoration: underline;
+     display: flex;
+    justify-content: flex-end;
+    padding:0px;
+}
+
+#custom-blog-slider--{{ section.id }} .swiper-wrapper {
+    gap: 10px;
+}
+  
+}
+  
+</style>
+
+
+{% schema %}
+{
+  "name": "Custom Blog Slider",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Select Blog"
+    },
+    
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Blog"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_style_secondary",
+      "label": "Use secondary button style",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "View All"
+    },
+    
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "background-1"
+    },
+    {
+    "type": "checkbox",
+    "id": "show_read_more",
+    "label": "Show Read More button",
+    "default": true
+  },
+  {
+    "type": "text",
+    "id": "read_more_text",
+    "label": "Read More Button Text",
+    "default": "Read More"
+  },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Blog Slider",
+      "category": "Blog"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,203 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="slider-grid-blcks color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" id="custom-slider-block--{{ section.id }}">
+  <div class="slider-grid-blck-inner">
+    <div class="custom-marquee-wrapper custom-marquee-{{ section.id }}">
+      <div class="custom-marquee-track custom-marquee-track-{{ section.id }}">
+        {% for block in section.blocks %}
+          <div class="custom-marquee-block">
+            {% if block.type == 'image_block' and block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Slider Image" loading="lazy">
+            {% elsif block.type == 'text_block' %}
+              <div class="custom-section-btn">
+              <h2>{{ block.settings.heading }}</h2>
+             <a 
+              href="{{ block.settings.button_link }}" 
+              class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %} color-{{ section.settings.color_scheme }}">
+              {{ block.settings.button_label }}
+            </a>
+              </div>
+
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        {% comment %} Duplicate blocks for seamless loop {% endcomment %}
+        {% for block in section.blocks %}
+          <div class="custom-marquee-block">
+            {% if block.type == 'image_block' and block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Slider Image" loading="lazy">
+            {% elsif block.type == 'text_block' %}
+              <div class="custom-section-btn">
+              <h2>{{ block.settings.heading }} </h2>
+             <a 
+                href="{{ block.settings.button_link }}" 
+                class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %} color-{{ section.settings.color_scheme }}">
+                {{ block.settings.button_label }}
+              </a>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>
+#custom-slider-block--{{ section.id }} .custom-marquee-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+#custom-slider-block--{{ section.id }} .custom-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: customMarqueeScroll 40s linear infinite;
+}
+
+@keyframes customMarqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+#custom-slider-block--{{ section.id }} .custom-marquee-block {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 365px;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+  #custom-slider-block--{{ section.id }} .custom-section-btn {
+    width: 100%;
+    padding-top: 41px;
+}
+
+#custom-slider-block--{{ section.id }} .custom-marquee-block img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+#custom-slider-block--{{ section.id }} .custom-marquee-block h2 {
+  margin: 10px 0;
+}
+
+#custom-slider-block--{{ section.id }} .custom-marquee-block .btn {
+  padding: 8px 16px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+</style>
+
+
+
+{% schema %}
+ {
+  "name": "Slider Grid Block",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "background-1"
+    },
+     {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "text_block",
+      "name": "Text Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Slider Grid Block",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "image_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+}
+
+
+{% endschema %}

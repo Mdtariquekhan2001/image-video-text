@@ -1,0 +1,286 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+
+<section class="section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="icon-with-text" id="icon-with-text--{{ section.id }}">
+    <div class="icon-with-text-inner page-width">
+      <div class="icon-with-text-flex swiper icon-swiper-{{ section.id }}">
+        <div class="icon-with-text-flex-grid swiper-wrapper">
+          {%- for block in section.blocks -%}
+            <div class="icon-with-text-flex-grid-item swiper-slide">
+              <div class="icon-with-text-flex-item">
+                <div class="icon--i">
+                  <div class="icon--image">
+                    <img src="{{ block.settings.image | img_url: 'master' }}" class="grid-flex-image">
+                  </div>
+                  <div class="icon--heading">
+                    <h3>{{ block.settings.title }}</h3>
+                  </div>
+                </div>
+                <div class="icon--content">
+                  {{ block.settings.content }}
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Navigation Buttons (give them unique classes too) -->
+        <div class="swiper-button-prev swiper-prev-{{ section.id }}"></div>
+        <div class="swiper-button-next swiper-next-{{ section.id }}"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Swiper Initialization Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const swiperSelector = '.icon-swiper-{{ section.id }}';
+
+    new Swiper(swiperSelector, {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      navigation: {
+        nextEl: '.swiper-next-{{ section.id }}',
+        prevEl: '.swiper-prev-{{ section.id }}'
+      },
+      pagination: {
+        el: null // Remove this if you're not using pagination
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+          spaceBetween: 10
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 20
+        }
+      }
+    });
+  });
+</script>
+
+
+<!-- Custom Styling -->
+<style>
+  #icon-with-text--{{ section.id }} {
+    padding-top: {{ section.settings.pt }}px;
+    padding-bottom: {{ section.settings.pb }}px;
+    background: {{ section.settings.bg_color }};
+  }
+
+  #icon-with-text--{{ section.id }} img.grid-flex-image {
+    height: {{ section.settings.img_w_d }}px;
+    width: auto;
+  }
+
+  #icon-with-text--{{ section.id }} .icon-with-text-flex {
+    width: 100%;
+  }
+
+  #icon-with-text--{{ section.id }} .swiper-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: {{ section.settings.gap_d }}px;
+    justify-content:center;
+  }
+
+  #icon-with-text--{{ section.id }} .swiper-slide {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+  }
+
+  #icon-with-text--{{ section.id }} .icon--heading h3 {
+    margin: 0px;
+  }
+
+  #icon-with-text--{{ section.id }} .icon--i {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #icon-with-text--{{ section.id }} .icon--content p {
+    margin: 0px;
+  }
+
+  #icon-with-text--{{ section.id }} .icon--image {
+    height: 48px;
+    width: 48px;
+    border: solid 1px #14141433;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  #icon-with-text--{{ section.id }} .icon-with-text-flex-item {
+    justify-content: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+  @media only screen and (max-width: 767px) {
+    #icon-with-text--{{ section.id }} .swiper-wrapper {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    #icon-with-text--{{ section.id }} .swiper-slide {
+      width: 100% !important;
+    }
+
+    #icon-with-text--{{ section.id }} .icon-with-text-flex {
+  
+      margin: 0 auto;
+    }
+
+     #icon-with-text--{{ section.id }} .icon--i {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+#icon-with-text--{{ section.id }} .icon--content {
+    text-align: center;
+}
+
+  
+    
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Icon with text",
+    "settings": [
+       {
+            "type": "header",
+            "content": "t:sections.all.padding.section_padding_heading"
+          },
+          {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_top",
+            "default": 36
+          },
+          {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_bottom",
+            "default": 36
+          },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "t:sections.all.colors.label",
+          "info": "t:sections.all.colors.has_cards_info",
+          "default": "scheme-1"
+        },
+        {
+          "type": "header",
+          "content": "Image size"
+        },
+        {
+          "type": "range",
+          "id": "img_w_d",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Image width",
+          "default": 100
+        },
+  
+        {
+          "type": "range",
+          "id": "img_w_m",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Image width mob",
+          "default": 90
+        },
+        {	
+            "type": "number",
+            "id": "gap_m",
+            "label": "Image gap mobile",
+            "default": 20
+        }
+		
+	],
+    "blocks": [
+      {
+        "type": "item",
+		"limit": 10,
+        "name": "Content",
+        "settings": [
+		  
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+			
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+			
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+		 
+		]
+	  }
+      
+	],
+    "presets": [
+      {
+        "name": "Icon with text",
+      	"category": "Collection",
+        "blocks": [
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

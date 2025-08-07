@@ -1,0 +1,781 @@
+<section class="custom-slidershow" id="slideshow--{{ section.id }}">
+  <div class="custom-slidershow--inner page-width">
+    <div class="{% if section.settings.sticky-on-scroll == true %}custom-slideshow--f-t{% endif %}">
+      <div class="custom-slideshow--details">
+        {% for block in section.blocks %}
+            <div class="main-slider {{ forloop.index }}" id="main-slider--{{ block.id }}">
+                <div class="main-slider-single" data-slider="slider{{ block.id }}">
+                  {{ block.settings.image-1 | img_url: 'master' | img_tag }}
+                </div>
+                <div class="main-slider-single" data-slider="slider{{ block.id }}">
+                  {{ block.settings.image-2 | img_url: 'master' | img_tag }}
+                </div>
+                <div class="main-slider-single" data-slider="slider{{ block.id }}">
+                  {{ block.settings.image-3 | img_url: 'master' | img_tag }}
+                </div>
+                <div class="main-slider-single" data-slider="slider{{ block.id }}">
+                  {{ block.settings.image-4 | img_url: 'master' | img_tag }}
+                </div>
+            </div>
+  
+          {% endfor %}
+      </div>
+      <div class="c-s-btn-text">
+        <div class="c-s-btn-text-flex">
+          <h2>{{ section.settings.text }}</h2>
+          {% if section.settings.btn-text != blank %}
+          <div class="c-s-btn-text-box">
+            <a href="{{ section.settings.btn-url }}"><button>{{ section.settings.btn-text }}</button></a>
+          </div>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="slider-buttons slider-buttons-f-f">
+      {% for block in section.blocks %}
+        <div class="slider-button" data-slider="{{ block.id }}">
+        {{ block.settings.grid-image | img_url: 'master' | img_tag }}
+        <h2>{{ block.settings.slider_label }}</h2>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<style>
+/* Styles for the sticky header */
+.sticky {
+    position: sticky;
+    top: -40%;
+    background-color: white;
+    transition: top 0.3s ease; /* Smooth transition */
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+/* Padding to prevent content from being hidden behind the sticky h2 */
+.sticky + h2 {
+    padding-top: 50px; /* Adjust based on header size */
+}
+</style>
+
+<script type="text/javascript">
+window.onscroll = function() {
+    handleStickyHeader();
+};
+
+var header = document.querySelector('.custom-slideshow--f-t');
+var sticky = header.offsetTop;
+
+// Get the total height of the content
+var contentContainer = document.querySelector('.slider-buttons-f-f');
+var contentHeight = contentContainer.offsetHeight + contentContainer.offsetTop;
+
+function handleStickyHeader() {
+    // When scrolling down and past the sticky threshold
+    if (window.pageYOffset > sticky + 500 && window.pageYOffset < contentHeight - header.offsetHeight) {
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
+    }
+}
+</script>
+
+<script>
+$(document).ready(function () {
+  // Initially, hide all sliders
+  $('.main-slider').hide();
+
+  // Handle button click to select the appropriate slider
+  $('.slider-button').on('click', function () {
+    const selectedSliderId = $(this).data('slider'); // Get the ID of the selected slider
+      {% if section.settings.sticky-on-scroll == false %}
+        // // Scroll to the top of the page
+       $('html, body').animate({ scrollTop: 0 }, 'slow');
+      {% endif %}
+    {% if section.settings.sticky-on-scroll-top == true %}
+      $('html, body').animate({ scrollTop: 0 }, 'slow');
+    {% endif %}
+    // Hide all sliders
+    $('.main-slider').hide();
+
+    // Show the selected slider
+    const selectedSlider = $(`#main-slider--${selectedSliderId}`);
+    selectedSlider.show();
+
+    // Destroy the existing slick slider instance if it’s initialized
+    if (selectedSlider.hasClass('slick-initialized')) {
+      selectedSlider.slick('unslick');
+    }
+
+    // Reinitialize the slider for the selected block
+    selectedSlider.slick({
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: false,
+      autoplaySpeed: 3000,
+      arrows: false
+    });
+  });
+
+  // Initialize the first slider by default (index 1 in forloop)
+  const firstSlider = $('.main-slider').eq(0); // Get the first slider element (index starts from 0)
+  if (firstSlider.length) {
+    firstSlider.show().slick({
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: false,
+      autoplaySpeed: 3000,
+      arrows: false
+    });
+  }
+});
+
+</script>
+<style>
+ #slideshow--{{ section.id }} .parallax-container{
+   width: 100%;
+   max-width: {{ section.settings.container }}px;
+   margin: 0 auto;
+   margin-top: {{ section.settings.padding-top }}px;
+   margin-bottom: {{ section.settings.padding-bottom }}px;
+ } 
+#slideshow--{{ section.id }} .page-width {
+  padding: 0 3.75rem;
+}
+#slideshow--{{ section.id }} .slider-buttons {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+#slideshow--{{ section.id }} .slider-button {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+#slideshow--{{ section.id }} .slick-slide img {
+  display: block;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+#slideshow--{{ section.id }} .slick-dots {
+  position: absolute;
+  bottom: 20px;
+}
+
+#slideshow--{{ section.id }} .slick-dots li button:before {
+  color: #fff !important;
+  content: "" !important;
+}
+#slideshow--{{ section.id }} .slick-dots li {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  padding: 2px;
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  #slideshow--{{ section.id }} .page-width {
+    padding: 0 0.5rem;
+  }
+}
+@media only screen and (max-width: 767px) {
+  #slideshow--{{ section.id }} .page-width {
+    padding: 0 0.5rem;
+  }
+  #slideshow--{{ section.id }} .parallax-container{
+   width: 100%;
+   max-width: 100%;
+   margin: 0 auto;
+   margin-top: {{ section.settings.padding-top-mob }}px;
+   margin-bottom: {{ section.settings.padding-bottom-mob }}px;
+ } 
+}
+  
+ #slideshow--{{ section.id }} .slider-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+ #slideshow--{{ section.id }} .slick-dots li.slick-active button {
+    background-color: #fff;
+}
+ #slideshow--{{ section.id }} .slick-dots li.slick-active button {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    background: #fff !important;
+}
+#slideshow--{{ section.id }}  .slick-dots li button {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+}
+#slideshow--{{ section.id }} .c-s-btn-text-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#slideshow--{{ section.id }} .c-s-btn-text-box {
+    width: -webkit-fill-available;
+    text-align: end;
+}
+#slideshow--{{ section.id }} .c-s-btn-text-box a button {
+    text-align: center;
+    background: {{section.settings.b_b}};
+    height: {{ section.settings.b_h }}px;
+    max-width: {{ section.settings.b_m_w }}px;
+    width: 100%;
+    font-size: {{section.settings.b_s}}px;
+    color: {{section.settings.b_c}};
+    font-weight:{{section.settings.b_w}};
+}
+#slideshow--{{ section.id }} .c-s-btn-text {
+    padding-bottom: 30px;
+}
+#slideshow--{{ section.id }} .slider-button img {
+    width: 100%;
+    height: 195px;
+    object-fit: cover;
+}
+#slideshow--{{ section.id }} .slider-button h2 {
+    margin: 0px;
+    text-align: left;
+    color: {{ section.settings.h_c }};
+    font-size: {{ section.settings.h_s }}px;
+    line-height: normal;
+    padding-top: {{ section.settings.h_p_t }}px;
+    font-weight: {{ section.settings.h_w }};
+}
+#slideshow--{{ section.id }} .c-s-btn-text-flex h2 {
+    text-align: left;
+    color: {{ section.settings.m_h_c }};
+    font-size: {{ section.settings.m_h_s }}px;
+    line-height: normal;
+    padding-top: {{ section.settings.m_h_p_t }}px;
+    font-weight: {{ section.settings.m_h_w }};
+}
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+#slideshow--{{ section.id }} .slider-buttons {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+  }
+@media only screen and (max-width: 767px) {
+#slideshow--{{ section.id }} .slider-button h2 {
+    font-size: {{ section.settings.h_s_m }}px;
+    padding-top: {{ section.settings.h_p_t_m }}px;
+    font-weight: {{ section.settings.h_w_m }};
+}
+  #slideshow--{{ section.id }} .c-s-btn-text-flex h2 {
+    font-size: {{ section.settings.m_h_s_m }}px;
+    padding-top: {{ section.settings.m_h_p_t_m }}px;
+    font-weight: {{ section.settings.m_h_w_m }};
+  }
+  #slideshow--{{ section.id }} .slider-buttons {
+    grid-template-columns: 1fr 1fr;
+}
+  #slideshow--{{ section.id }} .c-s-btn-text-box {
+    width: auto;
+}
+  #slideshow--{{ section.id }} .c-s-btn-text-box a button {
+    font-size: {{section.settings.b_s_m}}px;
+    font-weight:{{section.settings.b_w_m}};
+    height: {{ section.settings.b_h_m }}px;
+    max-width: {{ section.settings.b_m_w_m }}px;
+}
+  #slideshow--{{ section.id }} .c-s-btn-text-box a {
+    display: flex;
+    background: #4E4E4E;
+    color: #F5F5F5;
+    font-size: 16px;
+    line-height: 26px;
+    width: 212px;
+    height: 31px;
+    justify-content: center;
+    align-items: center;
+}
+  }
+  
+</style>
+
+{% schema %}
+{
+  "name": "Slideshow v2",
+  "settings": [
+    {
+          "type": "range",
+          "id": "padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding-top",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding-bottom",
+          "default": 20
+        },
+       {
+          "type": "range",
+          "id": "padding-top-mob",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding top mob",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "padding-bottom-mob",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding bottom mob",
+          "default": 20
+        },
+        {
+          "type": "checkbox",
+          "id": "sticky-on-scroll",
+          "label": "Sticky on scroll",
+          "default": true
+        },
+    {
+          "type": "checkbox",
+          "id": "sticky-on-scroll-top",
+          "label": "Sticky on scroll top",
+          "default": true
+        },
+        {
+          "type": "number",
+          "id": "container",
+          "label": "Container(px)"
+        },
+    {
+          "type": "header",
+          "content": "Main Heading"
+        },
+    {
+          "type": "text",
+          "id": "text",
+          "label": "Heading",
+          "default": "ALLUX"
+        },
+    {
+          "type": "color",
+          "id": "m_h_c",
+          "label": "Heading color"
+        },
+        {
+          "type": "range",
+          "id": "m_h_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "m_h_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "m_h_p_t",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding top",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "m_h_p_t_m",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top mob",
+          "default": 5
+        },
+        {
+          "type": "select",
+          "id": "m_h_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "m_h_w_m",
+          "label": "Font Weight mob",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+    {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "number",
+          "id": "b_m_w",
+          "label": "Button max width"
+        },
+        {
+          "type": "number",
+          "id": "b_h",
+          "label": "Button Height"
+        },
+        {
+          "type": "number",
+          "id": "b_m_w_m",
+          "label": "Button max width mobile"
+        },
+        {
+          "type": "number",
+          "id": "b_h_m",
+          "label": "Button Height mobile"
+        },
+        {
+          "type": "text",
+          "id": "btn-text",
+          "label": "Button Text",
+          "default": "Collection Detail"
+        },
+        {
+          "type": "url",
+          "id": "btn-url",
+          "label": "Button Link"
+        },
+        {
+          "type": "color",
+          "id": "b_b",
+          "label": "Button Background Color"
+        },
+        {
+          "type": "color",
+          "id": "b_c",
+          "label": "Font color"
+        },
+        {
+          "type": "range",
+          "id": "b_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "b_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Font Weight"
+        },
+        {
+          "type": "select",
+          "id": "b_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "500"
+        },
+        {
+          "type": "select",
+          "id": "b_w_m",
+          "label": "Font Weight Mobile",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "500"
+        },
+    {
+          "type": "header",
+          "content": "block text"
+        },
+    {
+          "type": "color",
+          "id": "h_c",
+          "label": "Heading color"
+        },
+        {
+          "type": "range",
+          "id": "h_s",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "h_s_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Font Size Mobile",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "h_p_t",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding top",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "h_p_t_m",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top mob",
+          "default": 5
+        },
+        {
+          "type": "select",
+          "id": "h_w",
+          "label": "Font Weight",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "select",
+          "id": "h_w_m",
+          "label": "Font Weight mob",
+          "options": [
+            {
+              "value": "300",
+              "label": "300"
+            },
+            {
+              "value": "400",
+              "label": "400"
+            },
+            {
+              "value": "500",
+              "label": "500"
+            },
+            {
+              "value": "600",
+              "label": "600"
+            },
+            {
+              "value": "700",
+              "label": "700"
+            },
+            {
+              "value": "800",
+              "label": "800"
+            }
+          ],
+          "default": "600"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "slider",
+      "name": "Slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "grid-image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "slider_label",
+          "label": "Slider Label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image-1",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image-2",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image-3",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image-4",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slideshow v2",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

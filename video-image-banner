@@ -1,0 +1,406 @@
+
+<div id="custom-video-banner--{{ section.id }}" class="banner-media-wrappers" style="padding-top: {{ section.settings.padding_top }}; padding-bottom: {{ section.settings.padding_bottom }};">
+  
+  <div class="overlay-content">
+    {% if section.settings.heading != blank %}
+      <h2 class="banner-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p class="banner-description">{{ section.settings.description }}</p>
+    {% endif %}
+    {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+      <a href="{{ section.settings.button_link }}" class="banner-button">{{ section.settings.button_label }}</a>
+    {% endif %}
+  </div>
+
+  <!-- Desktop -->
+  <div class="desktop-onlys">
+    {% if section.settings.desktop_video_type == 'youtube' and section.settings.desktop_youtube_video != blank %}
+      <div class="video-wrappers">
+        {% assign video_id = section.settings.desktop_youtube_video | split: 'v=' | last | split: '&' | first %}
+        <iframe
+          id="youtube-video--{{ section.id }}"
+          src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&loop=1&mute=1&playlist={{ video_id }}"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </div>
+    {% elsif section.settings.desktop_video_type == 'hosted' and section.settings.desktop_hosted_video != blank %}
+      {{ section.settings.desktop_hosted_video | video_tag: autoplay: true, loop: true, controls: false, muted: true }}
+    {% elsif section.settings.desktop_image != blank %}
+      <img src="{{ section.settings.desktop_image | image_url: width: 2000 }}" alt="Desktop Banner">
+    {% endif %}
+  </div>
+
+  <!-- Mobile -->
+  <div class="mobile-onlys">
+    {% if section.settings.mobile_video_type == 'youtube' and section.settings.mobile_youtube_video != blank %}
+      <div class="video-wrappers">
+        {% assign video_id = section.settings.mobile_youtube_video | split: 'v=' | last | split: '&' | first %}
+        <iframe
+          id="youtube-video--{{ section.id }}"
+          src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&loop=1&mute=1&playlist={{ video_id }}"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </div>
+    {% elsif section.settings.mobile_video_type == 'hosted' and section.settings.mobile_hosted_video != blank %}
+      {{ section.settings.mobile_hosted_video | video_tag: autoplay: true, loop: true, controls: false, muted: true }}
+    {% elsif section.settings.mobile_image != blank %}
+      <img src="{{ section.settings.mobile_image | image_url: width: 1000 }}" alt="Mobile Banner">
+    {% endif %}
+  </div>
+</div>
+
+{% style %}
+#custom-video-banner--{{ section.id }} {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner-media-wrappers video,
+.banner-media-wrappers img {
+  width: 100%;
+  height: {{ section.settings.section_height }} !important;
+  object-fit: cover;
+  display: block;
+}
+
+.video-wrappers iframe {
+  width: 100%;
+  height: {{ section.settings.section_height }} !important;
+}
+
+.overlay-content {
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: {{ section.settings.text_align }};
+  padding: 20px;
+}
+
+.banner-heading {
+  color: {{ section.settings.heading_color }};
+  font-size: {{ section.settings.heading_font_size }};
+  font-weight: {{ section.settings.heading_font_weight }};
+  margin: 0 0 10px;
+}
+
+.banner-description {
+  color: {{ section.settings.description_color }};
+  font-size: {{ section.settings.description_font_size }};
+  font-weight: {{ section.settings.description_font_weight }};
+  margin: 0 0 30px;
+}
+
+.banner-button {
+  background-color: {{ section.settings.button_bg }};
+  color: {{ section.settings.button_color }};
+  font-size: {{ section.settings.button_font_size }};
+  padding: 14px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.banner-button:hover {
+  background-color: {{ section.settings.button_bg_hv }};
+  color: {{ section.settings.button_color_hv }} !important;
+  text-decoration:none;
+}
+
+#custom-video-banner--{{ section.id }} .desktop-onlys {
+  display: block;
+}
+
+#custom-video-banner--{{ section.id }} .mobile-onlys {
+  display: none;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+
+  #custom-video-banner--{{ section.id }} .desktop-onlys {
+    display: none;
+  }
+
+  #custom-video-banner--{{ section.id }} .mobile-onlys {
+    display: block;
+  }
+
+  .banner-media-wrappers video,
+  .banner-media-wrappers img,
+  .video-wrappers {
+    height: {{ section.settings.section_height_mobile }} !important;
+  }
+
+  .banner-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }};
+  }
+
+  .banner-description {
+    font-size: {{ section.settings.description_font_size_mobile }};
+  }
+
+  .banner-button {
+    font-size: {{ section.settings.button_font_size_mobile }};
+  }
+}
+{% endstyle %}
+
+
+
+{% schema %}
+{
+  "name": " Video Banner v2",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID",
+      "default": "banner-section"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Media"
+    },
+    {
+      "type": "select",
+      "id": "desktop_video_type",
+      "label": "Desktop Video Type",
+      "options": [
+        { "value": "hosted", "label": "Shopify Hosted Video" },
+        { "value": "youtube", "label": "YouTube Video" }
+      ],
+      "default": "hosted"
+    },
+    {
+      "type": "video",
+      "id": "desktop_hosted_video",
+      "label": "Desktop Hosted Video URL (Shopify file)"
+    },
+    {
+      "type": "url",
+      "id": "desktop_youtube_video",
+      "label": "Desktop YouTube Video URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Fallback Image"
+    },
+
+    {
+      "type": "header",
+      "content": "Mobile Media"
+    },
+    {
+      "type": "select",
+      "id": "mobile_video_type",
+      "label": "Mobile Video Type",
+      "options": [
+        { "value": "hosted", "label": "Shopify Hosted Video" },
+        { "value": "youtube", "label": "YouTube Video" }
+      ],
+      "default": "hosted"
+    },
+    {
+      "type": "video",
+      "id": "mobile_hosted_video",
+      "label": "Mobile Hosted Video URL (Shopify file)"
+    },
+    {
+      "type": "url",
+      "id": "mobile_youtube_video",
+      "label": "Mobile YouTube Video URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Fallback Image"
+    },
+
+    {
+      "type": "text",
+      "id": "section_height",
+      "label": "Desktop Height",
+      "default": "500px"
+    },
+    {
+      "type": "text",
+      "id": "section_height_mobile",
+      "label": "Mobile Height",
+      "default": "400px"
+    },
+    {
+      "type": "text",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "default": "0px"
+    },
+    {
+      "type": "text",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "default": "0px"
+    },
+    {
+      "type": "header",
+      "content": "Overlay Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Heading Contant"
+    },
+    {
+      "type": "text",
+      "id": "heading_font_size",
+      "label": "Heading Font Size (Desktop)",
+      "default": "36px"
+    },
+    {
+      "type": "text",
+      "id": "heading_font_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "default": "24px"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading Font Weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Description Content"
+    },
+    {
+      "type": "text",
+      "id": "description_font_size",
+      "label": "Description Font Size (Desktop)",
+      "default": "18px"
+    },
+    {
+      "type": "text",
+      "id": "description_font_size_mobile",
+      "label": "Description Font Size (Mobile)",
+      "default": "16px"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "description_font_weight",
+      "label": "Description Font Weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "Button Content"
+    },
+    {
+      "type": "text",
+      "id": "button_font_size",
+      "label": "Button Font Size (Desktop)",
+      "default": "16px"
+    },
+    {
+      "type": "text",
+      "id": "button_font_size_mobile",
+      "label": "Button Font Size (Mobile)",
+      "default": "14px"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Button Hover Color"
+    },
+
+    {
+      "type": "color",
+      "id": "button_bg_hv",
+      "label": "Button Background Hover",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_color_hv",
+      "label": "Button Text Hover",
+      "default": "#ffffff"
+    }
+
+  ],
+  "presets": [
+    {
+      "name": " Video Banner v2"
+    }
+  ]
+}
+{% endschema %}

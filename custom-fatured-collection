@@ -1,0 +1,278 @@
+{% if section.settings.collection %}
+  {{ 'section-featured-products.css' | asset_url | stylesheet_tag }}
+  {%- style -%}
+    #Featured-products-{{ section.id }} {
+      background-color: {{ section.settings.background_color }};
+      color: {{ section.settings.text_color }};
+    }
+
+    #Featured-products-{{ section.id }}__heading {
+      font-size: {{ section.settings.heading_size_mobile }}px;
+    }
+    
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.5 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.5 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+
+      #Featured-products-{{ section.id }}__heading {
+        font-size: {{ section.settings.heading_size }}px;
+      }
+    }
+
+    @media screen and (min-width: 990px) {
+      #Featured-products-{{ section.id }}__grid {
+        grid-template-columns: repeat({{ section.settings.products_per_row }}, 1fr);
+      }
+    }
+  {%- endstyle -%}
+
+  <div id="Featured-products-{{ section.id }}" class="custom-featured-products section-{{ section.id }}-padding{% if section.settings.show_top_line_separator %} top-line-separator{% endif %}{% if section.settings.show_bottom_line_separator %} bottom-line-separator{% endif %}">
+    <div class="custom-featured-products--page-width" id="main-custom-list-all">
+      {%- if section.settings.heading -%}
+        <h2 class="featured-products__heading" id="Featured-products-{{ section.id }}__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      
+     <div id="Featured-products-{{ section.id }}__grid" class="grid featured-products__grid">
+         {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          <div class="grid__item product-item">
+            <a href="{{ product.url }}">
+              <div class="product__media {% if product.featured_image != blank %}media{% else %}product__media--placeholder placeholder{% endif %}">
+                {%- assign index = section.settings.image_number | minus: 1 -%}
+                {%- assign selected_image = product.images[index] -%}
+      
+                {%- if selected_image != blank -%}
+                  {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
+                  {%- capture sizes -%}
+                    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+                    (min-width: 750px) calc((100vw - 130px) / 2), 100vw
+                  {%- endcapture -%}
+                  {{
+                    selected_image
+                    | image_url: width: 600
+                    | image_tag: loading: 'lazy', sizes: sizes, widths: widths
+                  }}
+                {%- else -%}
+                  {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <div class="product__information">
+                <h5 class="product__title">{{ product.title }}</h5>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      {% if section.settings.collection.products.size > section.settings.products_to_show %}
+        {%- if section.settings.view_all_text != blank -%}
+          <div class="featured-products__button--wrapper">
+            <style>
+              #Featured-products-{{ section.id }}__view-all {
+                color: {{ section.settings.color_text }};
+                background-color: {{ section.settings.color_background }};
+              }
+  
+              #Featured-products-{{ section.id }}__view-all:hover {
+                color: {{ section.settings.color_text_when_hover }};
+                background-color: {{ section.settings.color_background_when_hover }};
+              }
+            </style>
+            <a href="{{ section.settings.collection.url }}" id="Featured-products-{{ section.id }}__view-all" class="o-btn is-border featured-products__button">
+              {{ section.settings.view_all_text }}
+            </a>
+          </div>
+        {%- endif -%}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+<style>
+  {% if section.settings.container != 0 %}
+
+ div#main-custom-list-all {
+      max-width: {{ section.settings.container }}px;
+      margin: 0px auto;
+  }
+
+{% endif %}
+
+  div#main-custom-list-all h5.product__title {
+    text-align: center;
+}
+</style>
+
+
+
+
+{% schema %}
+  {
+    "name": "Custom collection listv2",
+    "settings": [
+       {
+      "type": "header",
+      "content": "Max Container"
+    },
+    {
+      "type": "number",
+      "id": "container",
+      "label": "Max Container"
+     },
+      {
+        "type": "checkbox",
+        "id": "show_top_line_separator",
+        "label": "Show top separator line",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_bottom_line_separator",
+        "label": "Show bottom separator line",
+        "default": false
+      },
+      {
+        "type": "inline_richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Featured Products"
+      },
+      {
+        "type": "range",
+        "id": "heading_size",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Font Size",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Font Size Mobile",
+        "default": 32
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Select Collection"
+      },
+      {
+      "type": "number",
+      "id": "image_number",
+      "label": "Image Number to Show (1 = first image)",
+      "default": 1
+      },
+      {
+        "type": "range",
+        "id": "products_per_row",
+        "label": "Products per Row",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "products_to_show",
+        "label": "Number of Products to Display",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "default": 8
+      },
+      {
+        "type": "header",
+        "content": "Button"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "view_all_text",
+        "label": "View All Button Text",
+        "default": "View All Products"
+      },
+    
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Color text",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Color background",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "color",
+        "id": "color_text_when_hover",
+        "label": "Color text when hover",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_background_when_hover",
+        "label": "Color background when hover",
+        "default": "#e8845d"
+      },
+      {
+        "type": "header",
+        "content": "Color"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#1A1A1A"
+      },
+      {
+        "type": "header",
+        "content": "Section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 36
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom collection listv2",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}
+  

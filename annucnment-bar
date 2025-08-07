@@ -1,0 +1,107 @@
+<section class="announcement-bar-v2  color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" id="announcement-bar-v2--{{ section.id }}">
+  <div class="announcement-wrapper">
+    <div class="marquee-track">
+      {% for block in section.blocks %}
+        {% if block.settings.text != blank %}
+          <span class="marquee-item">{{ block.settings.text }}</span>
+        {% endif %}
+      {% endfor %}
+   
+      {% for block in section.blocks %}
+        {% if block.settings.text != blank %}
+          <span class="marquee-item">{{ block.settings.text }}</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  
+  
+.announcement-bar-v2 {
+  overflow: hidden;
+  position: relative;
+}
+
+.announcement-wrapper {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.marquee-track {
+  min-height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: scroll-left 40s linear infinite;
+}
+
+.marquee-item {
+  display: inline-block;
+  margin-right: 50px;
+  text-transform: uppercase;
+}
+
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar V2",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    }
+    
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Text Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Your announcement text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar V2",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "text": "Chemical Free"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "Preservative Free"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
